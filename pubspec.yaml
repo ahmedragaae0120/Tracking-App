@@ -41,6 +41,9 @@ dependencies:
   flutter_bloc: ^9.1.1
   shared_preferences: ^2.5.3
   easy_localization: ^3.0.7+1
+  build_runner: ^2.4.15
+  fluttertoast: ^8.2.12
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +55,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-
+  injectable_generator:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
