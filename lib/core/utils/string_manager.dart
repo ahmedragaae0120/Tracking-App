@@ -48,4 +48,6 @@ class AppStrings {
   static String get pleaseEnterYourPasswordConfirmation => "pleaseEnterYourPasswordConfirmation".tr();
   static String get invalidFirstName => "invalidFirstName".tr();
   static String get logout => "logout".tr();
+  static String get thankYouForProviding => "thankYouForProviding".tr();
+  static String get yourApplicationHasBeenSubmitted => "yourApplicationHasBeenSubmitted".tr();
 }
