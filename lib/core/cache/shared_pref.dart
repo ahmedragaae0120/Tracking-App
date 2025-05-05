@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tracking_app/core/constant.dart';
 
 @singleton
 @singleton
@@ -20,7 +21,6 @@ class CacheHelper {
 
   Future<void> init() async {
     _sharedPrefs = await SharedPreferences.getInstance();
-    // await setData<bool>(Constant.questCacheKey, false);
     log("initialized shared prefs");
   }
 
@@ -45,10 +45,10 @@ class CacheHelper {
   //   }
   // }
 
-  // static T? getRememberMe<T>() {
-  //   if (_sharedPrefs == null) return null;
-  //   return _sharedPrefs!.getBool(Constant.isRememberMe) as T?;
-  // }
+  static T? getRememberMe<T>() {
+    if (_sharedPrefs == null) return null;
+    return _sharedPrefs!.getBool(Constant.isRememberMe) as T?;
+  }
 
   //========USAGE=========\\
   Future<bool> setData<T>(String key, T value) async {

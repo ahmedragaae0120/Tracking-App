@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:tracking_app/core/di/di.config.dart';
 
 import 'di.config.dart';
 
