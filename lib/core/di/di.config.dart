@@ -13,6 +13,12 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
 
+import '../../data/data_source_contract/auth/login_datasource.dart' as _i1048;
+import '../../data/data_source_impl/auth/login_datasource_impl.dart' as _i1013;
+import '../../data/repo_impl/auth/login_repo_impl.dart' as _i314;
+import '../../domain/repo_contract/auth/login_repo.dart' as _i284;
+import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
+import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
 import '../api/api_manager.dart' as _i1047;
 import '../cache/shared_pref.dart' as _i299;
 import '../logger/logger_module.dart' as _i279;
@@ -29,10 +35,14 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final loggerModule = _$LoggerModule();
+    gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit());
+    gh.factory<_i912.LoginUsecase>(() => _i912.LoginUsecase());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
     gh.singleton<_i299.CacheHelper>(() => _i299.CacheHelper());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);
+    gh.factory<_i284.LoginRepo>(() => _i314.LoginRepoImpl());
+    gh.factory<_i1048.LoginDatasource>(() => _i1013.LoginDatasourceImpl());
     return this;
   }
 }
