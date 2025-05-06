@@ -1,0 +1,345 @@
+import 'dart:convert';
+import 'dart:io'; // Import for File
+import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_app/core/di/di.dart';
+import 'package:tracking_app/core/utils/string_manager.dart';
+import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
+import '../../../config/theme/app_theme.dart';
+import '../../../core/resuable_comp/custom_text_field.dart';
+import '../../../core/resuable_comp/toast_message.dart';
+import '../../../core/utils/colors_manager.dart';
+import '../../../domain/entity/auth/apply_request.dart';
+
+class ApplyScreen extends StatefulWidget {
+  const ApplyScreen({super.key});
+
+  @override
+  State<ApplyScreen> createState() => _ApplyScreenState();
+}
+
+class _ApplyScreenState extends State<ApplyScreen> {
+  List<dynamic> countries = [];
+  List<VehiclesEntity> vehicleTypes = [];
+  String selectedCountry = '';
+  String selectedGender = AppStrings.male;
+  String selectedVehicleType = AppStrings.cars;
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final vehicleNumberController = TextEditingController();
+  final vehicleLicenseController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final idNumberController = TextEditingController();
+  final idImageController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  final AuthCubit authCubit = getIt<AuthCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    authCubit.loadCountries();
+    authCubit.getallvehicle();
+  }
+
+
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    vehicleNumberController.dispose();
+    vehicleLicenseController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    idNumberController.dispose();
+    idImageController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: ColorManager.white,
+      appBar: AppBar(
+          backgroundColor: ColorManager.white,
+        title: Text(AppStrings.apply),
+      ),
+      body: BlocBuilder<AuthCubit, AuthState>(
+        bloc: authCubit,
+        builder: (context, state) {
+          if(state is LoadContrySuccess){
+            countries = state.countries;
+
+          }
+          else if (state is applyFailure) {
+            toastMessage(message: state.message, tybeMessage: TybeMessage.negative);
+          }
+
+         else  if (state is applyLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is getVehiclesSuccess) {
+vehicleTypes= state.vehicles.vehicles??[];
+
+          }
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.welcome,
+                  style: TextStyle(
+                    fontSize: AppTheme.lightTheme.textTheme.titleLarge?.fontSize,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  AppStrings.youWantToBeaDeliveryMan,
+                  style: TextStyle(
+                    fontSize: AppTheme.lightTheme.textTheme.bodyLarge?.fontSize,
+                  ),
+                ),
+                Text(
+                  AppStrings.joinOurTeam,
+                  style: TextStyle(
+                    fontSize: AppTheme.lightTheme.textTheme.bodyLarge?.fontSize,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  style: BorderStyle.none,
+                  width: 4,
+                  color: Colors.black,
+                ),
+              ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
+          ,label: Text(AppStrings.country),
+            ),
+                  value: selectedCountry.isNotEmpty ? selectedCountry : null,
+                  hint: Text(AppStrings.selectCountry),
+
+                  items: countries.map((e) {
+                    return DropdownMenuItem<String>(
+
+                      value: e[AppStrings.name],
+                      child: Row(
+                        children: [
+                          Text(e[AppStrings.flag]),
+                          const SizedBox(width: 8),
+                          Text(e[AppStrings.name]),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      selectedCountry = val ?? '';
+                    });
+                  },
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.firstLegalName,
+                  controller: firstNameController,
+                  hintText: AppStrings.enterFirstLegalName,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.secondLegalName,
+                  controller: lastNameController,
+                  hintText: AppStrings.enterSecondLegalName,
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        style: BorderStyle.none,
+                        width: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
+                    ,label: Text(AppStrings.vehicleType),
+                  ),
+                  value: selectedVehicleType.isNotEmpty &&
+          vehicleTypes.any((v) => v.id == selectedVehicleType)
+          ? selectedVehicleType
+              : null,
+                  items: vehicleTypes.map((e){
+                    return DropdownMenuItem<String>(
+                      value: e.id,
+                      child: Text(e.type??''),
+                    );
+                  }).toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      selectedVehicleType = val ?? AppStrings.cars;
+                    });
+                  },
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.vehicleNumber,
+                  controller: vehicleNumberController,
+                  hintText: AppStrings.enterVehicleNumber,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.vehicleLicense,
+                  controller: vehicleLicenseController,
+                  hintText: AppStrings.uploadlicense,
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      await authCubit.pickVehicleLicense();
+                      if (authCubit.vehicleLicenseFile != null) {
+                        vehicleLicenseController.text =
+                            authCubit.vehicleLicenseFile!.path.split('/').last;
+                      }
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.upload),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.email,
+                  controller: emailController,
+                  hintText: AppStrings.enterEmail,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.phoneNumber,
+                  controller: phoneController,
+                  hintText: AppStrings.enterPhoneNumber,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.idNumber,
+                  controller: idNumberController,
+                  hintText: AppStrings.enterIDNumber,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  labelText: AppStrings.idImage,
+                  controller: idImageController,
+                  hintText: AppStrings.uploadidimage,
+                  suffixIcon: IconButton(
+                    onPressed: () async {
+                      await authCubit.pickNidImage();
+                      if (authCubit.nidImageFile != null) {
+                        idImageController.text =
+                            authCubit.nidImageFile!.path.split('/').last;
+                      }
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.upload),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        labelText: AppStrings.password,
+                        controller: passwordController,
+                        hintText: AppStrings.enterPassword,
+                        obscureText: true,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: CustomTextField(
+                        labelText: AppStrings.confirmPassword,
+                        controller: confirmPasswordController,
+                        hintText: AppStrings.enterConfirmPassword,
+                        obscureText: true,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(
+                      AppStrings.gender,
+                      style: AppTheme.lightTheme.textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      AppStrings.male,
+                      style: AppTheme.lightTheme.textTheme.bodyLarge,
+                    ),
+                    Radio<String>(
+                      value: AppStrings.male,
+                      groupValue: selectedGender,
+                      onChanged: (val) {
+                        setState(() {
+                         if(val!=null) selectedGender = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      AppStrings.female,
+                      style: AppTheme.lightTheme.textTheme.bodyLarge,
+                    ),
+                    Radio<String>(
+                      value: AppStrings.female,
+                      groupValue: selectedGender,
+                      onChanged: (val) {
+                        setState(() {
+                          if(val!=null) selectedGender = val;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style,
+                  onPressed: () async {
+                    final request = applyrequest(
+                      country: selectedCountry,
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      vehicleType: selectedVehicleType,
+                      vehicleNumber: vehicleNumberController.text,
+                      vehicleLicense: authCubit.vehicleLicenseFile!,
+                      nid: idNumberController.text,
+                      nidImg: authCubit.nidImageFile!,
+                      email: emailController.text,
+                      gender: selectedGender,
+                      phone: phoneController.text,
+                      password: passwordController.text,
+                      rePassword: confirmPasswordController.text,
+                    );
+
+                    authCubit.dointent(applyIntent(request: request));
+                  },
+                  child: Text(
+                    AppStrings.continueText,
+                    style: AppTheme.lightTheme.textTheme.labelLarge,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

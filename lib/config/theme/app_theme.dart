@@ -77,6 +77,7 @@ class AppTheme {
     // 🔘 تصميم الأزرار (Buttons)
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        minimumSize: Size(343, 43),
         backgroundColor: ColorManager.addToCartButtonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32),

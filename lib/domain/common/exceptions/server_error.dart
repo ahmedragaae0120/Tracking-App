@@ -1,4 +1,5 @@
-import 'package:tracking_app/domain/model/error_model.dart';
+
+import '../../entity/error_model.dart';
 
 class ServerError implements Exception {
   ErrorModel? errorModel;

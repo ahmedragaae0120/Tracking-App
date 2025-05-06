@@ -10,19 +10,18 @@ class ErrorModel {
   String? message;
   List<ErrorData>? errors; // ✅ تغيير errors إلى List
 
-  ErrorModel.fromJson(dynamic json) {
-    message = json['message'];
+  factory ErrorModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return ErrorModel(message: "Unknown error");
 
-    // ✅ التأكد من أن errors هي قائمة
-    if (json['errors'] != null) {
-      if (json['errors'] is List) {
-        errors =
-            (json['errors'] as List).map((e) => ErrorData.fromJson(e)).toList();
-      } else if (json['errors'] is Map) {
-        errors = [ErrorData.fromJson(json['errors'])];
-      }
+    return ErrorModel(
+      message: json['message']?.toString() ??
+          json['error']?.toString() ??
+          json['detail']?.toString() ??
+          "Unknown error",
+    );
+
     }
-  }
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

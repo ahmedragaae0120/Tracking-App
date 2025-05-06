@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:tracking_app/domain/common/exceptions/server_error.dart';
 import 'package:tracking_app/domain/common/result.dart';
-import 'package:tracking_app/domain/model/error_model.dart';
+
+import '../../domain/entity/error_model.dart';
 
 Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
   try {
@@ -11,7 +12,7 @@ Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
     return Success(result);
   } on DioException catch (ex) {
     var errorModel = ErrorModel.fromJson(ex.response?.data);
-    log(errorModel.message.toString());
+    log(errorModel.message ?? "No error message");
     switch (ex.type) {
       case DioExceptionType.badCertificate:
       case DioExceptionType.connectionError:
@@ -23,12 +24,16 @@ Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
         }
       case DioExceptionType.badResponse:
         {
+
           var responseCode = ex.response?.statusCode ?? 0;
           var errorData = ex.response?.data;
+          log("Raw error response: $errorData");
 
           var errorModel = (errorData is Map<String, dynamic>)
               ? ErrorModel.fromJson(errorData)
               : ErrorModel(message: "Unknown error");
+          log("Parsed error message: ${errorModel.message ?? "No message"}");
+
 
           if (responseCode != 0 && responseCode >= 400 && responseCode < 500) {
             return Error(ClientError(message: errorModel.message));
