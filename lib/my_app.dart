@@ -6,6 +6,9 @@ import 'package:tracking_app/ui/Auth/login/login_screen.dart';
 import 'package:tracking_app/ui/main_screen.dart';
 import 'core/cache/shared_pref.dart';
 import 'core/utils/routes_manager.dart';
+import 'package:tracking_app/core/utils/routes_manager.dart';
+
+import 'ui/Auth/success_apply/view/apply_success.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         routes: {
-
+          RouteManager.applySuccess: (context) => ApplySuccess(),
           RouteManager.loginScreen: (context) => const SignInScreen(),
           RouteManager.mainScreen: (context) =>  MainScreen(),
           RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),

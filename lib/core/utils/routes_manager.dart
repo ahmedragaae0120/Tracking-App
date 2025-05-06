@@ -6,5 +6,6 @@ class RouteManager {
   static const String forgetPasswordScreen = "/FORGETPASSWORDSCREEN";
   static const String registerScreen = "/REGISTERSCREEN";
   static const String OnBoardingScreen = "/OnBoardingScreen";
+  static const String applySuccess = "/APPLYSUCCESS";
 
 }
