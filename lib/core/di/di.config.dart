@@ -35,14 +35,20 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final loggerModule = _$LoggerModule();
-    gh.factory<_i912.LoginUsecase>(() => _i912.LoginUsecase());
-    gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
     gh.singleton<_i299.CacheHelper>(() => _i299.CacheHelper());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);
-    gh.factory<_i284.LoginRepo>(() => _i314.LoginRepoImpl());
-    gh.factory<_i1048.LoginDatasource>(() => _i1013.LoginDatasourceImpl());
+    gh.factory<_i1048.LoginDataSourceRepo>(() => _i1013.LoginDatasourceImpl(
+          gh<_i1047.ApiManager>(),
+          gh<_i299.CacheHelper>(),
+        ));
+    gh.factory<_i284.LoginRepo>(
+        () => _i314.SigninRepoImpl(gh<_i1048.LoginDataSourceRepo>()));
+    gh.factory<_i912.LoginUsecase>(
+        () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
+    gh.factory<_i906.AuthCubit>(
+        () => _i906.AuthCubit(gh<_i912.LoginUsecase>()));
     return this;
   }
 }

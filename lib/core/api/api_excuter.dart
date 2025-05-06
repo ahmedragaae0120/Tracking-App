@@ -1,14 +1,13 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:tracking_app/domain/common/exceptions/server_error.dart';
-import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/model/error_model.dart';
+import '../../domain/common/exceptions/server_error.dart';
+import 'api_result.dart';
 
-Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
+Future<ApiResult<T>> executeApi<T>(Future<T> Function() apiCall) async {
   try {
     var result = await apiCall.call();
-    return Success(result);
+    return SuccessApiResult(result);
   } on DioException catch (ex) {
     var errorModel = ErrorModel.fromJson(ex.response?.data);
     log(errorModel.message.toString());
@@ -19,7 +18,7 @@ Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
       case DioExceptionType.receiveTimeout:
       case DioExceptionType.connectionTimeout:
         {
-          return Error(NetworkError(errorModel: errorModel));
+          return ErrorApiResult(NetworkError(errorModel: errorModel));
         }
       case DioExceptionType.badResponse:
         {
@@ -31,20 +30,20 @@ Future<Result<T>> executeApi<T>(Future<T> Function() apiCall) async {
               : ErrorModel(message: "Unknown error");
 
           if (responseCode != 0 && responseCode >= 400 && responseCode < 500) {
-            return Error(ClientError(message: errorModel.message));
+            return ErrorApiResult(ClientError(message: errorModel.message));
           }
           if (responseCode != 0 && responseCode >= 500 && responseCode < 600) {
-            return Error(ServerError(errorModel: errorModel));
+            return ErrorApiResult(ServerError(errorModel: errorModel));
           }
-          return Error(Exception("Unexpected response error"));
+          return ErrorApiResult(Exception("Unexpected response error"));
         }
       default:
         {
-          return Error(Exception("Something went wrong"));
+          return ErrorApiResult(Exception("Something went wrong"));
         }
     }
   } on Exception catch (ex) {
-    return Error(ex);
+    return ErrorApiResult(ex);
   }
 }
 
