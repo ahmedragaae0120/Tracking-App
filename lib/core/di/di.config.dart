@@ -35,8 +35,8 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final loggerModule = _$LoggerModule();
-    gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit());
     gh.factory<_i912.LoginUsecase>(() => _i912.LoginUsecase());
+    gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
     gh.singleton<_i299.CacheHelper>(() => _i299.CacheHelper());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
