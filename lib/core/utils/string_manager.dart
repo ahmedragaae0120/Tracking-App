@@ -42,7 +42,10 @@ class AppStrings {
   static String get resetText => "resetText".tr();
   static String get back => "back".tr();
   static String get login => "login".tr();
+  static String get welcomeTo => "welcomeTo".tr();
+  static String get floweryRiderApp => "floweryRiderApp".tr();
   static String get signUp => "signUp".tr();
+  static String get applyNow => "applyNow".tr();
   static String get loginSuccessfully => "loginSuccessfully".tr();
   static String get enterPassword => "enterPassword".tr();
   static String get pleaseEnterAPassword => "pleaseEnterAPassword".tr();

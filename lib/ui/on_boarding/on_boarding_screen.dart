@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tracking_app/core/resuable_comp/text_button.dart';
 import 'package:tracking_app/core/utils/colors_manager.dart';
+import 'package:tracking_app/core/utils/routes_manager.dart';
+import 'package:tracking_app/core/utils/string_manager.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   @override
@@ -19,7 +21,7 @@ class OnBoardingScreen extends StatelessWidget {
                     height: 300,
                     width: double.infinity,
                     child: Transform.scale(
-                      scale: 2, // قيمة التكبير
+                      scale: 2,
                       child: Lottie.asset(
                         'assets/animations/onboarding_animation.json',
                         fit: BoxFit.contain,
@@ -30,21 +32,25 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 30,),
-                const Text("Welcome to",style: TextStyle(fontSize: 22),),
-                const Text("Flowry rider app",style: TextStyle(fontSize: 22),),
+                 Text(AppStrings.welcomeTo,style: TextStyle(fontSize: 22),),
+                 Text(AppStrings.floweryRiderApp,style: TextStyle(fontSize: 22),),
                 const SizedBox(height: 30,),
                 CustomTextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.pushNamed(context, RouteManager.loginScreen);
+                    },
                     borderColor: ColorManager.primaryColor,
-                    text: "Login",
+                    text: AppStrings.login,
                     color: ColorManager.primaryColor,
                     textColor: ColorManager.white
                 ),
                 const SizedBox(height: 20,),
                 CustomTextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      // navigate to the apply screen
+                    },
                     borderColor: ColorManager.black100.withOpacity(0.2),
-                    text: "Apply now",
+                    text: AppStrings.applyNow,
                     color: ColorManager.white,
                     textColor: ColorManager.black
                 ),

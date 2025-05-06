@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       print("$rememberMe ⭐⭐⭐⭐⭐⭐⭐⭐");
       return rememberMe == true
           ? RouteManager.mainScreen
-          : RouteManager.loginScreen;
+          : RouteManager.OnBoardingScreen;
     }
 
     return MaterialApp(
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
 
           RouteManager.loginScreen: (context) => const SignInScreen(),
           RouteManager.mainScreen: (context) =>  MainScreen(),
+          RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),
 
         },
         initialRoute: initialRoute(),
