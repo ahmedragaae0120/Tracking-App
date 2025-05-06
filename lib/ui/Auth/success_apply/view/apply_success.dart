@@ -3,6 +3,7 @@ import 'package:tracking_app/config/theme/app_theme.dart';
 import 'package:tracking_app/core/resuable_comp/text_button.dart';
 import 'package:tracking_app/core/utils/assets_manager.dart';
 import 'package:tracking_app/core/utils/colors_manager.dart';
+import 'package:tracking_app/core/utils/routes_manager.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
 
 class ApplySuccess extends StatelessWidget {
@@ -47,10 +48,7 @@ class ApplySuccess extends StatelessWidget {
                   ),
                   CustomTextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const Login()));
+                      Navigator.pushNamed(context, RouteManager.loginScreen);
                     },
                     borderColor: ColorManager.primaryColor,
                     text: AppStrings.login,

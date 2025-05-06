@@ -1,5 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 class AppStrings {
+  static String get email => "email".tr();
+  static String get password => "password".tr();
+  static String get welcomeTo => "welcomeTo".tr();
+  static String get floweryRiderApp => "floweryRiderApp".tr();
+  static String get applyNow => "applyNow".tr();
+  static String get loginSuccessfully => "loginSuccessfully".tr();
   static String get emailCantBeEmpty => "emailCantBeEmpty".tr();
   static String get thePinCodeIsWrong => "thePinCodeIsWrong".tr();
   static String get enterValidEmailAddress => "enterValidEmailAddress".tr();
@@ -19,8 +25,6 @@ class AppStrings {
   static String get name => "name".tr();
   static String get profile => "profile".tr();
   static String get rememberMe => "rememberMe".tr();
-  static String get email => "email".tr();
-  static String get password => "password".tr();
   static String get passwordMustContainAtLeastOneSpecialCharacter => "passwordMustContainAtLeastOneSpecialCharacter".tr();
   static String get notValidEmail => "notValidEmail".tr();
   static String get forgetPassword => "forgetPassword".tr();
@@ -42,11 +46,7 @@ class AppStrings {
   static String get resetText => "resetText".tr();
   static String get back => "back".tr();
   static String get login => "login".tr();
-  static String get welcomeTo => "welcomeTo".tr();
-  static String get floweryRiderApp => "floweryRiderApp".tr();
   static String get signUp => "signUp".tr();
-  static String get applyNow => "applyNow".tr();
-  static String get loginSuccessfully => "loginSuccessfully".tr();
   static String get enterPassword => "enterPassword".tr();
   static String get pleaseEnterAPassword => "pleaseEnterAPassword".tr();
   static String get pleaseEnterACorrectPassword => "pleaseEnterACorrectPassword".tr();
