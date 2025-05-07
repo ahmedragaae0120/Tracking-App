@@ -28,10 +28,16 @@ class ApiManager {
 
   Future<Response> postRequest(
       {required String endpoint,
-      Map<String, dynamic>? body,
+        dynamic? body,
+        String? contentType,
       Map<String, dynamic>? headers}) async {
     var response = await dio.post(endpoint,
-        data: body, options: Options(headers: headers));
+        data: body, options: Options(
+            validateStatus:(_) => true,
+            headers: {
+             'Content-Type':'multipart/form-data'
+            }
+        ));
     return response;
   }
 

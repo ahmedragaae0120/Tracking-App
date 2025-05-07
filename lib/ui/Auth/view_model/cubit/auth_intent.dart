@@ -1,7 +1,14 @@
+import 'package:tracking_app/domain/entity/auth/apply_request.dart';
+
 ///  Auth Intent ///
 // ignore_for_file: non_constant_identifier_names, dangling_library_doc_comments
 
 sealed class AuthIntent {}
+class applyIntent extends AuthIntent {
+  applyrequest request;
+
+  applyIntent({required this.request});
+}
 
 class SignInIntent extends AuthIntent {
   final String email;
@@ -37,3 +44,4 @@ class ResetPassword extends AuthIntent {
 
   ResetPassword({required this.email, required this.NewPassword});
 }
+class getVehiclesIntent extends AuthIntent{}

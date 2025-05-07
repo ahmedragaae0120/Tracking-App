@@ -47,7 +47,7 @@ class OnBoardingScreen extends StatelessWidget {
                 const SizedBox(height: 20,),
                 CustomTextButton(
                     onPressed: (){
-                      // navigate to the apply screen
+                        Navigator.pushNamed(context, RouteManager.applyScreen);
                     },
                     borderColor: ColorManager.black100.withOpacity(0.2),
                     text: AppStrings.applyNow,

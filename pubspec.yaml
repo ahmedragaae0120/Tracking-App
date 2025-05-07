@@ -42,6 +42,8 @@ dependencies:
   shared_preferences: ^2.5.3
   easy_localization: ^3.0.7+1
   fluttertoast: ^8.2.12
+  image_picker: ^1.1.2
+  http_parser: ^4.1.2
   get_it: ^8.0.3
   lottie: ^3.3.1
   pinput: ^5.0.1
@@ -79,7 +81,7 @@ flutter:
     - assets/animations/
     - assets/images/
     - assets/translations/
-
+    - assets/country/country.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -105,6 +107,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-assets:
-  - assets/images/
-  - assets/translations/

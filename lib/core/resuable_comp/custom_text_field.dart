@@ -4,6 +4,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType? keyboard;
   final String labelText;
+  final Widget? icon;
   final String? hintText;
   final bool obscureText;
   final String obscuringCharacter;
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     required this.labelText,
     this.hintText,
+    this.icon,
     required this.controller,
     this.keyboard,
     this.validator,
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.labelMedium,
         suffixIcon: suffixIcon,
+        icon: icon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(

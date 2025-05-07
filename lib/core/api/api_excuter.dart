@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:tracking_app/domain/model/error_model.dart';
 import '../../domain/common/exceptions/server_error.dart';
 import 'api_result.dart';
+
+import '../../domain/entity/error_model.dart';
 
 Future<ApiResult<T>> executeApi<T>(Future<T> Function() apiCall) async {
   try {
@@ -22,12 +23,16 @@ Future<ApiResult<T>> executeApi<T>(Future<T> Function() apiCall) async {
         }
       case DioExceptionType.badResponse:
         {
+
           var responseCode = ex.response?.statusCode ?? 0;
           var errorData = ex.response?.data;
+          log("Raw error response: $errorData");
 
           var errorModel = (errorData is Map<String, dynamic>)
               ? ErrorModel.fromJson(errorData)
               : ErrorModel(message: "Unknown error");
+          log("Parsed error message: ${errorModel.message ?? "No message"}");
+
 
           if (responseCode != 0 && responseCode >= 400 && responseCode < 500) {
             return ErrorApiResult(ClientError(message: errorModel.message));

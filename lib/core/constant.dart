@@ -1,4 +1,6 @@
 class Constant {
+
+
   static const String tokenKey = 'auth_token';
   static const String highestPrice = 'HighestPrice';
   static const String lowestPrice = 'LowestPrice';

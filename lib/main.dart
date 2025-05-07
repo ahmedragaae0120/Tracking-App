@@ -5,6 +5,7 @@ import 'package:tracking_app/core/api/api_manager.dart';
 import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/observer/bloc_observer.dart';
 import 'package:tracking_app/my_app.dart';
+import 'package:tracking_app/ui/Auth/apply/apply_screen.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 
 void main() async {
@@ -22,7 +23,7 @@ void main() async {
       startLocale: const Locale('en'),
       child: BlocProvider<AuthCubit>(
         create: (context) => authCubit,
-        child: const MyApp(),
+        child: MyApp(),
       ),
     ),
   );
