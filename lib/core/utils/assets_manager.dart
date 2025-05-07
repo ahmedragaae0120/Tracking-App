@@ -1,4 +1,4 @@
 // ignore_for_file: prefer_single_quotes
 class AssetsManager {
-  AssetsManager._();
+  static const String backgroundCard = "assets/images/bg.png";
 }

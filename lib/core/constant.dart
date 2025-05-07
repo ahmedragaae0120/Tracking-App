@@ -1,4 +1,17 @@
 class Constant {
-  static const String baseUrl = "https://flower.elevateegy.com/api";
 
+
+  static const String tokenKey = 'auth_token';
+  static const String highestPrice = 'HighestPrice';
+  static const String lowestPrice = 'LowestPrice';
+  static const String isRememberMe = 'isRememberMe';
+  static const String baseUrl = "https://flower.elevateegy.com/api";
+  static const String regExValidateEmail =
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+  static RegExp regexPass = RegExp(
+    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$',
+  );
+  static const String questCacheKey = "is_quest";
+  static const String cacheOnDelivery = "CacheOnDelivery";
+  static const String creditCard = "CreditCard";
 }
