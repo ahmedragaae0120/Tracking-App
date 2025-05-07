@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tracking_app/config/theme/app_theme.dart';
+import 'package:tracking_app/ui/Auth/forget_password/forget_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/reset_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/verfiy_password.dart';
 import 'package:tracking_app/ui/on_boarding/on_boarding_screen.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
           const VerifyResetCodeScreen(),
           RouteManager.resetPasswordScreen: (context) =>
           const ResetPasswordScreen(),
-
+          RouteManager.forgetPasswordScreen: (context) =>
+          const ForgetPasswordScreen(),
         },
         initialRoute: initialRoute(),
         );
