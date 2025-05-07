@@ -7,5 +7,8 @@ class RouteManager {
   static const String registerScreen = "/REGISTERSCREEN";
   static const String OnBoardingScreen = "/OnBoardingScreen";
   static const String applySuccess = "/APPLYSUCCESS";
+  static const String emailVerificationScreen = "/EMAILVERIFICATIONSCREEN";
+  static const String resetPasswordScreen = "/RESETPASSWORDSCREEN";
 
 }
+
