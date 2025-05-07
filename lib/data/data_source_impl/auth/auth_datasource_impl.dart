@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_excuter.dart';
+import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/data_source_contract/auth/auth_datasource.dart';
 import 'package:tracking_app/data/model/apply_response_dto.dart';
 import 'package:tracking_app/domain/common/result.dart';
@@ -21,7 +22,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   AuthDataSourceImpl(this.api);
 
   @override
-  Future<Result<ApplyResponseDto>> apply(applyrequest request) async {
+  Future<ApiResult<ApplyResponseDto>> apply(applyrequest request) async {
     return executeApi<ApplyResponseDto>(() async {
       final formData = await request.toFormData();
       formData.fields.forEach((field) => log("Field: $field"));

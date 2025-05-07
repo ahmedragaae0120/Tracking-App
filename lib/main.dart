@@ -23,9 +23,7 @@ void main() async {
       startLocale: const Locale('en'),
       child: BlocProvider<AuthCubit>(
         create: (context) => authCubit,
-        child:MaterialApp(
-          home:  ApplyScreen(),
-        ),
+        child: MyApp(),
       ),
     ),
   );

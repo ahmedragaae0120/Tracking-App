@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
 
@@ -11,7 +12,7 @@ class ApplyUseCase{
 
   ApplyUseCase({required this.authContract});
 
-  Future<Result<ApplyEntity>> apply({required applyrequest applyrequest})async{
+  Future<ApiResult<ApplyEntity>> apply({required applyrequest applyrequest})async{
   return await  authContract.apply(applyrequest: applyrequest);
 
 

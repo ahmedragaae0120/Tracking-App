@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/data_source_contract/auth/auth_datasource.dart';
 import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
@@ -10,7 +11,7 @@ class AuthRepositoryImpl extends AuthrRepoContract {
   AuthRepositoryImpl({required this.authDataSource});
 
   @override
-  Future<Result<ApplyEntity>> apply({required applyrequest applyrequest}) {
+  Future<ApiResult<ApplyEntity>> apply({required applyrequest applyrequest}) {
     return authDataSource.apply(applyrequest);
   }
 

@@ -328,7 +328,7 @@ vehicleTypes= state.vehicles.vehicles??[];
                       rePassword: confirmPasswordController.text,
                     );
 
-                    authCubit.dointent(applyIntent(request: request));
+                    authCubit.doIntent(applyIntent(request: request));
                   },
                   child: Text(
                     AppStrings.continueText,

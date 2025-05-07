@@ -1,10 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:tracking_app/domain/model/error_model.dart';
 import '../../domain/common/exceptions/server_error.dart';
 import 'api_result.dart';
-import 'package:tracking_app/domain/common/exceptions/server_error.dart';
-import 'package:tracking_app/domain/common/result.dart';
 
 import '../../domain/entity/error_model.dart';
 

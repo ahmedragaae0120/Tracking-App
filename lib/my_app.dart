@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tracking_app/config/theme/app_theme.dart';
+import 'package:tracking_app/ui/Auth/apply/apply_screen.dart';
 import 'package:tracking_app/ui/Auth/forget_password/forget_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/reset_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/verfiy_password.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         routes: {
           RouteManager.applySuccess: (context) => ApplySuccess(),
           RouteManager.loginScreen: (context) => const SignInScreen(),
+          RouteManager.applyScreen: (context) => const ApplyScreen(),
           RouteManager.mainScreen: (context) =>  MainScreen(),
           RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),
           RouteManager.emailVerificationScreen: (context) =>

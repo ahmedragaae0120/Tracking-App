@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -78,7 +79,7 @@ class AuthCubit extends Cubit<AuthState> {
         _ResetPassword(intent: authIntent);
         break;
       case applyIntent():
-        _apply(Intent.request);
+        _apply(authIntent.request);
         break;
       case getVehiclesIntent():
         getallvehicle();
@@ -162,14 +163,14 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _applyUseCase.apply(applyrequest: aplyrequest);
 
     switch(result) {
-      case Success():
+      case SuccessApiResult():
         if (result.data != null) {
           emit(applySuccess(result.data!));
         } else {
           emit(applyFailure(message: 'Received empty response from server'));
         }
         break;
-      case Error():
+      case ErrorApiResult():
         log("Error: ${result.exception.toString()}");
         emit(applyFailure(message: result.exception.toString()));
         break;
@@ -187,10 +188,10 @@ class AuthCubit extends Cubit<AuthState> {
   getallvehicle()async{
     var response = await  _getallVehicleUseCase.get();
     switch(response){
-      case Success():{
+      case SuccessApiResult():{
         emit(getVehiclesSuccess(response.data!));
       }
-      case Error():{
+      case ErrorApiResult():{
         emit(getVehiclesFailure(message: response.exception.toString()));
       }
     }
