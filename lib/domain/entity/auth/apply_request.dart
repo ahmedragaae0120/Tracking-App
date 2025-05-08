@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
-
 import 'package:dio/dio.dart';
 
 class applyrequest {
@@ -50,33 +49,45 @@ class applyrequest {
     "password": password,
     "rePassword": rePassword
   };
-  Future<FormData> toFormData() async => FormData.fromMap(
-      {
-        "country": country,
-        "firstName": firstName,
-        "lastName": lastName,
-        "vehicleType": vehicleType,
-        "vehicleNumber": vehicleNumber,
-        "vehicleLicense": await MultipartFile.fromFile(
-          contentType: MediaType('image', 'jpeg'),
-          vehicleLicense.path,
-          filename: basename(vehicleLicense.path),
-        ),
-        "NID": nid,
-        "NIDImg": await MultipartFile.fromFile(
-          contentType: MediaType('image', 'jpeg'),
 
-          nidImg.path,
-          filename: basename(nidImg.path),
-        ),
-        "email": email,
-        "gender": gender,
-        "phone": phone,
-        "password": password,
-        "rePassword": rePassword
+  Future<FormData> toFormData() async {
+    String getMimeType(File file) {
+      String ext = extension(file.path).toLowerCase();
+      switch (ext) {
+        case '.jpg':
+        case '.jpeg':
+          return 'image/jpeg';
+        case '.png':
+          return 'image/png';
+        case '.pdf':
+          return 'application/pdf';
+        default:
+          throw Exception('Unsupported file type: \$ext');
       }
-  );
+    }
 
-
-
+    return FormData.fromMap({
+      "country": country,
+      "firstName": firstName,
+      "lastName": lastName,
+      "vehicleType": vehicleType,
+      "vehicleNumber": vehicleNumber,
+      "vehicleLicense": await MultipartFile.fromFile(
+        vehicleLicense.path,
+        contentType: MediaType.parse(getMimeType(vehicleLicense)),
+        filename: basename(vehicleLicense.path),
+      ),
+      "NID": nid,
+      "NIDImg": await MultipartFile.fromFile(
+        nidImg.path,
+        contentType: MediaType.parse(getMimeType(nidImg)),
+        filename: basename(nidImg.path),
+      ),
+      "email": email,
+      "gender": gender,
+      "phone": phone,
+      "password": password,
+      "rePassword": rePassword,
+    });
+  }
 }

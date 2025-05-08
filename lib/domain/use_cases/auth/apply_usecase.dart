@@ -2,25 +2,22 @@ import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
+import 'package:tracking_app/domain/repo_contract/auth/apply_contract.dart';
 
 import '../../entity/auth/apply_request.dart';
-import '../../repo_contract/auth/auth_contract.dart';
 @injectable
 class ApplyUseCase{
 
-  final AuthrRepoContract authContract;
+  final applyRepoContract applyContract;
 
-  ApplyUseCase({required this.authContract});
+  ApplyUseCase({required this.applyContract});
 
   Future<ApiResult<ApplyEntity>> apply({required applyrequest applyrequest})async{
-  return await  authContract.apply(applyrequest: applyrequest);
+    return await  applyContract.apply(applyrequest: applyrequest);
 
 
   }
-Future<List<dynamic>> loadCountries(){
-   return  authContract.loadCountries();
 
-  }
 
 
 }

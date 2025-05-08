@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/data/data_source_contract/auth/auth_datasource.dart';
 import 'package:tracking_app/data/model/apply_response_dto.dart';
 import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
@@ -15,11 +14,13 @@ import 'package:tracking_app/core/api/endpoints.dart';
 import 'package:tracking_app/domain/common/exceptions/server_error.dart';
 import 'package:tracking_app/domain/entity/error_model.dart';
 
-@Injectable(as: AuthDataSource)
-class AuthDataSourceImpl extends AuthDataSource {
+import '../../data_source_contract/auth/apply_datasource.dart';
+
+@Injectable(as: Applydatasourcecontract)
+class applyDataSourceImpl extends Applydatasourcecontract {
   final ApiManager api;
 
-  AuthDataSourceImpl(this.api);
+  applyDataSourceImpl(this.api);
 
   @override
   Future<ApiResult<ApplyResponseDto>> apply(applyrequest request) async {
@@ -52,12 +53,7 @@ class AuthDataSourceImpl extends AuthDataSource {
       return dto;
     });
   }
-  @override
-  Future<List<dynamic>> loadCountries() async{
-    final String data = await rootBundle.loadString('assets/country/country.json');
-    final List<dynamic> jsonData = jsonDecode(data);
-    return jsonData;
-  }
+
 }
 
 

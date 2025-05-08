@@ -13,42 +13,47 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
 
-import '../../data/data_source_contract/auth/auth_datasource.dart' as _i934;
+import '../../data/data_source_contract/auth/apply_datasource.dart' as _i130;
 import '../../data/data_source_contract/auth/forget_password_datasource/forget_password_datasource.dart'
     as _i879;
 import '../../data/data_source_contract/auth/forget_password_datasource/reset_password_datasource.dart'
     as _i708;
 import '../../data/data_source_contract/auth/forget_password_datasource/verify_password_datasource.dart'
     as _i958;
+import '../../data/data_source_contract/auth/loadcountries.dart' as _i910;
 import '../../data/data_source_contract/auth/login_datasource.dart' as _i1048;
 import '../../data/data_source_contract/vehicle/get_all_vehicle_datasource.dart'
     as _i619;
-import '../../data/data_source_impl/auth/auth_datasource_impl.dart' as _i536;
+import '../../data/data_source_impl/auth/apply_datasource_impl.dart' as _i619;
 import '../../data/data_source_impl/auth/forget_password_datasource_impl/forget_password_datasource_impl.dart'
     as _i444;
 import '../../data/data_source_impl/auth/forget_password_datasource_impl/reset_password_datasource_impl.dart'
     as _i397;
 import '../../data/data_source_impl/auth/forget_password_datasource_impl/verify_reset_code_datasource_impl.dart'
     as _i869;
+import '../../data/data_source_impl/auth/loadcountries_datasource_impl.dart'
+    as _i826;
 import '../../data/data_source_impl/auth/login_datasource_impl.dart' as _i1013;
 import '../../data/data_source_impl/vehicle/get_all_vehicle_data_source_impl.dart'
     as _i272;
-import '../../data/repo_impl/auth/auth_repo_impl.dart' as _i947;
+import '../../data/repo_impl/auth/apply_repo_impl.dart' as _i240;
 import '../../data/repo_impl/auth/forget_password_repo_impl/forget_password_repo_impl.dart'
     as _i363;
 import '../../data/repo_impl/auth/forget_password_repo_impl/reset_password_repo_impl.dart'
     as _i704;
 import '../../data/repo_impl/auth/forget_password_repo_impl/verify_reset_code_repo_impl.dart'
     as _i532;
+import '../../data/repo_impl/auth/loadcountries_repo_impl.dart' as _i300;
 import '../../data/repo_impl/auth/login_repo_impl.dart' as _i314;
 import '../../data/repo_impl/vehicle/vehicle_repo_impl.dart' as _i660;
-import '../../domain/repo_contract/auth/auth_contract.dart' as _i409;
+import '../../domain/repo_contract/auth/apply_contract.dart' as _i196;
 import '../../domain/repo_contract/auth/forget_password_repo/forget_password_repo.dart'
     as _i883;
 import '../../domain/repo_contract/auth/forget_password_repo/reset_password_repo.dart'
     as _i151;
 import '../../domain/repo_contract/auth/forget_password_repo/verify_reset_code_repo.dart'
     as _i389;
+import '../../domain/repo_contract/auth/loadcountries_contract.dart' as _i317;
 import '../../domain/repo_contract/auth/login_repo.dart' as _i284;
 import '../../domain/repo_contract/vehicle/vehicle_contract.dart' as _i1042;
 import '../../domain/use_cases/auth/apply_usecase.dart' as _i212;
@@ -58,6 +63,7 @@ import '../../domain/use_cases/auth/forget_password/reset_password_usecase.dart'
     as _i221;
 import '../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.dart'
     as _i750;
+import '../../domain/use_cases/auth/loadcountries.dart' as _i1000;
 import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
 import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
@@ -83,22 +89,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);
     gh.factory<_i619.getallvehicledatasourceContract>(
         () => _i272.getallvehicleimpl(gh<_i1047.ApiManager>()));
+    gh.factory<_i910.loadcountriesDataSourseRepo>(
+        () => _i826.loadcountriesDataSourceImpl());
     gh.factory<_i1048.LoginDataSourceRepo>(() => _i1013.LoginDatasourceImpl(
           gh<_i1047.ApiManager>(),
           gh<_i299.CacheHelper>(),
         ));
     gh.factory<_i1042.VehicleContract>(() =>
         _i660.vehicleRepoImpl(gh<_i619.getallvehicledatasourceContract>()));
+    gh.factory<_i130.Applydatasourcecontract>(
+        () => _i619.applyDataSourceImpl(gh<_i1047.ApiManager>()));
     gh.factory<_i284.LoginRepo>(
         () => _i314.SigninRepoImpl(gh<_i1048.LoginDataSourceRepo>()));
-    gh.factory<_i934.AuthDataSource>(
-        () => _i536.AuthDataSourceImpl(gh<_i1047.ApiManager>()));
     gh.factory<_i879.ForgetpasswordDataSourseRepo>(() =>
         _i444.ForgetpasswordDataSourceRepoImpl(
             apiManager: gh<_i1047.ApiManager>()));
+    gh.factory<_i317.loadCountriesRepo>(() => _i300.loadcountriesRepoImpl(
+        load: gh<_i910.loadcountriesDataSourseRepo>()));
     gh.factory<_i708.ResetpasswordDataSourceRepo>(() =>
         _i397.Resetpassworddatasourcerepoimpl(
             apiManager: gh<_i1047.ApiManager>()));
+    gh.factory<_i1000.loadcountriesUseCase>(
+        () => _i1000.loadcountriesUseCase(gh<_i317.loadCountriesRepo>()));
     gh.factory<_i958.VerifyresetcodeRepoDataSource>(() =>
         _i869.Verifyresetcoderepodatasourceimpl(
             apiManager: gh<_i1047.ApiManager>()));
@@ -113,18 +125,19 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i879.ForgetpasswordDataSourseRepo>()));
     gh.factory<_i587.ForgetPasswordUseCase>(() => _i587.ForgetPasswordUseCase(
         forgetPassword: gh<_i883.ForgetpasswordRepo>()));
-    gh.factory<_i409.AuthrRepoContract>(() =>
-        _i947.AuthRepositoryImpl(authDataSource: gh<_i934.AuthDataSource>()));
     gh.factory<_i750.VerifyresetcodeUseCase>(() =>
         _i750.VerifyresetcodeUseCase(repo: gh<_i389.VerifyresetcodeRepo>()));
+    gh.factory<_i196.applyRepoContract>(() => _i240.applyRepoImpl(
+        applyDataSource: gh<_i130.Applydatasourcecontract>()));
     gh.factory<_i912.LoginUsecase>(
         () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
-    gh.factory<_i212.ApplyUseCase>(
-        () => _i212.ApplyUseCase(authContract: gh<_i409.AuthrRepoContract>()));
     gh.factory<_i221.ResetpasswordUsecase>(
         () => _i221.ResetpasswordUsecase(repo: gh<_i151.ResetpasswordRepo>()));
+    gh.factory<_i212.ApplyUseCase>(
+        () => _i212.ApplyUseCase(applyContract: gh<_i196.applyRepoContract>()));
     gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit(
           gh<_i912.LoginUsecase>(),
+          gh<_i1000.loadcountriesUseCase>(),
           gh<_i587.ForgetPasswordUseCase>(),
           gh<_i221.ResetpasswordUsecase>(),
           gh<_i750.VerifyresetcodeUseCase>(),

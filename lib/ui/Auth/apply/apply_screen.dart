@@ -14,6 +14,7 @@ import '../../../config/theme/app_theme.dart';
 import '../../../core/resuable_comp/custom_text_field.dart';
 import '../../../core/resuable_comp/toast_message.dart';
 import '../../../core/utils/colors_manager.dart';
+import '../../../core/utils/routes_manager.dart';
 import '../../../domain/entity/auth/apply_request.dart';
 
 class ApplyScreen extends StatefulWidget {
@@ -26,8 +27,8 @@ class ApplyScreen extends StatefulWidget {
 class _ApplyScreenState extends State<ApplyScreen> {
   List<dynamic> countries = [];
   List<VehiclesEntity> vehicleTypes = [];
-  String selectedCountry = '';
-  String selectedGender = AppStrings.male;
+  String? selectedCountry;
+  String selectedGender = AppStrings.female;
   String selectedVehicleType = AppStrings.cars;
 
   final firstNameController = TextEditingController();
@@ -46,8 +47,8 @@ class _ApplyScreenState extends State<ApplyScreen> {
   @override
   void initState() {
     super.initState();
-    authCubit.loadCountries();
     authCubit.getallvehicle();
+    authCubit.loadCountries();
   }
 
 
@@ -77,9 +78,14 @@ class _ApplyScreenState extends State<ApplyScreen> {
       body: BlocBuilder<AuthCubit, AuthState>(
         bloc: authCubit,
         builder: (context, state) {
-          if(state is LoadContrySuccess){
-            countries = state.countries;
+if(state is applySuccess){
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pushNamed(context, RouteManager.applySuccess);
 
+  });
+}
+           if(state is LoadContrySuccess){
+countries=state.countries;
           }
           else if (state is applyFailure) {
             toastMessage(message: state.message, tybeMessage: TybeMessage.negative);
@@ -88,9 +94,13 @@ class _ApplyScreenState extends State<ApplyScreen> {
          else  if (state is applyLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is getVehiclesSuccess) {
-vehicleTypes= state.vehicles.vehicles??[];
 
-          }
+
+              vehicleTypes = state.vehicles.vehicles ?? [];
+              if (vehicleTypes.isNotEmpty) {
+                selectedVehicleType = selectedVehicleType.isEmpty ? vehicleTypes.first.id ?? '' : selectedVehicleType;
+
+            }}
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -128,18 +138,20 @@ vehicleTypes= state.vehicles.vehicles??[];
           contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
           ,label: Text(AppStrings.country),
             ),
-                  value: selectedCountry.isNotEmpty ? selectedCountry : null,
+                  value: countries.any((c) => c['name'] == selectedCountry)
+                      ? selectedCountry
+                      : null,
                   hint: Text(AppStrings.selectCountry),
 
                   items: countries.map((e) {
                     return DropdownMenuItem<String>(
 
-                      value: e[AppStrings.name],
+                      value: e['name']??"error",
                       child: Row(
                         children: [
-                          Text(e[AppStrings.flag]),
+                          Text(e['flag']??"error"),
                           const SizedBox(width: 8),
-                          Text(e[AppStrings.name]),
+                          Text(e['name']??"error"),
                         ],
                       ),
                     );
@@ -173,7 +185,7 @@ vehicleTypes= state.vehicles.vehicles??[];
                       ),
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
-                    ,label: Text(AppStrings.vehicleType),
+                    ,label: Text('${AppStrings.vehicleType}'),
                   ),
                   value: selectedVehicleType.isNotEmpty &&
           vehicleTypes.any((v) => v.id == selectedVehicleType)
@@ -181,7 +193,7 @@ vehicleTypes= state.vehicles.vehicles??[];
               : null,
                   items: vehicleTypes.map((e){
                     return DropdownMenuItem<String>(
-                      value: e.id,
+                      value:e.id??"ads",
                       child: Text(e.type??''),
                     );
                   }).toList(),
@@ -284,7 +296,7 @@ vehicleTypes= state.vehicles.vehicles??[];
                       style: AppTheme.lightTheme.textTheme.bodyLarge,
                     ),
                     Radio<String>(
-                      value: AppStrings.male,
+                      value: 'male',
                       groupValue: selectedGender,
                       onChanged: (val) {
                         setState(() {
@@ -298,7 +310,7 @@ vehicleTypes= state.vehicles.vehicles??[];
                       style: AppTheme.lightTheme.textTheme.bodyLarge,
                     ),
                     Radio<String>(
-                      value: AppStrings.female,
+                      value: 'female',
                       groupValue: selectedGender,
                       onChanged: (val) {
                         setState(() {
@@ -313,7 +325,7 @@ vehicleTypes= state.vehicles.vehicles??[];
                   style: AppTheme.lightTheme.elevatedButtonTheme.style,
                   onPressed: () async {
                     final request = applyrequest(
-                      country: selectedCountry,
+                      country: selectedCountry??'',
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       vehicleType: selectedVehicleType,
