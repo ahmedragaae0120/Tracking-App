@@ -11,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_app/core/api/api_result.dart';
+import 'package:tracking_app/data/model/GetallVehicleResponseDto.dart';
 import 'package:tracking_app/data/models/user_model.dart';
+import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
 import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
 
 import '../../../../domain/use_cases/auth/forget_password/forget_password_usecase.dart';
@@ -33,6 +35,7 @@ part 'auth_state.dart';
 @injectable
 class AuthCubit extends Cubit<AuthState> {
   ApplyUseCase _applyUseCase;
+  loadcountriesUseCase load;
   GetallVehicleUseCase _getallVehicleUseCase;
   List? data=[];
   File? nidImageFile;
@@ -42,6 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
   AuthCubit(this.signInUsecase,
+      this.load,
       this.forgetPasswordUseCase,
       this.resetpasswordUsecase,
       this.verifyresetcodeUseCase,
@@ -178,23 +182,36 @@ class AuthCubit extends Cubit<AuthState> {
   }
   loadCountries() async {
 
-    try {
-      var list = await _applyUseCase.loadCountries();
-      emit(LoadContrySuccess(list));
-    } catch (e) {
-      emit(LoadContryFailure(message: 'فشل في تحميل الدول'));
-    }
-  }
-  getallvehicle()async{
-    var response = await  _getallVehicleUseCase.get();
-    switch(response){
-      case SuccessApiResult():{
-        emit(getVehiclesSuccess(response.data!));
+      var list = await load.loadCountries();
+      switch(list){
+        case SuccessApiResult():
+          if(list.data != null){
+            emit(LoadContrySuccess(list.data!));
+          }else{
+            emit(LoadContryFailure(message: 'Received empty response from server'));
+          }
+          break;
+        case ErrorApiResult():
       }
-      case ErrorApiResult():{
-        emit(getVehiclesFailure(message: response.exception.toString()));
-      }
-    }
   }
 
-}
+  getallvehicle() async {
+
+    var response = await _getallVehicleUseCase.get();
+
+    switch (response) {
+      case SuccessApiResult():
+        if (response.data != null && response.data!.vehicles != null) {
+          emit(getVehiclesSuccess(response.data!));
+        } else {
+          emit(getVehiclesFailure(
+              message: 'Received empty response from server'));
+        }
+        break;
+      case ErrorApiResult():
+        log("Error: ${response.exception.toString()}");
+        emit(getVehiclesFailure(
+            message: response.exception.toString()));
+        break;
+    }
+  }}
