@@ -54,6 +54,7 @@ class _SuccessPageState extends State<SuccessPage>
         child: Center(
           child: SingleChildScrollView(
             child: Column(
+              spacing: 10,
               children: [
                 Stack(
                   alignment: Alignment.center,

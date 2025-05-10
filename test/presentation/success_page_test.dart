@@ -8,7 +8,6 @@ import 'package:tracking_app/ui/success_page/view/success_page.dart';
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  // 👇 ضروري لتفادي MissingPluginException
   SharedPreferences.setMockInitialValues({});
 
   await EasyLocalization.ensureInitialized();
@@ -29,12 +28,10 @@ void main() async {
 
       await tester.pumpAndSettle();
 
-      // Assert - Check texts
       expect(find.text(AppStrings.thankYou.tr()), findsOneWidget);
       expect(find.text(AppStrings.theOrderDeliveredSuccessfully.tr()), findsOneWidget);
       expect(find.text(AppStrings.done.tr()), findsOneWidget);
 
-      // Assert - Check icon and avatars
       expect(find.byIcon(Icons.check_rounded), findsOneWidget);
       expect(find.byType(CircleAvatar), findsNWidgets(4));
     });
