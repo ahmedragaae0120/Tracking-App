@@ -1,5 +1,7 @@
 // import 'package:flutter/material.dart';
-
+//
+// import '../utils/string_manager.dart';
+//
 // class Dialogs {
 // //========USAGE=========\\
 // //   if (isGuestUser) {
@@ -7,7 +9,7 @@
 // // } else {
 //   // تابع تنفيذ العملية المسموحة
 // // } or in widgets        isGuestUser ? Dialogs.showGuestRestrictionDialog(context) : performAllowedOperation();
-
+//
 //   static void restrictedAccess(BuildContext context, VoidCallback backButton) {
 //     showDialog(
 //       context: context,
@@ -53,7 +55,7 @@
 //       ),
 //     );
 //   }
-
+//
 //   static void confirmLogout(BuildContext context, VoidCallback cancelButton,
 //       VoidCallback logoutButton) {
 //     showDialog(
