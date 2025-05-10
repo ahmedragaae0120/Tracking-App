@@ -52,50 +52,51 @@ class _SuccessPageState extends State<SuccessPage>
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 150, horizontal: 60),
         child: Center(
-          child: Column(
-            spacing: 15,
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  buildAnimatedCircle(90, ColorManager.lightGreen3, 0.2),
-                  buildAnimatedCircle(70, ColorManager.lightGreen2, 0.4),
-                  buildAnimatedCircle(50, ColorManager.lightGreen1, 0.8),
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundColor: ColorManager.lightGreen,
-                    child: Icon(
-                      Icons.check_rounded,
-                      size: 50,
-                      color: ColorManager.white,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    buildAnimatedCircle(90, ColorManager.lightGreen3, 0.2),
+                    buildAnimatedCircle(70, ColorManager.lightGreen2, 0.4),
+                    buildAnimatedCircle(50, ColorManager.lightGreen1, 0.8),
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: ColorManager.lightGreen,
+                      child: Icon(
+                        Icons.check_rounded,
+                        size: 50,
+                        color: ColorManager.white,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Text(
-                AppStrings.thankYou,
-                textAlign: TextAlign.center,
-                style: AppTheme.lightTheme.textTheme.titleMedium,
-              ),
-              Text(
-                AppStrings.theOrderDeliveredSuccessfully,
-                textAlign: TextAlign.center,
-                style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
-                  color: ColorManager.black,
+                  ],
                 ),
-              ),
-              const SizedBox(height: 32),
-              CustomTextButton(
-                onPressed: () {
-                  // Navigator.pushNamed(context, RouteManager.loginScreen);
-                },
-                borderColor: ColorManager.primaryColor,
-                text: AppStrings.done,
-                color: ColorManager.primaryColor,
-                textColor: ColorManager.backgroundColor,
-              ),
-            ],
+                const SizedBox(height: 24),
+                Text(
+                  AppStrings.thankYou,
+                  textAlign: TextAlign.center,
+                  style: AppTheme.lightTheme.textTheme.titleMedium,
+                ),
+                Text(
+                  AppStrings.theOrderDeliveredSuccessfully,
+                  textAlign: TextAlign.center,
+                  style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+                    color: ColorManager.black,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                CustomTextButton(
+                  onPressed: () {
+                    // Navigator.pushNamed(context, RouteManager.loginScreen);
+                  },
+                  borderColor: ColorManager.primaryColor,
+                  text: AppStrings.done,
+                  color: ColorManager.primaryColor,
+                  textColor: ColorManager.backgroundColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),
