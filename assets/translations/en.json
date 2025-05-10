@@ -91,5 +91,7 @@
     "flag": "Flag",
     "welcome": "Welcome!!",
     "joinOurTeam": "Join our team",
-    "dontHaveAccount": "Don't have an account?"
+    "dontHaveAccount": "Don't have an account?",
+    "home": "Home",
+    "orders": "Orders"
 }

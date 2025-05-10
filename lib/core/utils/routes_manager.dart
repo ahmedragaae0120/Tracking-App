@@ -1,7 +1,7 @@
 
 class RouteManager {
   static const String homeScreen = "/HOMESCREEN";
-  static const String mainScreen = "/mainScreen";
+  static const String mainScreen = "/MAINSCREEN";
   static const String loginScreen = "/LOGINSCREEN";
   static const String forgetPasswordScreen = "/FORGETPASSWORDSCREEN";
   static const String applyScreen = "/APPLYSCREEN";
