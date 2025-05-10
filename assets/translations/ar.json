@@ -91,5 +91,8 @@
   "welcome": "أهلاً وسهلاً!!",
   "joinOurTeam": "انضم إلى فريقنا",
   "dontHaveAccount": "ليس لديك حساب؟",
-  "apply": "تقديم"
+  "apply": "تقديم",
+  "thankYou": "شكراً لك!!",
+  "theOrderDeliveredSuccessfully": "تم تسليم الطلبك بنجاح",
+  "done": "تم"
 }

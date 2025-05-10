@@ -43,6 +43,11 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           color: Colors.black87,
         ),
+        titleMedium: TextStyle(
+          fontSize: 26,
+          fontWeight: FontWeight.w500,
+          color: ColorManager.green,
+        ),
         bodyLarge: TextStyle(
           fontSize: 16,
           color: Colors.black54,

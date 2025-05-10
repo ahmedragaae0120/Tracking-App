@@ -93,4 +93,7 @@ class AppStrings {
   static String get welcome => "welcome".tr();
   static String get joinOurTeam => "joinOurTeam".tr();
   static String get dontHaveAccount => "dontHaveAccount".tr();
+  static String get thankYou => "thankYou".tr();
+  static String get theOrderDeliveredSuccessfully => "theOrderDeliveredSuccessfully".tr();
+  static String get done => "done".tr();
 }
