@@ -22,6 +22,8 @@ import '../../data/data_source_contract/auth/forget_password_datasource/verify_p
     as _i958;
 import '../../data/data_source_contract/auth/loadcountries.dart' as _i910;
 import '../../data/data_source_contract/auth/login_datasource.dart' as _i1048;
+import '../../data/data_source_contract/tracking/tracking_datasource.dart'
+    as _i1067;
 import '../../data/data_source_contract/vehicle/get_all_vehicle_datasource.dart'
     as _i619;
 import '../../data/data_source_impl/auth/apply_datasource_impl.dart' as _i619;
@@ -34,6 +36,8 @@ import '../../data/data_source_impl/auth/forget_password_datasource_impl/verify_
 import '../../data/data_source_impl/auth/loadcountries_datasource_impl.dart'
     as _i826;
 import '../../data/data_source_impl/auth/login_datasource_impl.dart' as _i1013;
+import '../../data/data_source_impl/tracking/tracking_datasource_impl.dart'
+    as _i947;
 import '../../data/data_source_impl/vehicle/get_all_vehicle_data_source_impl.dart'
     as _i272;
 import '../../data/repo_impl/auth/apply_repo_impl.dart' as _i240;
@@ -45,6 +49,8 @@ import '../../data/repo_impl/auth/forget_password_repo_impl/verify_reset_code_re
     as _i532;
 import '../../data/repo_impl/auth/loadcountries_repo_impl.dart' as _i300;
 import '../../data/repo_impl/auth/login_repo_impl.dart' as _i314;
+import '../../data/repo_impl/tracking/tracking_repo_impl.dart' as _i481;
+import '../../data/repo_impl/tracking/update_driver_Info_usecase.dart' as _i20;
 import '../../data/repo_impl/vehicle/vehicle_repo_impl.dart' as _i660;
 import '../../domain/repo_contract/auth/apply_contract.dart' as _i196;
 import '../../domain/repo_contract/auth/forget_password_repo/forget_password_repo.dart'
@@ -55,6 +61,7 @@ import '../../domain/repo_contract/auth/forget_password_repo/verify_reset_code_r
     as _i389;
 import '../../domain/repo_contract/auth/loadcountries_contract.dart' as _i317;
 import '../../domain/repo_contract/auth/login_repo.dart' as _i284;
+import '../../domain/repo_contract/tracking/tracking_repo.dart' as _i861;
 import '../../domain/repo_contract/vehicle/vehicle_contract.dart' as _i1042;
 import '../../domain/use_cases/auth/apply_usecase.dart' as _i212;
 import '../../domain/use_cases/auth/forget_password/forget_password_usecase.dart'
@@ -65,6 +72,8 @@ import '../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.da
     as _i750;
 import '../../domain/use_cases/auth/loadcountries.dart' as _i1000;
 import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
+import '../../domain/use_cases/tracking/update_order_status_usecase.dart'
+    as _i26;
 import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
 import '../api/api_manager.dart' as _i1047;
@@ -108,6 +117,8 @@ extension GetItInjectableX on _i174.GetIt {
             apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i317.loadCountriesRepo>(() => _i300.loadcountriesRepoImpl(
         load: gh<_i910.loadcountriesDataSourseRepo>()));
+    gh.factory<_i1067.TrackingDataSource>(
+        () => _i947.TrackingDataSourceimpl(gh<_i492.FirestoreHepler>()));
     gh.factory<_i708.ResetpasswordDataSourceRepo>(() =>
         _i397.Resetpassworddatasourcerepoimpl(
             apiManager: gh<_i1047.ApiManager>()));
@@ -127,12 +138,18 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i879.ForgetpasswordDataSourseRepo>()));
     gh.factory<_i587.ForgetPasswordUseCase>(() => _i587.ForgetPasswordUseCase(
         forgetPassword: gh<_i883.ForgetpasswordRepo>()));
+    gh.factory<_i861.TrackingRepo>(
+        () => _i481.TrackingRepoImpl(gh<_i1067.TrackingDataSource>()));
     gh.factory<_i750.VerifyresetcodeUseCase>(() =>
         _i750.VerifyresetcodeUseCase(repo: gh<_i389.VerifyresetcodeRepo>()));
     gh.factory<_i196.applyRepoContract>(() => _i240.applyRepoImpl(
         applyDataSource: gh<_i130.Applydatasourcecontract>()));
     gh.factory<_i912.LoginUsecase>(
         () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
+    gh.factory<_i26.UpdateOrderStatusUsecase>(
+        () => _i26.UpdateOrderStatusUsecase(gh<_i861.TrackingRepo>()));
+    gh.factory<_i20.UpdateDriverInfoUsecase>(
+        () => _i20.UpdateDriverInfoUsecase(gh<_i861.TrackingRepo>()));
     gh.factory<_i221.ResetpasswordUsecase>(
         () => _i221.ResetpasswordUsecase(repo: gh<_i151.ResetpasswordRepo>()));
     gh.factory<_i212.ApplyUseCase>(

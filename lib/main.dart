@@ -19,6 +19,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   ApiManager.init();
   final authCubit = getIt<AuthCubit>();
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],

@@ -1,0 +1,17 @@
+import 'package:tracking_app/core/local/firestore_hepler.dart';
+import 'package:tracking_app/domain/common/result.dart';
+
+abstract class TrackingRepo {
+  Future<Result<void>> updateOrderStatus({
+    required String orderId,
+    required OrderStatus statusName,
+    required bool isDone,
+  });
+
+  Future<Result<void>> updateDriverInfo(
+      {required String orderId,
+      required String name,
+      required String phone,
+      required String driverId,
+      required DriverStatus driverStatus});
+}
