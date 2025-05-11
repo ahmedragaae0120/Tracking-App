@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "987088242836",
+    "project_id": "flora-app-ded12",
+    "storage_bucket": "flora-app-ded12.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987088242836:android:bd2b297eacc3a7cd5c8c81",
+        "android_client_info": {
+          "package_name": "com.example.flora_mart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARCLfIjBq_NW_Jucoyi-G0jAtMiCOJtNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987088242836:android:4fc04929c2c1e69f5c8c81",
+        "android_client_info": {
+          "package_name": "com.example.tracking_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARCLfIjBq_NW_Jucoyi-G0jAtMiCOJtNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

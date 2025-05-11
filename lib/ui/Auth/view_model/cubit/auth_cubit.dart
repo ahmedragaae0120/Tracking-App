@@ -1,57 +1,49 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/data/model/GetallVehicleResponseDto.dart';
 import 'package:tracking_app/data/models/user_model.dart';
-import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
-import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
-
-import '../../../../domain/use_cases/auth/forget_password/forget_password_usecase.dart';
-import '../../../../domain/use_cases/auth/forget_password/reset_password_usecase.dart';
-import '../../../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.dart';
-import 'auth_intent.dart';
-import 'package:tracking_app/data/data_source_impl/vehicle/get_all_vehicle_data_source_impl.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 import 'package:tracking_app/domain/use_cases/auth/apply_usecase.dart';
-import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
+import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
+import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
 
-import '../../../../domain/common/result.dart';
 import '../../../../domain/entity/auth/apply_entity.dart';
+import '../../../../domain/use_cases/auth/forget_password/forget_password_usecase.dart';
+import '../../../../domain/use_cases/auth/forget_password/reset_password_usecase.dart';
+import '../../../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.dart';
 import '../../../../domain/use_cases/vehicle/getall_vehicle.dart';
+import 'auth_intent.dart';
 
 part 'auth_state.dart';
 
 @injectable
 class AuthCubit extends Cubit<AuthState> {
-  ApplyUseCase _applyUseCase;
+  final ApplyUseCase _applyUseCase;
   loadcountriesUseCase load;
-  GetallVehicleUseCase _getallVehicleUseCase;
-  List? data=[];
+  final GetallVehicleUseCase _getallVehicleUseCase;
+  List? data = [];
   File? nidImageFile;
   File? vehicleLicenseFile;
   final LoginUsecase signInUsecase;
   final ForgetPasswordUseCase forgetPasswordUseCase;
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
-  AuthCubit(this.signInUsecase,
+  AuthCubit(
+      this.signInUsecase,
       this.load,
       this.forgetPasswordUseCase,
       this.resetpasswordUsecase,
       this.verifyresetcodeUseCase,
       this._applyUseCase,
-      this._getallVehicleUseCase
-      ) : super(AuthInitial());
+      this._getallVehicleUseCase)
+      : super(AuthInitial());
   static AuthCubit get(context) => BlocProvider.of(context);
 
   Future<void> pickNidImage() async {
@@ -108,6 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
         break;
     }
   }
+
   _ForgetPassword({required ForgetPassword intent}) async {
     emit(SendEmailVerificationLoadingState());
     final result = await forgetPasswordUseCase.invoke(
@@ -166,7 +159,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     final result = await _applyUseCase.apply(applyrequest: aplyrequest);
 
-    switch(result) {
+    switch (result) {
       case SuccessApiResult():
         if (result.data != null) {
           emit(applySuccess(result.data!));
@@ -180,23 +173,23 @@ class AuthCubit extends Cubit<AuthState> {
         break;
     }
   }
-  loadCountries() async {
 
-      var list = await load.loadCountries();
-      switch(list){
-        case SuccessApiResult():
-          if(list.data != null){
-            emit(LoadContrySuccess(list.data!));
-          }else{
-            emit(LoadContryFailure(message: 'Received empty response from server'));
-          }
-          break;
-        case ErrorApiResult():
-      }
+  loadCountries() async {
+    var list = await load.loadCountries();
+    switch (list) {
+      case SuccessApiResult():
+        if (list.data != null) {
+          emit(LoadContrySuccess(list.data!));
+        } else {
+          emit(LoadContryFailure(
+              message: 'Received empty response from server'));
+        }
+        break;
+      case ErrorApiResult():
+    }
   }
 
   getallvehicle() async {
-
     var response = await _getallVehicleUseCase.get();
 
     switch (response) {
@@ -210,8 +203,8 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case ErrorApiResult():
         log("Error: ${response.exception.toString()}");
-        emit(getVehiclesFailure(
-            message: response.exception.toString()));
+        emit(getVehiclesFailure(message: response.exception.toString()));
         break;
     }
-  }}
+  }
+}
