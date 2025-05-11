@@ -69,6 +69,7 @@ import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
 import '../api/api_manager.dart' as _i1047;
 import '../cache/shared_pref.dart' as _i299;
+import '../local/firestore_hepler.dart' as _i492;
 import '../logger/logger_module.dart' as _i279;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -83,6 +84,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final loggerModule = _$LoggerModule();
+    gh.factory<_i492.FirestoreHepler>(() => _i492.FirestoreHepler());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
     gh.singleton<_i299.CacheHelper>(() => _i299.CacheHelper());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
