@@ -8,19 +8,23 @@ class ErrorModel {
   });
 
   String? message;
-  List<ErrorData>? errors; // ✅ تغيير errors إلى List
+  List<ErrorData>? errors;
 
-  factory ErrorModel.fromJson(Map<String, dynamic>? json) {
-    if (json == null) return ErrorModel(message: "Unknown error");
+  ErrorModel.fromJson(dynamic json) {
+    if (json is Map<String, dynamic>) {
+      message = json['message'] ?? json['error'];
 
-    return ErrorModel(
-      message: json['message']?.toString() ??
-          json['error']?.toString() ??
-          json['detail']?.toString() ??
-          "Unknown error",
-    );
-
+      if (json['errors'] != null) {
+        if (json['errors'] is List) {
+          errors = (json['errors'] as List)
+              .map((e) => ErrorData.fromJson(e))
+              .toList();
+        } else if (json['errors'] is Map) {
+          errors = [ErrorData.fromJson(json['errors'])];
+        }
+      }
     }
+  }
 
 
   Map<String, dynamic> toJson() {
