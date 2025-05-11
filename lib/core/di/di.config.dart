@@ -72,13 +72,11 @@ import '../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.da
 import '../../domain/use_cases/auth/loadcountries.dart' as _i1000;
 import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
 import '../../domain/use_cases/tracking/update_driver_Info_usecase.dart'
-    as _i475;
+    as _i20;
 import '../../domain/use_cases/tracking/update_order_status_usecase.dart'
     as _i26;
 import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
-import '../../ui/order_details_screen/view_model/cubit/order_details_cubit.dart'
-    as _i598;
 import '../api/api_manager.dart' as _i1047;
 import '../cache/shared_pref.dart' as _i299;
 import '../local/firestore_hepler.dart' as _i492;
@@ -151,16 +149,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
     gh.factory<_i26.UpdateOrderStatusUsecase>(
         () => _i26.UpdateOrderStatusUsecase(gh<_i861.TrackingRepo>()));
-    gh.factory<_i475.UpdateDriverInfoUsecase>(
-        () => _i475.UpdateDriverInfoUsecase(gh<_i861.TrackingRepo>()));
+    gh.factory<_i20.UpdateDriverInfoUsecase>(
+        () => _i20.UpdateDriverInfoUsecase(gh<_i861.TrackingRepo>()));
     gh.factory<_i221.ResetpasswordUsecase>(
         () => _i221.ResetpasswordUsecase(repo: gh<_i151.ResetpasswordRepo>()));
     gh.factory<_i212.ApplyUseCase>(
         () => _i212.ApplyUseCase(applyContract: gh<_i196.applyRepoContract>()));
-    gh.factory<_i598.OrderDetailsCubit>(() => _i598.OrderDetailsCubit(
-          gh<_i475.UpdateDriverInfoUsecase>(),
-          gh<_i26.UpdateOrderStatusUsecase>(),
-        ));
     gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit(
           gh<_i912.LoginUsecase>(),
           gh<_i1000.loadcountriesUseCase>(),
