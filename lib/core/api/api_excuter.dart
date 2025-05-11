@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:tracking_app/domain/entity/error_model.dart';
 import '../../domain/common/exceptions/server_error.dart';
 import 'api_result.dart';
-
-import '../../domain/entity/error_model.dart';
 
 Future<ApiResult<T>> executeApi<T>(Future<T> Function() apiCall) async {
   try {

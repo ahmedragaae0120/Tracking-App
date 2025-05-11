@@ -25,10 +25,17 @@ class ApiManager {
         ));
     return response;
   }
-
   Future<Response> postRequest(
       {required String endpoint,
-        dynamic? body,
+        Map<String, dynamic>? body,
+        Map<String, dynamic>? headers}) async {
+    var response = await dio.post(endpoint,
+        data: body, options: Options(headers: headers));
+    return response;
+  }
+  Future<Response> postApplyRequest(
+      {required String endpoint,
+        dynamic body,
         String? contentType,
       Map<String, dynamic>? headers}) async {
     var response = await dio.post(endpoint,

@@ -32,7 +32,7 @@ class applyDataSourceImpl extends Applydatasourcecontract {
       });
       formData.files.forEach((file) => log("File: $file"));
 
-      final response = await api.postRequest(
+      final response = await api.postApplyRequest(
         endpoint: EndPoint.apply,
         body: formData,
       );
