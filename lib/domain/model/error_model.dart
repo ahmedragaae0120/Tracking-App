@@ -8,21 +8,24 @@ class ErrorModel {
   });
 
   String? message;
-  List<ErrorData>? errors; // ✅ تغيير errors إلى List
+  List<ErrorData>? errors;
 
   ErrorModel.fromJson(dynamic json) {
-    message = json['message'];
+    if (json is Map<String, dynamic>) {
+      message = json['message'] ?? json['error'];
 
-    // ✅ التأكد من أن errors هي قائمة
-    if (json['errors'] != null) {
-      if (json['errors'] is List) {
-        errors =
-            (json['errors'] as List).map((e) => ErrorData.fromJson(e)).toList();
-      } else if (json['errors'] is Map) {
-        errors = [ErrorData.fromJson(json['errors'])];
+      if (json['errors'] != null) {
+        if (json['errors'] is List) {
+          errors = (json['errors'] as List)
+              .map((e) => ErrorData.fromJson(e))
+              .toList();
+        } else if (json['errors'] is Map) {
+          errors = [ErrorData.fromJson(json['errors'])];
+        }
       }
     }
   }
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
