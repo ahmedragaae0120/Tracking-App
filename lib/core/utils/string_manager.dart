@@ -95,4 +95,20 @@ class AppStrings {
   static String get dontHaveAccount => "dontHaveAccount".tr();
   static String get home => "home".tr();
   static String get orders => "orders".tr();
+  static String get status => "status".tr();
+  static String get whatsAppcannotbeopened => "whatsAppcannotbeopened".tr();
+  static String get orderId => "orderId".tr();
+  static String get date => "date".tr();
+  static String get paymentMethod => "paymentMethod".tr();
+  static String get total => "total".tr();
+  static String get accepted => "accepted".tr();
+  static String get picked => "picked".tr();
+  static String get startDeliver => "startDeliver".tr();
+  static String get arrivedAtPickupPoint => "arrivedAtPickupPoint".tr();
+  static String get delivered => "delivered".tr();
+  static String get outForDelivery => "outForDelivery".tr();
+  static String get pickupAddress => "pickupAddress".tr();
+  static String get orderDeliveredSuccessfully => "orderDeliveredSuccessfully".tr();
+  static String get userAddress => "userAddress".tr();
+  static String get orderDetails => "orderDetails".tr();
 }

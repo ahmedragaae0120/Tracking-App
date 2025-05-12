@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
 import 'package:tracking_app/ui/tabs/home_tab/view/home_screen.dart';
 
 import '../../../core/utils/colors_manager.dart';
@@ -28,10 +30,11 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _selectedIndex = widget.initialTab;
+    AuthCubit.get(context).doIntent(getLoginDriverDataIntent());
   }
 
   void _onItemTapped(int index) {
-    if ((index == 2 || index == 3) ) {
+    if ((index == 2 || index == 3)) {
       //Dialogs.restrictedAccess(context, () => Navigator.pop(context));
       return;
     }

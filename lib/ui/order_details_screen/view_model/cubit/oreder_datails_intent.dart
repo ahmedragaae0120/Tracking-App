@@ -27,3 +27,10 @@ class UpdateOrderStatusIntent extends OrderDetailsIntent {
     required this.isDone,
   });
 }
+class UpdateOrderStatusApiIntent extends OrderDetailsIntent {
+  final String orderId;
+  UpdateOrderStatusApiIntent({
+    required this.orderId,
+
+  });
+}

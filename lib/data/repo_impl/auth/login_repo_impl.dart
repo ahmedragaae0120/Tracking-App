@@ -4,7 +4,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/data_source_contract/auth/login_datasource.dart';
-import 'package:tracking_app/data/models/user_model.dart';
+import 'package:tracking_app/data/model/user_model.dart';
 import 'package:tracking_app/domain/repo_contract/auth/login_repo.dart';
 
 @Injectable(as: LoginRepo)

@@ -7,12 +7,9 @@ import 'package:tracking_app/ui/Auth/forget_password/reset_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/verfiy_password.dart';
 import 'package:tracking_app/ui/on_boarding/on_boarding_screen.dart';
 import 'package:tracking_app/ui/Auth/login/login_screen.dart';
-import 'package:tracking_app/ui/main_screen.dart';
 import 'package:tracking_app/ui/tabs/main_tab/main_screen.dart';
 import 'core/cache/shared_pref.dart';
 import 'core/utils/routes_manager.dart';
-import 'package:tracking_app/core/utils/routes_manager.dart';
-
 import 'ui/Auth/success_apply/view/apply_success.dart';
 
 class MyApp extends StatelessWidget {

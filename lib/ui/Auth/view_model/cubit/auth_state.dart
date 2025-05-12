@@ -4,14 +4,19 @@ part of 'auth_cubit.dart';
 sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
+
 class applySuccess extends AuthState {
   final ApplyEntity applyEntity;
+
   applySuccess(this.applyEntity);
 }
+
 class applyFailure extends AuthState {
   String message;
+
   applyFailure({required this.message});
 }
+
 class applyLoading extends AuthState {}
 
 final class LoginSuccessState extends AuthState {
@@ -32,6 +37,7 @@ final class LoginErrorState extends AuthState {
 
 final class SendEmailVerificationSuccessState extends AuthState {
   bool isSent;
+
   SendEmailVerificationSuccessState({required this.isSent});
 }
 
@@ -41,6 +47,7 @@ final class SendEmailVerificationLoadingState extends AuthState {
 
 final class SendEmailVerificationErrorState extends AuthState {
   String? message;
+
   SendEmailVerificationErrorState({required this.message});
 }
 
@@ -48,6 +55,7 @@ final class SendEmailVerificationErrorState extends AuthState {
 
 final class VerifyResetCodeSuccessState extends AuthState {
   bool isVerified;
+
   VerifyResetCodeSuccessState({required this.isVerified});
 }
 
@@ -57,14 +65,15 @@ final class VerifyResetCodeLoadingState extends AuthState {
 
 final class VerifyResetCodeErrorState extends AuthState {
   String? message;
+
   VerifyResetCodeErrorState({required this.message});
 }
-
 
 ///  PASSWORD RESET STATES  ///
 
 final class ResetPasswordSuccessState extends AuthState {
   bool isChanged;
+
   ResetPasswordSuccessState({required this.isChanged});
 }
 
@@ -74,21 +83,42 @@ final class ResetPasswordLoadingState extends AuthState {
 
 final class ResetPasswordErrorState extends AuthState {
   String? message;
+
   ResetPasswordErrorState({required this.message});
 }
+
 class LoadContrySuccess extends AuthState {
-   List countries;
+  List countries;
+
   LoadContrySuccess(this.countries);
 }
+
 class LoadContryFailure extends AuthState {
   String message;
+
   LoadContryFailure({required this.message});
 }
+
 class getVehiclesSuccess extends AuthState {
-   GetallvehicleEntity vehicles;
+  GetallvehicleEntity vehicles;
+
   getVehiclesSuccess(this.vehicles);
 }
+
 class getVehiclesFailure extends AuthState {
   String message;
+
   getVehiclesFailure({required this.message});
+}
+
+final class GetLoggedInDriverDataSuccessState extends AuthState {
+  GetLoggedInDriverDataSuccessState();
+}
+
+final class GetLoggedInDriverDataLoadingState extends AuthState {}
+
+final class GetLoggedInDriverDataErrorState extends AuthState {
+  String? message;
+
+  GetLoggedInDriverDataErrorState({required this.message});
 }

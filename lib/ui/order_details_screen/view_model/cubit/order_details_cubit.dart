@@ -1,19 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/use_cases/tracking/update_driver_Info_usecase.dart';
 import 'package:tracking_app/domain/use_cases/tracking/update_order_status_usecase.dart';
+import 'package:tracking_app/domain/use_cases/update_order_use_case.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/oreder_datails_intent.dart';
 
 part 'order_details_state.dart';
 
 @injectable
 class OrderDetailsCubit extends Cubit<OrderDetailsState> {
-  OrderDetailsCubit(this.updateDriverInfoUsecase, this.updateOrderStatusUsecase)
+  OrderDetailsCubit(this.updateOrderApiUseCase, this.updateDriverInfoUsecase,
+      this.updateOrderStatusUsecase)
       : super(OrderDetailsInitial());
   final UpdateDriverInfoUsecase updateDriverInfoUsecase;
   final UpdateOrderStatusUsecase updateOrderStatusUsecase;
+  final UpdateOrderUseCase updateOrderApiUseCase;
 
   doIntent(OrderDetailsIntent intent) {
     switch (intent) {
@@ -23,8 +27,31 @@ class OrderDetailsCubit extends Cubit<OrderDetailsState> {
       case UpdateOrderStatusIntent():
         _updateOrderStatus(orderStatusIntent: intent);
         break;
+      case UpdateOrderStatusApiIntent():
+        _updateOrderStatusApi(orderStatusApiIntent: intent);
+        break;
     }
   }
+
+  _updateOrderStatusApi({
+    required UpdateOrderStatusApiIntent orderStatusApiIntent,
+  }) async {
+    emit(UpdateOrderStatusApiLoadingState());
+    final result = await updateOrderApiUseCase.invoke(
+      orderStatusApiIntent.orderId,
+    );
+
+    switch (result) {
+      case SuccessApiResult():
+        emit(UpdateOrderStatusApiSuccessState());
+        break;
+      case ErrorApiResult():
+        emit(UpdateOrderStatusErrorState(result.exception.toString()));
+        break;
+
+    }
+  }
+
 
   _updateDriverInfo({
     required UpdateDriverInfoIntent driverInfoIntent,
@@ -45,6 +72,8 @@ class OrderDetailsCubit extends Cubit<OrderDetailsState> {
         break;
     }
   }
+
+
 
   _updateOrderStatus({
     required UpdateOrderStatusIntent orderStatusIntent,

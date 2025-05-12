@@ -14,4 +14,7 @@ class Constant {
   static const String questCacheKey = "is_quest";
   static const String cacheOnDelivery = "CacheOnDelivery";
   static const String creditCard = "CreditCard";
+  static const String completedKey = "completed";
+  static const String canceledKey = "canceled";
+
 }

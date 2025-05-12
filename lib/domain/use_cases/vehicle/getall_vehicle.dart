@@ -4,14 +4,14 @@ import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 
 import '../../../core/api/api_result.dart';
 import '../../repo_contract/vehicle/vehicle_contract.dart';
+
 @injectable
-class GetallVehicleUseCase{
+class GetallVehicleUseCase {
   VehicleContract vehicleContract;
+
   GetallVehicleUseCase({required this.vehicleContract});
-  Future<ApiResult<GetallvehicleEntity>>get()async{
-   return await vehicleContract.getVehicles();
 
+  Future<ApiResult<GetallvehicleEntity>> get() async {
+    return await vehicleContract.getVehicles();
   }
-
-
 }
