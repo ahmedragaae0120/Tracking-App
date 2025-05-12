@@ -187,7 +187,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               switch (widget.statusName) {
                                 case OrderStatus.receivedYourOrder:
                                   cubit.doIntent(UpdateOrderStatusIntent(
-                                      isDone: false,
+                                      isDone: true,
                                       orderId: widget.order.id ?? "",
                                       statusName:
                                           OrderStatus.receivedYourOrder));
@@ -196,7 +196,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   break;
                                 case OrderStatus.preparingYourOrder:
                                   cubit.doIntent(UpdateOrderStatusIntent(
-                                      isDone: false,
+                                      isDone: true,
                                       orderId: widget.order.id ?? "",
                                       statusName:
                                           OrderStatus.preparingYourOrder));
@@ -205,7 +205,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   break;
                                 case OrderStatus.outForDelivery:
                                   cubit.doIntent(UpdateOrderStatusIntent(
-                                      isDone: false,
+                                      isDone: true,
                                       orderId: widget.order.id ?? "",
                                       statusName: OrderStatus.outForDelivery));
                                   widget.statusName = OrderStatus.delivered;
@@ -215,7 +215,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       isDone: true,
                                       orderId: widget.order.id ?? "",
                                       statusName:
-                                          OrderStatus.preparingYourOrder));
+                                          OrderStatus.delivered));
                                   cubit.doIntent(UpdateOrderStatusApiIntent(
                                     orderId: widget.order.id ?? "",
                                   ));
