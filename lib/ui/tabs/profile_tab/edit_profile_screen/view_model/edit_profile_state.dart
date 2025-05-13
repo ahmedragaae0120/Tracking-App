@@ -1,7 +1,6 @@
 // lib/presentation/tabs/profile_tab/edit_profile/view_model/edit_profile_state.dart
 
 import 'package:tracking_app/data/model/driver_profile_data.dart';
-import 'package:tracking_app/domain/entity/get_logged_user_data_entity.dart';
 
 sealed class EditProfileState {}
 

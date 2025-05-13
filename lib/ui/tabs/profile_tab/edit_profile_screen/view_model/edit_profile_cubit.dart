@@ -6,8 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/core/di/di.dart';
-import 'package:tracking_app/data/model/apply_response_dto.dart';
-import 'package:tracking_app/domain/entity/get_logged_user_data_entity.dart';
 import 'package:tracking_app/domain/use_cases/profile/edit_profile_usecase.dart';
 import 'package:tracking_app/domain/use_cases/profile/upload_photo_usecase.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
