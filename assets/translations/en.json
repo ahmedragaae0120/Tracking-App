@@ -105,6 +105,10 @@
   "total": "Total",
   "accepted": "Accepted",
   "picked": "Picked",
+  "confirmLogoutDialog": "Confirm logout !!",
+  "language": "Language",
+  "logoutCapital": "LOGOUT",
+  "vehicleInfo": "Vehicle Info",
   "startDeliver": "Start deliver",
   "arrivedAtPickupPoint": "Arrived at pickup point",
   "delivered": "Delivered",
@@ -112,5 +116,12 @@
   "pickupAddress": "Pickup Address",
   "orderDeliveredSuccessfully": "Order delivered successfully!",
   "userAddress": "User address",
-  "orderDetails": "Order Details"
+  "orderDetails": "Order Details",
+  "english": "English",
+  "arabic": "Arabic",
+  "changeLanguage": "Change Language",
+  "restrictedAccess": "Restricted Access",
+  "guestRestrictionMessage": "You are currently using a guest account. Please log in to access this feature.",
+  "confirmLogout": "Are you sure you want to log out?",
+  "cancel": "Cancel"
 }

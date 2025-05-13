@@ -106,6 +106,10 @@ class AppStrings {
   static String get total => "total".tr();
   static String get accepted => "accepted".tr();
   static String get picked => "picked".tr();
+  static String get confirmLogoutDialog => "confirmLogoutDialog".tr();
+  static String get language => "language".tr();
+  static String get logoutCapital => "logoutCapital".tr();
+  static String get vehicleInfo => "vehicleInfo".tr();
   static String get startDeliver => "startDeliver".tr();
   static String get arrivedAtPickupPoint => "arrivedAtPickupPoint".tr();
   static String get delivered => "delivered".tr();
@@ -114,4 +118,11 @@ class AppStrings {
   static String get orderDeliveredSuccessfully => "orderDeliveredSuccessfully".tr();
   static String get userAddress => "userAddress".tr();
   static String get orderDetails => "orderDetails".tr();
+  static String get english => "english".tr();
+  static String get arabic => "arabic".tr();
+  static String get changeLanguage => "changeLanguage".tr();
+  static String get restrictedAccess => "restrictedAccess".tr();
+  static String get guestRestrictionMessage => "guestRestrictionMessage".tr();
+  static String get confirmLogout => "confirmLogout".tr();
+  static String get cancel => "cancel".tr();
 }

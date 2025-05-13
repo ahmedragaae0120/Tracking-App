@@ -46,3 +46,11 @@ class ResetPassword extends AuthIntent {
 }
 class getVehiclesIntent extends AuthIntent{}
 class getLoginDriverDataIntent extends AuthIntent{}
+
+
+
+///  LOGOUT INTENT ///
+class LogoutIntent extends AuthIntent {
+
+  LogoutIntent();
+}

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,20 +7,20 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/model/user_model.dart';
+import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 import 'package:tracking_app/domain/use_cases/auth/apply_usecase.dart';
+import 'package:tracking_app/domain/use_cases/auth/forget_password/forget_password_usecase.dart';
+import 'package:tracking_app/domain/use_cases/auth/forget_password/reset_password_usecase.dart';
+import 'package:tracking_app/domain/use_cases/auth/forget_password/verify_reset_code_usecase.dart';
 import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
 import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
+import 'package:tracking_app/domain/use_cases/auth/logout_usecase.dart';
 import 'package:tracking_app/domain/use_cases/profile/get_profile_details_usecase.dart';
 import 'package:tracking_app/data/model/driver_profile_data.dart';
-import '../../../../domain/entity/auth/apply_entity.dart';
-import '../../../../domain/use_cases/auth/forget_password/forget_password_usecase.dart';
-import '../../../../domain/use_cases/auth/forget_password/reset_password_usecase.dart';
-import '../../../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.dart';
-import '../../../../domain/use_cases/vehicle/getall_vehicle.dart';
+import 'package:tracking_app/domain/use_cases/vehicle/getall_vehicle.dart';
 import 'auth_intent.dart';
-
 part 'auth_state.dart';
 
 @injectable
@@ -38,6 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
   final GetProfileDetailsUsecase getProfileDetailsUsecase;
+  final LogoutUsecase logoutUsecase;
 
   AuthCubit(
       this.signInUsecase,
@@ -47,7 +47,8 @@ class AuthCubit extends Cubit<AuthState> {
       this.verifyresetcodeUseCase,
       this._applyUseCase,
       this.getProfileDetailsUsecase,
-      this._getallVehicleUseCase)
+      this._getallVehicleUseCase,
+      this.logoutUsecase)
       : super(AuthInitial());
 
   static AuthCubit get(context) => BlocProvider.of(context);
@@ -89,6 +90,9 @@ class AuthCubit extends Cubit<AuthState> {
       case getLoginDriverDataIntent():
         _getLoginDriverData();
         break;
+      case LogoutIntent():
+        _Logout(intent: authIntent);
+        break;
     }
   }
 
@@ -102,7 +106,8 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case ErrorApiResult():
         print("${result.exception.toString()} Error ⛔⛔");
-        emit(GetLoggedInDriverDataErrorState(message: result.exception.toString()));
+        emit(GetLoggedInDriverDataErrorState(
+            message: result.exception.toString()));
         break;
     }
   }
@@ -229,6 +234,21 @@ class AuthCubit extends Cubit<AuthState> {
         log("Error: ${response.exception.toString()}");
         emit(getVehiclesFailure(message: response.exception.toString()));
         break;
+    }
+  }
+
+  _Logout({required LogoutIntent intent}) async {
+    emit(LogoutLoadingState());
+    final result = await logoutUsecase.invoke();
+    switch (result) {
+      case SuccessApiResult():
+        {
+          emit(LogoutSuccessState());
+        }
+      case ErrorApiResult():
+        {
+          emit(LogoutFailureState(message: result.exception.toString()));
+        }
     }
   }
 }
