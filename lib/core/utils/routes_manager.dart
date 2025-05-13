@@ -9,7 +9,8 @@ class RouteManager {
   static const String applySuccess = "/APPLYSUCCESS";
   static const String emailVerificationScreen = "/EMAILVERIFICATIONSCREEN";
   static const String resetPasswordScreen = "/RESETPASSWORDSCREEN";
-
+  static const String editProfileScreen = '/editProfile';
+  static const String changePasswordScreen = '/change-password';
 
 }
 

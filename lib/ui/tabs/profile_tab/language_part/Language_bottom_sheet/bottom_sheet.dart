@@ -17,6 +17,7 @@ class LanguageBottomSheet extends StatefulWidget {
 class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    Config().init(context);
     return Container(
       height: Config.screenHight! * 0.25,
       decoration: const BoxDecoration(

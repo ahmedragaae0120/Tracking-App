@@ -8,4 +8,6 @@ class EndPoint {
   static const String logoutEndpoint='/v1/drivers/logout';
   static const String getLoggedInDriver='/v1/drivers/profile-data';
   static  String updateOrderState(String id)=>"/v1/orders/state/$id";
+  static const String editProfile = "/v1/drivers/editProfile";
+  static const String uploadPhoto = "/v1/drivers/upload-photo";
 }

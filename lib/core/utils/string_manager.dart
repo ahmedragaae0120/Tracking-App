@@ -108,6 +108,11 @@ class AppStrings {
   static String get picked => "picked".tr();
   static String get confirmLogoutDialog => "confirmLogoutDialog".tr();
   static String get language => "language".tr();
+  static String get change => "change".tr();
+  static String get photoUploadedSuccessfully => "photoUploadedSuccessfully".tr();
+  static String get update => "update".tr();
+  static String get editProfile => "editProfile".tr();
+  static String get profileUpdatedSuccessfully => "profileUpdatedSuccessfully".tr();
   static String get logoutCapital => "logoutCapital".tr();
   static String get vehicleInfo => "vehicleInfo".tr();
   static String get startDeliver => "startDeliver".tr();

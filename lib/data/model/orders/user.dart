@@ -1,3 +1,5 @@
+import 'package:tracking_app/domain/entity/user_entity.dart';
+
 /// _id : "680eb8861433a666c8d66efc"
 /// firstName : "Elevate"
 /// lastName : "Tech"
@@ -46,5 +48,22 @@ class User {
     map['photo'] = photo;
     return map;
   }
+  UserEntity toUserEntity() {
+    return UserEntity(
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        gender: gender,
+        phone: phone,
+        photo: photo,
+        );
+  }
 
+  factory User.fromEntity(UserEntity entity) {
+    return User(
+      firstName: entity.firstName,
+      email: entity.email,
+    );
+  }
 }
