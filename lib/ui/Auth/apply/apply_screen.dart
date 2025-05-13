@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:io'; // Import for File
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
+// Import for File
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';

@@ -245,8 +245,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         labelText: AppStrings.password,
                         suffixIcon: TextButton(
                           onPressed: () {
-                            // Navigator.pushNamed(
-                            //     context, RouteManager.changePasswordScreen);
+                            Navigator.pushNamed(
+                                context, RouteManager.changePasswordScreen);
                           },
                           child: Text(
                             AppStrings.change,

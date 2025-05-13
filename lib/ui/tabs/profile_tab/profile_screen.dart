@@ -10,7 +10,6 @@ import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/widgets/item_carts_profile_widget.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/widgets/user_info_card.dart';
-import 'edit_profile_screen/edit_profile_screen.dart';
 import 'language_part/Language_bottom_sheet/Wigets/language_button.dart';
 import 'widgets/vehicle_info_card.dart';
 

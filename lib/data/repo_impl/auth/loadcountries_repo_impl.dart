@@ -4,7 +4,7 @@ import 'package:tracking_app/data/data_source_contract/auth/loadcountries.dart';
 import 'package:tracking_app/domain/repo_contract/auth/loadcountries_contract.dart';
 @Injectable(as: loadCountriesRepo)
 class loadcountriesRepoImpl extends loadCountriesRepo {
-  loadcountriesDataSourseRepo load;
+  LoadCountriesDataSourseRepo load;
   loadcountriesRepoImpl({required this.load});
 
   @override

@@ -7,8 +7,8 @@ import 'package:tracking_app/data/data_source_contract/auth/loadcountries.dart';
 import '../../../core/api/api_result.dart';
 import '../../../domain/common/exceptions/server_error.dart';
 import '../../../domain/entity/error_model.dart';
-@Injectable(as: loadcountriesDataSourseRepo)
-class loadcountriesDataSourceImpl extends loadcountriesDataSourseRepo {
+@Injectable(as: LoadCountriesDataSourseRepo)
+class loadcountriesDataSourceImpl extends LoadCountriesDataSourseRepo {
   @override
   Future<ApiResult<List<dynamic>>>  loadCountries() async{
     final String data = await rootBundle.loadString('assets/country/country.json');

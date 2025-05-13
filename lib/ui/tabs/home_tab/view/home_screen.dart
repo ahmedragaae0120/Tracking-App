@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/resuable_comp/custom_flower_order.dart';
 import '../../../../core/utils/colors_manager.dart';
-import '../../../../core/utils/text_style_manager.dart';
 
 // void main() {
 //   runApp(const MaterialApp(

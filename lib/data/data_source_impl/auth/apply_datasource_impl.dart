@@ -1,18 +1,13 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/model/apply_response_dto.dart';
-import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 import 'package:tracking_app/core/api/api_manager.dart';
 import 'package:tracking_app/core/api/endpoints.dart';
-import 'package:tracking_app/domain/common/exceptions/server_error.dart';
-import 'package:tracking_app/domain/entity/error_model.dart';
 
 import '../../data_source_contract/auth/apply_datasource.dart';
 

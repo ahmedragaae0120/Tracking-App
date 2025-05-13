@@ -10,4 +10,6 @@ class EndPoint {
   static  String updateOrderState(String id)=>"/v1/orders/state/$id";
   static const String editProfile = "/v1/drivers/editProfile";
   static const String uploadPhoto = "/v1/drivers/upload-photo";
+  static const String changePasswordEndpoint = "/v1/drivers/change-password";
+
 }

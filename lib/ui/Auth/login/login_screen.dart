@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {
-          Navigator.pushNamed(context, RouteManager.OnBoardingScreen);
+          Navigator.pushNamed(context, RouteManager.onBoardingScreen);
         }, icon: Icon(Icons.arrow_back_ios_new_outlined)),
         title: Text(AppStrings.login),
       ),

@@ -110,7 +110,7 @@ class CustomFlowerOrder extends StatelessWidget {
           Row(
             children: [
               Text(
-                "EGP ${price}",
+                "EGP $price",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const SizedBox(width: 20),
