@@ -1,0 +1,38 @@
+import 'package:injectable/injectable.dart';
+import 'package:tracking_app/core/api/api_excuter.dart';
+import 'package:tracking_app/core/api/api_manager.dart';
+import 'package:tracking_app/core/api/api_result.dart';
+import 'package:tracking_app/core/api/endpoints.dart';
+import 'package:tracking_app/core/cache/shared_pref.dart';
+import 'package:tracking_app/core/constant.dart';
+import 'package:tracking_app/data/data_source_contract/update_order_datasource_repo.dart';
+
+@Injectable(as: UpdateOrderdatasource)
+class getallvehicleimpl extends UpdateOrderdatasource {
+  ApiManager apiManager;
+  final CacheHelper cacheHelper;
+
+  getallvehicleimpl({required this.cacheHelper, required this.apiManager});
+
+  @override
+  Future<ApiResult<bool>> updateOrder(String id) async {
+    return executeApi<bool>(() async {
+      String token = await cacheHelper.getData<String>(Constant.tokenKey);
+      var response = await apiManager.put(
+        endpoint: EndPoint.updateOrderState(id),
+        data: {
+          "state": Constant.completedKey,
+        },
+        headers: {"Authorization": "Bearer $token"},
+      );
+
+      // Accessing the "state" from the response and printing it
+      print("State from response: ${response.data['orders']['state']}✅✅");
+      if (response.data["message"] == "success") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+}

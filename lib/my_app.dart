@@ -27,25 +27,25 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      routes: {
-        RouteManager.applySuccess: (context) => ApplySuccess(),
-        RouteManager.loginScreen: (context) => const SignInScreen(),
-        RouteManager.applyScreen: (context) => const ApplyScreen(),
-        RouteManager.mainScreen: (context) => MainScreen(),
-        RouteManager.OnBoardingScreen: (context) => OnBoardingScreen(),
-        RouteManager.emailVerificationScreen: (context) =>
-            const VerifyResetCodeScreen(),
-        RouteManager.resetPasswordScreen: (context) =>
-            const ResetPasswordScreen(),
-        RouteManager.forgetPasswordScreen: (context) =>
-            const ForgetPasswordScreen(),
-      },
-      initialRoute: initialRoute(),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        routes: {
+          RouteManager.applySuccess: (context) => ApplySuccess(),
+          RouteManager.loginScreen: (context) => const SignInScreen(),
+          RouteManager.applyScreen: (context) => const ApplyScreen(),
+          RouteManager.mainScreen: (context) =>  MainScreen(),
+          RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),
+          RouteManager.emailVerificationScreen: (context) =>
+          const VerifyResetCodeScreen(),
+          RouteManager.resetPasswordScreen: (context) =>
+          const ResetPasswordScreen(),
+          RouteManager.forgetPasswordScreen: (context) =>
+          const ForgetPasswordScreen(),
+        },
+        initialRoute: initialRoute(),
+        );
   }
 }

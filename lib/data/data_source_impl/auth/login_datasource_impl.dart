@@ -8,7 +8,7 @@ import 'package:tracking_app/core/api/endpoints.dart';
 import 'package:tracking_app/core/cache/shared_pref.dart';
 import 'package:tracking_app/core/constant.dart';
 import 'package:tracking_app/data/data_source_contract/auth/login_datasource.dart';
-import 'package:tracking_app/data/models/user_model.dart';
+import 'package:tracking_app/data/model/user_model.dart';
 
 @Injectable(as: LoginDataSourceRepo)
 class LoginDatasourceImpl implements LoginDataSourceRepo {

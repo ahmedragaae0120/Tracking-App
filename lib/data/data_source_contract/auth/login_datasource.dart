@@ -3,7 +3,7 @@
 
 
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/data/models/user_model.dart';
+import 'package:tracking_app/data/model/user_model.dart';
 
 abstract class LoginDataSourceRepo {
   Future<ApiResult<UserModel>> login({

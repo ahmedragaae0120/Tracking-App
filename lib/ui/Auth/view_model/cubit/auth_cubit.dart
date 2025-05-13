@@ -7,13 +7,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/data/models/user_model.dart';
+import 'package:tracking_app/data/model/user_model.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 import 'package:tracking_app/domain/use_cases/auth/apply_usecase.dart';
 import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
 import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
-
+import 'package:tracking_app/domain/use_cases/profile/get_profile_details_usecase.dart';
+import 'package:tracking_app/data/model/driver_profile_data.dart';
 import '../../../../domain/entity/auth/apply_entity.dart';
 import '../../../../domain/use_cases/auth/forget_password/forget_password_usecase.dart';
 import '../../../../domain/use_cases/auth/forget_password/reset_password_usecase.dart';
@@ -32,9 +33,12 @@ class AuthCubit extends Cubit<AuthState> {
   File? nidImageFile;
   File? vehicleLicenseFile;
   final LoginUsecase signInUsecase;
+  Driver? driver;
   final ForgetPasswordUseCase forgetPasswordUseCase;
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
+  final GetProfileDetailsUsecase getProfileDetailsUsecase;
+
   AuthCubit(
       this.signInUsecase,
       this.load,
@@ -42,8 +46,10 @@ class AuthCubit extends Cubit<AuthState> {
       this.resetpasswordUsecase,
       this.verifyresetcodeUseCase,
       this._applyUseCase,
+      this.getProfileDetailsUsecase,
       this._getallVehicleUseCase)
       : super(AuthInitial());
+
   static AuthCubit get(context) => BlocProvider.of(context);
 
   Future<void> pickNidImage() async {
@@ -79,6 +85,24 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case getVehiclesIntent():
         getallvehicle();
+        break;
+      case getLoginDriverDataIntent():
+        _getLoginDriverData();
+        break;
+    }
+  }
+
+  _getLoginDriverData() async {
+    emit(GetLoggedInDriverDataLoadingState());
+    final result = await getProfileDetailsUsecase.call();
+    switch (result) {
+      case SuccessApiResult():
+        emit(GetLoggedInDriverDataSuccessState());
+        driver = result.data?.driver;
+        break;
+      case ErrorApiResult():
+        print("${result.exception.toString()} Error ⛔⛔");
+        emit(GetLoggedInDriverDataErrorState(message: result.exception.toString()));
         break;
     }
   }
