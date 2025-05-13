@@ -5,14 +5,12 @@ import 'package:tracking_app/ui/Auth/apply/apply_screen.dart';
 import 'package:tracking_app/ui/Auth/forget_password/forget_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/reset_password.dart';
 import 'package:tracking_app/ui/Auth/forget_password/verfiy_password.dart';
-import 'package:tracking_app/ui/on_boarding/on_boarding_screen.dart';
 import 'package:tracking_app/ui/Auth/login/login_screen.dart';
-import 'package:tracking_app/ui/main_screen.dart';
+import 'package:tracking_app/ui/on_boarding/on_boarding_screen.dart';
 import 'package:tracking_app/ui/tabs/main_tab/main_screen.dart';
+
 import 'core/cache/shared_pref.dart';
 import 'core/utils/routes_manager.dart';
-import 'package:tracking_app/core/utils/routes_manager.dart';
-
 import 'ui/Auth/success_apply/view/apply_success.dart';
 
 class MyApp extends StatelessWidget {
@@ -29,25 +27,25 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        routes: {
-          RouteManager.applySuccess: (context) => ApplySuccess(),
-          RouteManager.loginScreen: (context) => const SignInScreen(),
-          RouteManager.applyScreen: (context) => const ApplyScreen(),
-          RouteManager.mainScreen: (context) =>  MainScreen(),
-          RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),
-          RouteManager.emailVerificationScreen: (context) =>
-          const VerifyResetCodeScreen(),
-          RouteManager.resetPasswordScreen: (context) =>
-          const ResetPasswordScreen(),
-          RouteManager.forgetPasswordScreen: (context) =>
-          const ForgetPasswordScreen(),
-        },
-        initialRoute: initialRoute(),
-        );
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      routes: {
+        RouteManager.applySuccess: (context) => ApplySuccess(),
+        RouteManager.loginScreen: (context) => const SignInScreen(),
+        RouteManager.applyScreen: (context) => const ApplyScreen(),
+        RouteManager.mainScreen: (context) => MainScreen(),
+        RouteManager.OnBoardingScreen: (context) => OnBoardingScreen(),
+        RouteManager.emailVerificationScreen: (context) =>
+            const VerifyResetCodeScreen(),
+        RouteManager.resetPasswordScreen: (context) =>
+            const ResetPasswordScreen(),
+        RouteManager.forgetPasswordScreen: (context) =>
+            const ForgetPasswordScreen(),
+      },
+      initialRoute: initialRoute(),
+    );
   }
 }

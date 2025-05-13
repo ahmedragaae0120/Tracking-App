@@ -1,6 +1,4 @@
 class Constant {
-
-
   static const String tokenKey = 'auth_token';
   static const String highestPrice = 'HighestPrice';
   static const String lowestPrice = 'LowestPrice';
@@ -14,4 +12,5 @@ class Constant {
   static const String questCacheKey = "is_quest";
   static const String cacheOnDelivery = "CacheOnDelivery";
   static const String creditCard = "CreditCard";
+  static const Duration connectTimeout = Duration(seconds: 40);
 }

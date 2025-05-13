@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../constant.dart';
 
@@ -9,9 +11,28 @@ class ApiManager {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: Constant.baseUrl,
-      ),
+          baseUrl: Constant.baseUrl,
+          connectTimeout: Constant.connectTimeout,
+          receiveTimeout: Constant.connectTimeout,
+          sendTimeout: Constant.connectTimeout),
     );
+    dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+        enabled: kDebugMode,
+        filter: (options, args) {
+          // don't print requests with uris containing '/posts'
+          if (options.path.contains('/posts')) {
+            return false;
+          }
+          // don't print responses with unit8 list data
+          return !args.isResponse || !args.hasUint8ListData;
+        }));
   }
 
   Future<Response> getRequest(
@@ -25,26 +46,26 @@ class ApiManager {
         ));
     return response;
   }
+
   Future<Response> postRequest(
       {required String endpoint,
-        Map<String, dynamic>? body,
-        Map<String, dynamic>? headers}) async {
+      Map<String, dynamic>? body,
+      Map<String, dynamic>? headers}) async {
     var response = await dio.post(endpoint,
         data: body, options: Options(headers: headers));
     return response;
   }
+
   Future<Response> postApplyRequest(
       {required String endpoint,
-        dynamic body,
-        String? contentType,
+      dynamic body,
+      String? contentType,
       Map<String, dynamic>? headers}) async {
     var response = await dio.post(endpoint,
-        data: body, options: Options(
-            validateStatus:(_) => true,
-            headers: {
-             'Content-Type':'multipart/form-data'
-            }
-        ));
+        data: body,
+        options: Options(
+            validateStatus: (_) => true,
+            headers: {'Content-Type': 'multipart/form-data'}));
     return response;
   }
 
