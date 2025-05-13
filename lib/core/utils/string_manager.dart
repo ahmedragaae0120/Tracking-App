@@ -25,6 +25,9 @@ class AppStrings {
   static String get forgetpassword => "forgetpassword".tr();
   static String get thankYouForProviding => "thankYouForProviding".tr();
   static String get yourApplicationHasBeenSubmitted => "yourApplicationHasBeenSubmitted".tr();
+  static String get thankYou => "thankYou".tr();
+  static String get theOrderDeliveredSuccessfully => "theOrderDeliveredSuccessfully".tr();
+  static String get done => "done".tr();
   static String get emailCantBeEmpty => "emailCantBeEmpty".tr();
   static String get thePinCodeIsWrong => "thePinCodeIsWrong".tr();
   static String get selectCountry => "SelectCountry".tr();

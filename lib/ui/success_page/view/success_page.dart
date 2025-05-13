@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tracking_app/config/theme/app_theme.dart';
 import 'package:tracking_app/core/resuable_comp/text_button.dart';
 import 'package:tracking_app/core/utils/colors_manager.dart';
+import 'package:tracking_app/core/utils/routes_manager.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
 
 class SuccessPage extends StatefulWidget {
@@ -89,7 +90,7 @@ class _SuccessPageState extends State<SuccessPage>
                 const SizedBox(height: 32),
                 CustomTextButton(
                   onPressed: () {
-                    // Navigator.pushNamed(context, RouteManager.loginScreen);
+                     Navigator.pushNamed(context, RouteManager.mainScreen);
                   },
                   borderColor: ColorManager.primaryColor,
                   text: AppStrings.done,

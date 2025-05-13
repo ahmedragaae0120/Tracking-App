@@ -16,6 +16,7 @@ import 'package:tracking_app/ui/order_details_screen/view/widgets/order_details_
 import 'package:tracking_app/ui/order_details_screen/view/widgets/product_summary_card.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/order_details_cubit.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/oreder_datails_intent.dart';
+import 'package:tracking_app/ui/success_page/view/success_page.dart';
 import 'widgets/payment_card.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -55,7 +56,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 toastMessage(
                     message: AppStrings.orderDeliveredSuccessfully,
                     tybeMessage: TybeMessage.positive);
-                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SuccessPage(),));
               }
             },
             child: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
