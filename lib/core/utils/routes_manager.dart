@@ -10,5 +10,6 @@ class RouteManager {
   static const String emailVerificationScreen = "/EMAILVERIFICATIONSCREEN";
   static const String resetPasswordScreen = "/RESETPASSWORDSCREEN";
 
+
 }
 

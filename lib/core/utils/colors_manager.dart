@@ -18,6 +18,10 @@ class ColorManager {
   static const green = Color(0xff0CB359);
   static const pink = Color(0xffD2166A);
   static const lightPink = Color(0xf0F9ECF0);
+  static const lightGreen = Color(0xFF94EC97);
+  static const lightGreen1 = Color(0xFFBDF7BF);
+  static const lightGreen2 = Color(0xFFD1FBD3);
+  static const lightGreen3 = Color(0xFFE0FDE1);
 
   //==================================== White Shades ====================================//
   static const white10 = Color(0xfffefefe);

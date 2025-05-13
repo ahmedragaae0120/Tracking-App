@@ -95,4 +95,7 @@ class AppStrings {
   static String get dontHaveAccount => "dontHaveAccount".tr();
   static String get home => "home".tr();
   static String get orders => "orders".tr();
+  static String get thankYou => "thankYou".tr();
+  static String get theOrderDeliveredSuccessfully => "theOrderDeliveredSuccessfully".tr();
+  static String get done => "done".tr();
 }

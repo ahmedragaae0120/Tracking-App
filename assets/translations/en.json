@@ -92,6 +92,9 @@
     "welcome": "Welcome!!",
     "joinOurTeam": "Join our team",
     "dontHaveAccount": "Don't have an account?",
-    "home": "Home",
-    "orders": "Orders"
+  "thankYou": "Thank you!!",
+  "theOrderDeliveredSuccessfully": "The order delivered successfully",
+  "done": "Done",
+  "home": "Home",
+  "orders": "Orders"
 }
