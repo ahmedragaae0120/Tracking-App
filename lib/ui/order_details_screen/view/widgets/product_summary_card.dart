@@ -53,13 +53,14 @@ class ProductSummaryCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              orderItem.product?.title ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.regular12
-                                  .copyWith(color: ColorManager.grey),
+                            Expanded(
+                              child: Text(
+                                orderItem.product?.title ?? "",
+                                overflow: TextOverflow.clip,
+                                style: AppTextStyle.regular12
+                                    .copyWith(color: ColorManager.grey),
+                              ),
                             ),
-                            Spacer(),
                             Text(
                               "X ${orderItem.quantity}",
                               style: TextStyle(color: ColorManager.pink),
