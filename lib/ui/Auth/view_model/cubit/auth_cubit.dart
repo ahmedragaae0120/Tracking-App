@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, avoid_print, non_constant_identifier_names
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -102,7 +104,8 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case ErrorApiResult():
         print("${result.exception.toString()} Error ⛔⛔");
-        emit(GetLoggedInDriverDataErrorState(message: result.exception.toString()));
+        emit(GetLoggedInDriverDataErrorState(
+            message: result.exception.toString()));
         break;
     }
   }

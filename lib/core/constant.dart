@@ -14,6 +14,7 @@ class Constant {
   static const String creditCard = "CreditCard";
   static const String completedKey = "completed";
   static const String canceledKey = "canceled";
+  static const String acceptedOrderKey = "accepted_order_id";
 
   static const Duration connectTimeout = Duration(seconds: 40);
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -106,8 +108,6 @@ class DestinationsWidget extends StatelessWidget {
                             toastMessage(
                                 message: AppStrings.whatsAppcannotbeopened,
                                 tybeMessage: TybeMessage.negative);
-
-                            print('Could not launch $url');
                           }
                         },
                         icon: SvgPicture.asset(

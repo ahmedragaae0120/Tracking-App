@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, camel_case_types
+
 part of 'auth_cubit.dart';
 
 @immutable

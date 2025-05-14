@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/colors_manager.dart';
@@ -21,9 +23,10 @@ class AddressCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,style: TextStyle(
-            color: ColorManager.grey.withOpacity(0.7)
-        ),),
+        Text(
+          title,
+          style: TextStyle(color: ColorManager.grey.withOpacity(0.7)),
+        ),
         const SizedBox(height: 6),
         Container(
           margin: const EdgeInsets.only(bottom: 16),
@@ -48,7 +51,8 @@ class AddressCard extends StatelessWidget {
                 children: [
                   Text(
                     subtitle,
-                    style: const TextStyle(fontSize: 16,color: ColorManager.grey),
+                    style:
+                        const TextStyle(fontSize: 16, color: ColorManager.grey),
                   ),
                   Row(
                     children: [

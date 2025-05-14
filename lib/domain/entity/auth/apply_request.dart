@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, depend_on_referenced_packages
+
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
@@ -35,20 +37,20 @@ class applyrequest {
   });
 
   Map<String, dynamic> toJson() => {
-    "country": country,
-    "firstName": firstName,
-    "lastName": lastName,
-    "vehicleType": vehicleType,
-    "vehicleNumber": vehicleNumber,
-    "vehicleLicense": vehicleLicense,
-    "NID": nid,
-    "NIDImg": nidImg,
-    "email": email,
-    "gender": gender,
-    "phone": phone,
-    "password": password,
-    "rePassword": rePassword
-  };
+        "country": country,
+        "firstName": firstName,
+        "lastName": lastName,
+        "vehicleType": vehicleType,
+        "vehicleNumber": vehicleNumber,
+        "vehicleLicense": vehicleLicense,
+        "NID": nid,
+        "NIDImg": nidImg,
+        "email": email,
+        "gender": gender,
+        "phone": phone,
+        "password": password,
+        "rePassword": rePassword
+      };
 
   Future<FormData> toFormData() async {
     String getMimeType(File file) {

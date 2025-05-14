@@ -1,9 +1,12 @@
+// ignore_for_file: camel_case_types
+
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 
 ///  Auth Intent ///
 // ignore_for_file: non_constant_identifier_names, dangling_library_doc_comments
 
 sealed class AuthIntent {}
+
 class applyIntent extends AuthIntent {
   applyrequest request;
 
@@ -21,7 +24,6 @@ class SignInIntent extends AuthIntent {
     required this.password,
   });
 }
-
 
 ///  FORGOT PASSWORD INTENT ///
 class ForgetPassword extends AuthIntent {
@@ -44,5 +46,7 @@ class ResetPassword extends AuthIntent {
 
   ResetPassword({required this.email, required this.NewPassword});
 }
-class getVehiclesIntent extends AuthIntent{}
-class getLoginDriverDataIntent extends AuthIntent{}
+
+class getVehiclesIntent extends AuthIntent {}
+
+class getLoginDriverDataIntent extends AuthIntent {}
