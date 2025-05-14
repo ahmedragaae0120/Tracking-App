@@ -1,10 +1,13 @@
 /// message : "success"
 /// token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkcml2ZXIiOiI2ODE4YzAwYTE0MzNhNjY2YzhkOWI5MmYiLCJpYXQiOjE3NDY0NTI2MTZ9.m3jc-glYORl5O1jG26srQjOBGmZQHwQNB14LYmw50KE"
 
+// ignore_for_file: dangling_library_doc_comments
+
 class UserModel {
   UserModel({
     this.message,
-    this.token,});
+    this.token,
+  });
 
   UserModel.fromJson(dynamic json) {
     message = json['message'];
@@ -19,5 +22,4 @@ class UserModel {
     map['token'] = token;
     return map;
   }
-
 }

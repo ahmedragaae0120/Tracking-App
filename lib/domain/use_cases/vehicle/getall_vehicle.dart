@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 
 import '../../../core/api/api_result.dart';

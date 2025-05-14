@@ -112,5 +112,14 @@
   "pickupAddress": "عنوان الاستلام",
   "orderDeliveredSuccessfully": "تم توصيل الطلب بنجاح!",
   "userAddress": "عنوان المستخدم",
-  "orderDetails": "تفاصيل الطلب"
+  "orderDetails": "تفاصيل الطلب",
+  "pendingOrders": "الطلبات المعلقة",
+  "noOrdersAvailable": "لا توجد طلبات متاحة",
+  "tryAgain": "حاول مرة أخرى",
+  "orderNotFound": "الطلب غير موجود",
+  "accept": "قبول",
+  "reject": "رفض",
+  "storeLocation": "موقع المتجر",
+  "customerLocation": "موقع العميل",
+  "products": "المنتجات"
 }

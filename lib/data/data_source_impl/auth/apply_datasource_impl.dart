@@ -1,18 +1,15 @@
-import 'dart:convert';
+// ignore_for_file: camel_case_types, avoid_function_literals_in_foreach_calls
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/data/model/apply_response_dto.dart';
-import 'package:tracking_app/domain/common/result.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 import 'package:tracking_app/core/api/api_manager.dart';
 import 'package:tracking_app/core/api/endpoints.dart';
-import 'package:tracking_app/domain/common/exceptions/server_error.dart';
-import 'package:tracking_app/domain/entity/error_model.dart';
 
 import '../../data_source_contract/auth/apply_datasource.dart';
 
@@ -36,9 +33,10 @@ class applyDataSourceImpl extends Applydatasourcecontract {
         endpoint: EndPoint.apply,
         body: formData,
       );
-      final dto =  ApplyResponseDto.fromJson(response.data);
+      final dto = ApplyResponseDto.fromJson(response.data);
 
-      if (dto.message == null || !dto.message!.toLowerCase().contains("success")) {
+      if (dto.message == null ||
+          !dto.message!.toLowerCase().contains("success")) {
         throw DioException(
           requestOptions: RequestOptions(path: EndPoint.apply),
           response: Response(
@@ -53,9 +51,4 @@ class applyDataSourceImpl extends Applydatasourcecontract {
       return dto;
     });
   }
-
 }
-
-
-
-

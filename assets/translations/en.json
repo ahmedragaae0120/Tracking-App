@@ -112,5 +112,14 @@
   "pickupAddress": "Pickup Address",
   "orderDeliveredSuccessfully": "Order delivered successfully!",
   "userAddress": "User address",
-  "orderDetails": "Order Details"
+  "orderDetails": "Order Details",
+  "pendingOrders": "Pending Orders",
+  "noOrdersAvailable": "No orders available",
+  "tryAgain": "Try Again",
+  "orderNotFound": "Order not found",
+  "accept": "Accept",
+  "reject": "Reject",
+  "storeLocation": "Store Location",
+  "customerLocation": "Customer Location",
+  "products": "Products"
 }

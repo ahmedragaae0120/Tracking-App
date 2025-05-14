@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
 import 'package:tracking_app/ui/tabs/home_tab/view/home_screen.dart';
@@ -42,22 +41,6 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  void _onCategoryTapped(String categoryId) {
-    setState(() {
-      widget.selectedCategoryId = categoryId;
-    });
-
-    // Now navigate after the state is updated
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => MainScreen(
-          selectedCategoryId: categoryId,
-          initialTab: 1, // Keeping the tab at Categories screen
-        ),
-      ),
-    );
   }
 
   @override

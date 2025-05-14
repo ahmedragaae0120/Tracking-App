@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tracking_app/config/theme/app_theme.dart';
@@ -21,31 +23,37 @@ class MyApp extends StatelessWidget {
     String initialRoute() {
       bool? rememberMe = CacheHelper.getRememberMe();
       print("$rememberMe ⭐⭐⭐⭐⭐⭐⭐⭐");
+
+//  String? currentOrderId = CacheHelper.getData<String>('current_order_id');
+      // if (currentOrderId != null && currentOrderId.isNotEmpty) {
+      //   return RouteManager.orderDetailsScreen;
+      // }
+
       return rememberMe == true
           ? RouteManager.mainScreen
           : RouteManager.OnBoardingScreen;
     }
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        routes: {
-          RouteManager.applySuccess: (context) => ApplySuccess(),
-          RouteManager.loginScreen: (context) => const SignInScreen(),
-          RouteManager.applyScreen: (context) => const ApplyScreen(),
-          RouteManager.mainScreen: (context) =>  MainScreen(),
-          RouteManager.OnBoardingScreen: (context) =>  OnBoardingScreen(),
-          RouteManager.emailVerificationScreen: (context) =>
-          const VerifyResetCodeScreen(),
-          RouteManager.resetPasswordScreen: (context) =>
-          const ResetPasswordScreen(),
-          RouteManager.forgetPasswordScreen: (context) =>
-          const ForgetPasswordScreen(),
-        },
-        initialRoute: initialRoute(),
-        );
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      routes: {
+        RouteManager.applySuccess: (context) => ApplySuccess(),
+        RouteManager.loginScreen: (context) => const SignInScreen(),
+        RouteManager.applyScreen: (context) => const ApplyScreen(),
+        RouteManager.mainScreen: (context) => MainScreen(),
+        RouteManager.OnBoardingScreen: (context) => OnBoardingScreen(),
+        RouteManager.emailVerificationScreen: (context) =>
+            const VerifyResetCodeScreen(),
+        RouteManager.resetPasswordScreen: (context) =>
+            const ResetPasswordScreen(),
+        RouteManager.forgetPasswordScreen: (context) =>
+            const ForgetPasswordScreen(),
+      },
+      initialRoute: initialRoute(),
+    );
   }
 }

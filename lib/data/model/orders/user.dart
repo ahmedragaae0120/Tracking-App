@@ -6,7 +6,7 @@
 /// phone : "+201010700999"
 /// photo : "default-profile.png"
 
-
+// ignore_for_file: dangling_library_doc_comments
 
 class User {
   User({
@@ -16,7 +16,8 @@ class User {
     this.email,
     this.gender,
     this.phone,
-    this.photo,});
+    this.photo,
+  });
 
   User.fromJson(dynamic json) {
     id = json['_id'];
@@ -46,5 +47,4 @@ class User {
     map['photo'] = photo;
     return map;
   }
-
 }

@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:io'; // Import for File
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
@@ -51,8 +46,6 @@ class _ApplyScreenState extends State<ApplyScreen> {
     authCubit.loadCountries();
   }
 
-
-
   @override
   void dispose() {
     firstNameController.dispose();
@@ -70,37 +63,35 @@ class _ApplyScreenState extends State<ApplyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: ColorManager.white,
+    return Scaffold(
+      backgroundColor: ColorManager.white,
       appBar: AppBar(
-          backgroundColor: ColorManager.white,
+        backgroundColor: ColorManager.white,
         title: Text(AppStrings.apply),
       ),
       body: BlocBuilder<AuthCubit, AuthState>(
         bloc: authCubit,
         builder: (context, state) {
-if(state is applySuccess){
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    Navigator.pushNamed(context, RouteManager.applySuccess);
-
-  });
-}
-           if(state is LoadContrySuccess){
-countries=state.countries;
+          if (state is applySuccess) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.pushNamed(context, RouteManager.applySuccess);
+            });
           }
-          else if (state is applyFailure) {
-            toastMessage(message: state.message, tybeMessage: TybeMessage.negative);
-          }
-
-         else  if (state is applyLoading) {
+          if (state is LoadContrySuccess) {
+            countries = state.countries;
+          } else if (state is applyFailure) {
+            toastMessage(
+                message: state.message, tybeMessage: TybeMessage.negative);
+          } else if (state is applyLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is getVehiclesSuccess) {
-
-
-              vehicleTypes = state.vehicles.vehicles ?? [];
-              if (vehicleTypes.isNotEmpty) {
-                selectedVehicleType = selectedVehicleType.isEmpty ? vehicleTypes.first.id ?? '' : selectedVehicleType;
-
-            }}
+            vehicleTypes = state.vehicles.vehicles ?? [];
+            if (vehicleTypes.isNotEmpty) {
+              selectedVehicleType = selectedVehicleType.isEmpty
+                  ? vehicleTypes.first.id ?? ''
+                  : selectedVehicleType;
+            }
+          }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -109,7 +100,8 @@ countries=state.countries;
                 Text(
                   AppStrings.welcome,
                   style: TextStyle(
-                    fontSize: AppTheme.lightTheme.textTheme.titleLarge?.fontSize,
+                    fontSize:
+                        AppTheme.lightTheme.textTheme.titleLarge?.fontSize,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -125,33 +117,32 @@ countries=state.countries;
                     fontSize: AppTheme.lightTheme.textTheme.bodyLarge?.fontSize,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  style: BorderStyle.none,
-                  width: 4,
-                  color: Colors.black,
-                ),
-              ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
-          ,label: Text(AppStrings.country),
-            ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        style: BorderStyle.none,
+                        width: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    label: Text(AppStrings.country),
+                  ),
                   value: countries.any((c) => c['name'] == selectedCountry)
                       ? selectedCountry
                       : null,
                   hint: Text(AppStrings.selectCountry),
-
                   items: countries.map((e) {
                     return DropdownMenuItem<String>(
-
-                      value: e['name']??"error",
+                      value: e['name'] ?? "error",
                       child: Row(
                         children: [
-                          Text(e['flag']??"error"),
+                          Text(e['flag'] ?? "error"),
                           const SizedBox(width: 8),
-                          Text(e['name']??"error"),
+                          Text(e['name'] ?? "error"),
                         ],
                       ),
                     );
@@ -168,13 +159,13 @@ countries=state.countries;
                   controller: firstNameController,
                   hintText: AppStrings.enterFirstLegalName,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.secondLegalName,
                   controller: lastNameController,
                   hintText: AppStrings.enterSecondLegalName,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -184,17 +175,18 @@ countries=state.countries;
                         color: Colors.black,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16)
-                    ,label: Text('${AppStrings.vehicleType}'),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    label: Text(AppStrings.vehicleType),
                   ),
                   value: selectedVehicleType.isNotEmpty &&
-          vehicleTypes.any((v) => v.id == selectedVehicleType)
-          ? selectedVehicleType
-              : null,
-                  items: vehicleTypes.map((e){
+                          vehicleTypes.any((v) => v.id == selectedVehicleType)
+                      ? selectedVehicleType
+                      : null,
+                  items: vehicleTypes.map((e) {
                     return DropdownMenuItem<String>(
-                      value:e.id??"ads",
-                      child: Text(e.type??''),
+                      value: e.id ?? "ads",
+                      child: Text(e.type ?? ''),
                     );
                   }).toList(),
                   onChanged: (val) {
@@ -209,7 +201,7 @@ countries=state.countries;
                   controller: vehicleNumberController,
                   hintText: AppStrings.enterVehicleNumber,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.vehicleLicense,
                   controller: vehicleLicenseController,
@@ -226,25 +218,25 @@ countries=state.countries;
                     icon: const Icon(Icons.upload),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.email,
                   controller: emailController,
                   hintText: AppStrings.enterEmail,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.phoneNumber,
                   controller: phoneController,
                   hintText: AppStrings.enterPhoneNumber,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.idNumber,
                   controller: idNumberController,
                   hintText: AppStrings.enterIDNumber,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 CustomTextField(
                   labelText: AppStrings.idImage,
                   controller: idImageController,
@@ -261,7 +253,7 @@ countries=state.countries;
                     icon: const Icon(Icons.upload),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
@@ -272,7 +264,7 @@ countries=state.countries;
                         obscureText: true,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: CustomTextField(
                         labelText: AppStrings.confirmPassword,
@@ -283,7 +275,7 @@ countries=state.countries;
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Text(
@@ -300,7 +292,7 @@ countries=state.countries;
                       groupValue: selectedGender,
                       onChanged: (val) {
                         setState(() {
-                         if(val!=null) selectedGender = val;
+                          if (val != null) selectedGender = val;
                         });
                       },
                     ),
@@ -314,7 +306,7 @@ countries=state.countries;
                       groupValue: selectedGender,
                       onChanged: (val) {
                         setState(() {
-                          if(val!=null) selectedGender = val;
+                          if (val != null) selectedGender = val;
                         });
                       },
                     ),
@@ -325,7 +317,7 @@ countries=state.countries;
                   style: AppTheme.lightTheme.elevatedButtonTheme.style,
                   onPressed: () async {
                     final request = applyrequest(
-                      country: selectedCountry??'',
+                      country: selectedCountry ?? '',
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       vehicleType: selectedVehicleType,

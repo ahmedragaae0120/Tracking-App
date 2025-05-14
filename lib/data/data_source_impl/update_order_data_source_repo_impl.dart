@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/api_manager.dart';
@@ -27,7 +29,6 @@ class getallvehicleimpl extends UpdateOrderdatasource {
       );
 
       // Accessing the "state" from the response and printing it
-      print("State from response: ${response.data['orders']['state']}✅✅");
       if (response.data["message"] == "success") {
         return true;
       } else {
