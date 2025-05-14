@@ -87,9 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   message: state.message, tybeMessage: TybeMessage.negative);
             } else if (state is RejectOrderSuccessState) {
               toastMessage(
-                message: "Order rejected successfully",
-                tybeMessage: TybeMessage.negative,
-              );
+                  message: "Order rejected successfully",
+                  tybeMessage: TybeMessage.positive);
             }
           },
           builder: (context, state) {
@@ -130,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     if (index < cubit.filteredOrders.length) {
                                       final order = cubit.filteredOrders[index];
                                       return CustomFlowerOrder(
-                                        price: order.totalPrice?.toString() ?? "0",
+                                        price:
+                                            order.totalPrice?.toString() ?? "0",
                                         order: order,
                                         onReject: (id) {
                                           cubit.doIntent(
