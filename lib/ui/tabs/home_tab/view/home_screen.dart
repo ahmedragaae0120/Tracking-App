@@ -59,8 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
             final cubit = context.read<HomeCubit>();
 
             if (state is StartOrderSuccessState) {
-              final selectedOrder = cubit.allOrders.firstWhere(
+              // Find the order in filteredOrders instead of allOrders
+              // or use firstWhere with orElse to prevent exceptions
+              final selectedOrder = cubit.filteredOrders.firstWhere(
                 (order) => order.id == state.orderId,
+                orElse: () => cubit.allOrders.firstWhere(
+                  (order) => order.id == state.orderId,
+                  orElse: () => throw Exception("Order not found"),
+                ),
               );
 
               Navigator.push(

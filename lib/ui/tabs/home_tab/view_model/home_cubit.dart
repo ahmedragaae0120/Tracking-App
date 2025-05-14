@@ -109,19 +109,90 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  _searchOrders(SearchOrdersIntent intent) {
+  _searchOrders(SearchOrdersIntent intent) async {
     if (intent.query.isEmpty) {
       filteredOrders = allOrders;
-    } else {
-      filteredOrders = allOrders.where((order) {
-        // Search by order number, customer name, or any other relevant field
-        final orderNumber = order.orderNumber?.toLowerCase() ?? '';
-        final customerName =
-            '${order.user?.firstName} ${order.user?.lastName}'.toLowerCase();
-        final query = intent.query.toLowerCase();
+      emit(SearchOrdersSuccessState(orders: filteredOrders));
+      return;
+    }
 
-        return orderNumber.contains(query) || customerName.contains(query);
-      }).toList();
+    List<Orders> localResults = allOrders.where((order) {
+      final orderId = order.id?.toLowerCase() ?? '';
+      final orderNumber = order.orderNumber?.toLowerCase() ?? '';
+      final customerName =
+          '${order.user?.firstName} ${order.user?.lastName}'.toLowerCase();
+      final query = intent.query.toLowerCase();
+
+      return orderId.contains(query) ||
+          orderNumber.contains(query) ||
+          customerName.contains(query);
+    }).toList();
+
+    if (localResults.isNotEmpty) {
+      filteredOrders = localResults;
+      emit(SearchOrdersSuccessState(orders: filteredOrders));
+      return;
+    }
+
+    if (intent.query.length >= 5) {
+      emit(GetPendingOrdersLoadingState());
+
+      int page = 1;
+      bool hasMorePages = true;
+      int totalPages = 9;
+      List<Orders> searchResults = [];
+
+      while (hasMorePages && page <= totalPages) {
+        final result = await getPendingOrdersUseCase.invoke(page: page);
+
+        switch (result) {
+          case SuccessApiResult():
+            final pageOrders = result.data ?? [];
+
+            if (pageOrders.isEmpty) {
+              hasMorePages = false;
+            } else {
+              final matchingOrders = pageOrders.where((order) {
+                final orderId = order.id?.toLowerCase() ?? '';
+                final orderNumber = order.orderNumber?.toLowerCase() ?? '';
+                final query = intent.query.toLowerCase();
+
+                return orderId.contains(query) || orderNumber.contains(query);
+              }).toList();
+
+              if (matchingOrders.isNotEmpty) {
+                searchResults.addAll(matchingOrders);
+                // If we found an exact match, we can stop searching
+                if (matchingOrders.any((order) =>
+                    (order.id?.toLowerCase() ?? '') ==
+                        intent.query.toLowerCase() ||
+                    (order.orderNumber?.toLowerCase() ?? '') ==
+                        intent.query.toLowerCase())) {
+                  hasMorePages = false;
+                }
+              }
+
+              page++;
+            }
+            break;
+          case ErrorApiResult():
+            emit(GetPendingOrdersErrorState(
+                message: result.exception.toString()));
+            return;
+        }
+      }
+
+      // Update our local cache with the search results
+      for (var order in searchResults) {
+        if (!allOrders.any((existingOrder) => existingOrder.id == order.id)) {
+          allOrders.add(order);
+        }
+      }
+
+      filteredOrders = searchResults;
+    } else {
+      // For short queries that didn't match locally, just show empty results
+      filteredOrders = [];
     }
 
     emit(SearchOrdersSuccessState(orders: filteredOrders));
