@@ -22,6 +22,10 @@ import '../../data/data_source_contract/auth/forget_password_datasource/verify_p
     as _i958;
 import '../../data/data_source_contract/auth/loadcountries.dart' as _i910;
 import '../../data/data_source_contract/auth/login_datasource.dart' as _i1048;
+import '../../data/data_source_contract/get_driver_orders_datasourse.dart'
+    as _i629;
+import '../../data/data_source_contract/get_specific_product_datasource.dart'
+    as _i312;
 import '../../data/data_source_contract/pending_orders_datasource.dart' as _i30;
 import '../../data/data_source_contract/profile/get_logged_driver_data_datasource.dart'
     as _i709;
@@ -41,6 +45,10 @@ import '../../data/data_source_impl/auth/forget_password_datasource_impl/verify_
 import '../../data/data_source_impl/auth/loadcountries_datasource_impl.dart'
     as _i826;
 import '../../data/data_source_impl/auth/login_datasource_impl.dart' as _i1013;
+import '../../data/data_source_impl/get_driver_orders_datasourse_impl.dart'
+    as _i628;
+import '../../data/data_source_impl/get_specific_product_datasource_impl.dart'
+    as _i351;
 import '../../data/data_source_impl/pending_orders_datasource_impl.dart'
     as _i345;
 import '../../data/data_source_impl/profile/get_driver_profile_datasource_impl.dart'
@@ -60,6 +68,8 @@ import '../../data/repo_impl/auth/forget_password_repo_impl/verify_reset_code_re
     as _i532;
 import '../../data/repo_impl/auth/loadcountries_repo_impl.dart' as _i300;
 import '../../data/repo_impl/auth/login_repo_impl.dart' as _i314;
+import '../../data/repo_impl/get_driver_orders_repo_impl.dart' as _i61;
+import '../../data/repo_impl/get_specific_product_repo_impl.dart' as _i288;
 import '../../data/repo_impl/pending_orders_repo_impl.dart' as _i360;
 import '../../data/repo_impl/profile/profile_repo_impl.dart' as _i114;
 import '../../data/repo_impl/tracking/tracking_repo_impl.dart' as _i481;
@@ -74,6 +84,8 @@ import '../../domain/repo_contract/auth/forget_password_repo/verify_reset_code_r
     as _i389;
 import '../../domain/repo_contract/auth/loadcountries_contract.dart' as _i317;
 import '../../domain/repo_contract/auth/login_repo.dart' as _i284;
+import '../../domain/repo_contract/get_driver_orders_repo.dart' as _i169;
+import '../../domain/repo_contract/get_specific_product_repo.dart' as _i555;
 import '../../domain/repo_contract/pending_orders_repo.dart' as _i1031;
 import '../../domain/repo_contract/profile/profile_repo.dart' as _i689;
 import '../../domain/repo_contract/tracking/tracking_repo.dart' as _i861;
@@ -88,7 +100,9 @@ import '../../domain/use_cases/auth/forget_password/verify_reset_code_usecase.da
     as _i750;
 import '../../domain/use_cases/auth/loadcountries.dart' as _i1000;
 import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
+import '../../domain/use_cases/get_driver_orders_usecase.dart' as _i1017;
 import '../../domain/use_cases/get_pending_orders_usecase.dart' as _i966;
+import '../../domain/use_cases/get_specific_product_usecase.dart' as _i789;
 import '../../domain/use_cases/profile/get_profile_details_usecase.dart'
     as _i444;
 import '../../domain/use_cases/start_order_usecase.dart' as _i468;
@@ -102,6 +116,7 @@ import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
 import '../../ui/order_details_screen/view_model/cubit/order_details_cubit.dart'
     as _i598;
 import '../../ui/tabs/home_tab/view_model/home_cubit.dart' as _i894;
+import '../../ui/tabs/orders_tab/view_model/orders_cubit.dart' as _i893;
 import '../api/api_manager.dart' as _i1047;
 import '../cache/shared_pref.dart' as _i299;
 import '../local/firestore_hepler.dart' as _i492;
@@ -130,6 +145,11 @@ extension GetItInjectableX on _i174.GetIt {
           cacheHelper: gh<_i299.CacheHelper>(),
           apiManager: gh<_i1047.ApiManager>(),
         ));
+    gh.factory<_i312.GetSpecificProductDatasource>(
+        () => _i351.GetSpecificProductDatasourceImpl(
+              cacheHelper: gh<_i299.CacheHelper>(),
+              apiManager: gh<_i1047.ApiManager>(),
+            ));
     gh.factory<_i709.ProfileDatasource>(() => _i1031.ProfileDatasourceImpl(
           gh<_i1047.ApiManager>(),
           gh<_i299.CacheHelper>(),
@@ -142,6 +162,11 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i30.PendingOrdersDataSource>(
         () => _i345.PendingOrdersDataSourceImpl(
+              cacheHelper: gh<_i299.CacheHelper>(),
+              apiManager: gh<_i1047.ApiManager>(),
+            ));
+    gh.factory<_i629.GetDriverOrdersDatasourse>(
+        () => _i628.GetDriverOrdersDatasourseImpl(
               cacheHelper: gh<_i299.CacheHelper>(),
               apiManager: gh<_i1047.ApiManager>(),
             ));
@@ -162,6 +187,8 @@ extension GetItInjectableX on _i174.GetIt {
             apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i444.GetProfileDetailsUsecase>(
         () => _i444.GetProfileDetailsUsecase(gh<_i689.ProfileRepo>()));
+    gh.factory<_i169.GetDriverOrdersRepo>(() =>
+        _i61.GetDriverOrdersRepoImpl(gh<_i629.GetDriverOrdersDatasourse>()));
     gh.factory<_i317.loadCountriesRepo>(() => _i300.loadcountriesRepoImpl(
         load: gh<_i910.loadcountriesDataSourseRepo>()));
     gh.factory<_i1067.TrackingDataSource>(
@@ -183,6 +210,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i883.ForgetpasswordRepo>(() => _i363.Forgetpasswordrepoimpl(
         forgetpassword_data_sourse_repo:
             gh<_i879.ForgetpasswordDataSourseRepo>()));
+    gh.factory<_i555.GetSpecificProductRepo>(() =>
+        _i288.GetSpecificProductRepoImpl(
+            gh<_i312.GetSpecificProductDatasource>()));
     gh.factory<_i587.ForgetPasswordUseCase>(() => _i587.ForgetPasswordUseCase(
         forgetPassword: gh<_i883.ForgetpasswordRepo>()));
     gh.factory<_i861.TrackingRepo>(
@@ -191,6 +221,9 @@ extension GetItInjectableX on _i174.GetIt {
         _i750.VerifyresetcodeUseCase(repo: gh<_i389.VerifyresetcodeRepo>()));
     gh.factory<_i196.applyRepoContract>(() => _i240.applyRepoImpl(
         applyDataSource: gh<_i130.Applydatasourcecontract>()));
+    gh.factory<_i1017.GetDriverOrdersUsecase>(() =>
+        _i1017.GetDriverOrdersUsecase(
+            getDriverOrdersRepo: gh<_i169.GetDriverOrdersRepo>()));
     gh.factory<_i912.LoginUsecase>(
         () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
     gh.factory<_i475.UpdateDriverInfoUsecase>(
@@ -211,6 +244,9 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i221.ResetpasswordUsecase>(
         () => _i221.ResetpasswordUsecase(repo: gh<_i151.ResetpasswordRepo>()));
+    gh.factory<_i789.GetSpecificProductUsecase>(() =>
+        _i789.GetSpecificProductUsecase(
+            getSpecificProductRepo: gh<_i555.GetSpecificProductRepo>()));
     gh.factory<_i894.HomeCubit>(() => _i894.HomeCubit(
           gh<_i966.GetPendingOrdersUseCase>(),
           gh<_i468.StartOrderUseCase>(),
@@ -218,6 +254,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i212.ApplyUseCase>(
         () => _i212.ApplyUseCase(applyContract: gh<_i196.applyRepoContract>()));
+    gh.factory<_i893.OrdersCubit>(() => _i893.OrdersCubit(
+          gh<_i1017.GetDriverOrdersUsecase>(),
+          gh<_i789.GetSpecificProductUsecase>(),
+        ));
     gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit(
           gh<_i912.LoginUsecase>(),
           gh<_i1000.loadcountriesUseCase>(),

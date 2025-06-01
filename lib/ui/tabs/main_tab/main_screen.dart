@@ -7,6 +7,7 @@ import 'package:tracking_app/ui/tabs/home_tab/view/home_screen.dart';
 
 import '../../../core/utils/colors_manager.dart';
 import '../../../core/utils/string_manager.dart';
+import '../orders_tab/view/orders_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialTab;
@@ -33,7 +34,10 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onItemTapped(int index) {
-    if ((index == 2 || index == 3)) {
+    // if ((index == 2 || index == 3)) {
+    //   //Dialogs.restrictedAccess(context, () => Navigator.pop(context));
+    //   return;
+    if ((index == 3)) {
       //Dialogs.restrictedAccess(context, () => Navigator.pop(context));
       return;
     }
@@ -50,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
         index: _selectedIndex,
         children: [
           HomeScreen(),
-          HomeScreen(),
+          OrdersScreen(),
           HomeScreen(),
         ],
       ),
