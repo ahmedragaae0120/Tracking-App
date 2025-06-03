@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/local/firestore_hepler.dart';
 import 'package:tracking_app/domain/common/result.dart';

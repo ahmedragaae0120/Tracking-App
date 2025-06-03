@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
@@ -48,10 +50,8 @@ class OrderDetailsCubit extends Cubit<OrderDetailsState> {
       case ErrorApiResult():
         emit(UpdateOrderStatusErrorState(result.exception.toString()));
         break;
-
     }
   }
-
 
   _updateDriverInfo({
     required UpdateDriverInfoIntent driverInfoIntent,
@@ -72,8 +72,6 @@ class OrderDetailsCubit extends Cubit<OrderDetailsState> {
         break;
     }
   }
-
-
 
   _updateOrderStatus({
     required UpdateOrderStatusIntent orderStatusIntent,

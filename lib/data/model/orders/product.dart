@@ -1,4 +1,3 @@
-
 /// _id : "673e308c115992017182816d"
 /// title : "Moko Chocolate Set | Esperance Rose"
 /// slug : "moko-chocolate-set-or-esperance-rose"
@@ -15,6 +14,8 @@
 /// __v : 0
 /// discount : 50
 /// sold : 1055
+
+// ignore_for_file: dangling_library_doc_comments
 
 class Product {
   Product({
@@ -33,7 +34,8 @@ class Product {
     this.updatedAt,
     this.v,
     this.discount,
-    this.sold,});
+    this.sold,
+  });
 
   Product.fromJson(dynamic json) {
     id = json['_id'];
@@ -90,5 +92,4 @@ class Product {
     map['sold'] = sold;
     return map;
   }
-
 }

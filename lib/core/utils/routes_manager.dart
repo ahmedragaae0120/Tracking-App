@@ -1,6 +1,8 @@
+// ignore_for_file: constant_identifier_names
 
 class RouteManager {
   static const String homeScreen = "/HOMESCREEN";
+  static const String orderDetailsScreen = "/ORDERDETAILSSCREEN";
   static const String mainScreen = "/MAINSCREEN";
   static const String loginScreen = "/LOGINSCREEN";
   static const String forgetPasswordScreen = "/FORGETPASSWORDSCREEN";
@@ -13,4 +15,3 @@ class RouteManager {
   static const String changePasswordScreen = '/change-password';
 
 }
-

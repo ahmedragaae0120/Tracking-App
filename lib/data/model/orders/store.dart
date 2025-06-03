@@ -4,13 +4,16 @@
 /// phoneNumber : "1234567890"
 /// latLong : "37.7749,-122.4194"
 
+// ignore_for_file: dangling_library_doc_comments
+
 class Store {
   Store({
     this.name,
     this.image,
     this.address,
     this.phoneNumber,
-    this.latLong,});
+    this.latLong,
+  });
 
   Store.fromJson(dynamic json) {
     name = json['name'];
@@ -34,5 +37,4 @@ class Store {
     map['latLong'] = latLong;
     return map;
   }
-
 }

@@ -139,8 +139,8 @@ class AppTheme {
       tabAlignment: TabAlignment.start,
     ),
 
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: ColorManager.backgroundColor,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: ColorManager.primaryColor,
     ),
 
     // 🛒 تصميم بطاقات المنتجات (Cards)

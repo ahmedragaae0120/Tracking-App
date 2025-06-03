@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/constant.dart';
@@ -38,8 +40,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           widget.order.state == Constant.completedKey,
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: widget.order.state == Constant.canceledKey ||
-              widget.order.state == Constant.completedKey,
+          automaticallyImplyLeading:
+              widget.order.state == Constant.canceledKey ||
+                  widget.order.state == Constant.completedKey,
           title: Text(AppStrings.orderDetails),
         ),
         body: BlocProvider(
@@ -56,7 +59,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 toastMessage(
                     message: AppStrings.orderDeliveredSuccessfully,
                     tybeMessage: TybeMessage.positive);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SuccessPage(),));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SuccessPage(),
+                    ));
               }
             },
             child: BlocBuilder<OrderDetailsCubit, OrderDetailsState>(
@@ -215,8 +222,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   cubit.doIntent(UpdateOrderStatusIntent(
                                       isDone: true,
                                       orderId: widget.order.id ?? "",
-                                      statusName:
-                                          OrderStatus.delivered));
+                                      statusName: OrderStatus.delivered));
                                   cubit.doIntent(UpdateOrderStatusApiIntent(
                                     orderId: widget.order.id ?? "",
                                   ));

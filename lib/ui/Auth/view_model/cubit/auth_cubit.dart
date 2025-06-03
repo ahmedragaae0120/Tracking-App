@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, avoid_print, non_constant_identifier_names
+
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';

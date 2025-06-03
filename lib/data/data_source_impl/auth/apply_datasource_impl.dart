@@ -1,4 +1,6 @@
 import 'dart:developer';
+// ignore_for_file: camel_case_types, avoid_function_literals_in_foreach_calls
+
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -31,9 +33,10 @@ class applyDataSourceImpl extends Applydatasourcecontract {
         endpoint: EndPoint.apply,
         body: formData,
       );
-      final dto =  ApplyResponseDto.fromJson(response.data);
+      final dto = ApplyResponseDto.fromJson(response.data);
 
-      if (dto.message == null || !dto.message!.toLowerCase().contains("success")) {
+      if (dto.message == null ||
+          !dto.message!.toLowerCase().contains("success")) {
         throw DioException(
           requestOptions: RequestOptions(path: EndPoint.apply),
           response: Response(

@@ -1,25 +1,24 @@
+// ignore_for_file: overridden_fields, annotate_overrides
+
 import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
 
 class ApplyResponseDto extends ApplyEntity {
   ApplyResponseDto({
-      super.message,
-      super.driver,
-      super.token,});
+    super.message,
+    super.driver,
+    super.token,
+  });
 
   ApplyResponseDto.fromJson(dynamic json) {
     message = json['message'];
     driver = json['driver'] != null ? Driver.fromJson(json['driver']) : null;
     token = json['token'];
   }
-
-
-
-
 }
 
 class Driver extends DriverEntity {
   Driver({
-      super.country,
+    super.country,
     super.firstName,
     super.lastName,
     super.vehicleType,
@@ -33,7 +32,8 @@ class Driver extends DriverEntity {
     super.photo,
     super.role,
     super.id,
-    super.createdAt,});
+    super.createdAt,
+  });
 
   Driver.fromJson(dynamic json) {
     country = json['country'];
@@ -67,37 +67,40 @@ class Driver extends DriverEntity {
   String? role;
   String? id;
   String? createdAt;
-Driver copyWith({  String? country,
-  String? firstName,
-  String? lastName,
-  String? vehicleType,
-  String? vehicleNumber,
-  String? vehicleLicense,
-  String? nid,
-  String? nIDImg,
-  String? email,
-  String? gender,
-  String? phone,
-  String? photo,
-  String? role,
-  String? id,
-  String? createdAt,
-}) => Driver(  country: country ?? this.country,
-  firstName: firstName ?? this.firstName,
-  lastName: lastName ?? this.lastName,
-  vehicleType: vehicleType ?? this.vehicleType,
-  vehicleNumber: vehicleNumber ?? this.vehicleNumber,
-  vehicleLicense: vehicleLicense ?? this.vehicleLicense,
-  nid: nid ?? this.nid,
-  nIDImg: nIDImg ?? this.nIDImg,
-  email: email ?? this.email,
-  gender: gender ?? this.gender,
-  phone: phone ?? this.phone,
-  photo: photo ?? this.photo,
-  role: role ?? this.role,
-  id: id ?? this.id,
-  createdAt: createdAt ?? this.createdAt,
-);
+  Driver copyWith({
+    String? country,
+    String? firstName,
+    String? lastName,
+    String? vehicleType,
+    String? vehicleNumber,
+    String? vehicleLicense,
+    String? nid,
+    String? nIDImg,
+    String? email,
+    String? gender,
+    String? phone,
+    String? photo,
+    String? role,
+    String? id,
+    String? createdAt,
+  }) =>
+      Driver(
+        country: country ?? this.country,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        vehicleType: vehicleType ?? this.vehicleType,
+        vehicleNumber: vehicleNumber ?? this.vehicleNumber,
+        vehicleLicense: vehicleLicense ?? this.vehicleLicense,
+        nid: nid ?? this.nid,
+        nIDImg: nIDImg ?? this.nIDImg,
+        email: email ?? this.email,
+        gender: gender ?? this.gender,
+        phone: phone ?? this.phone,
+        photo: photo ?? this.photo,
+        role: role ?? this.role,
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+      );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['country'] = country;
@@ -117,5 +120,4 @@ Driver copyWith({  String? country,
     map['createdAt'] = createdAt;
     return map;
   }
-
 }
