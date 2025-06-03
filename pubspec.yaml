@@ -59,6 +59,10 @@ dependencies:
   flutter_svg: ^2.1.0
   flutter_phone_direct_caller: ^2.2.1
   pretty_dio_logger: ^1.4.0
+  google_maps_flutter: ^2.12.2
+  geolocator: ^14.0.1
+  geocoding: ^4.0.0
+  flutter_polyline_points: ^2.1.0
 
 dev_dependencies:
   flutter_test:

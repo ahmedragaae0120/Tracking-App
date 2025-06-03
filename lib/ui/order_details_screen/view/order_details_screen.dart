@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tracking_app/core/constant.dart';
 import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/local/firestore_hepler.dart';
@@ -18,6 +19,7 @@ import 'package:tracking_app/ui/order_details_screen/view/widgets/order_details_
 import 'package:tracking_app/ui/order_details_screen/view/widgets/product_summary_card.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/order_details_cubit.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/oreder_datails_intent.dart';
+import 'package:tracking_app/ui/pick_up_location/view/pick_up_location_screen.dart';
 import 'package:tracking_app/ui/success_page/view/success_page.dart';
 import 'widgets/payment_card.dart';
 
@@ -144,6 +146,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   name: widget.order.store?.name ?? "",
                                   phone: widget.order.store?.phoneNumber ?? "",
                                   subTitle: widget.order.store?.address ?? "",
+                                  onTap: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PickUpLocationScreen(
+                                          clientLocation: LatLng(30.0444, 31.2357), // Cairo coordinates
+                                          driverLocation: LatLng(30.0566, 31.2299),  // Nearby location
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 Text(
                                   AppStrings.userAddress,
@@ -155,6 +168,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   name: widget.order.user?.firstName ?? "",
                                   phone: widget.order.user?.phone ?? "",
                                   subTitle: widget.order.user?.email ?? "",
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PickUpLocationScreen(
+                                        clientLocation: LatLng(30.0444, 31.2357), // Cairo coordinates
+                                        driverLocation: LatLng(30.0566, 31.2299),  // Nearby location
+                                      ),
+                                    ),
+                                  );
+                                },
                                 ),
                                 Text(
                                   AppStrings.orderDetails,
