@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 // ignore_for_file: must_be_immutable, camel_case_types
 
 part of 'auth_cubit.dart';
@@ -123,4 +125,18 @@ final class GetLoggedInDriverDataErrorState extends AuthState {
   String? message;
 
   GetLoggedInDriverDataErrorState({required this.message});
+}
+
+
+
+///  LOGOUT STATES  ///
+
+
+class LogoutLoadingState extends AuthState {}
+
+class LogoutSuccessState extends AuthState {}
+
+class LogoutFailureState extends AuthState {
+  final String message;
+  LogoutFailureState({required this.message});
 }

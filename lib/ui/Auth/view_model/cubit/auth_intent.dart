@@ -46,7 +46,13 @@ class ResetPassword extends AuthIntent {
 
   ResetPassword({required this.email, required this.NewPassword});
 }
+class getVehiclesIntent extends AuthIntent{}
+class getLoginDriverDataIntent extends AuthIntent{}
 
-class getVehiclesIntent extends AuthIntent {}
 
-class getLoginDriverDataIntent extends AuthIntent {}
+
+///  LOGOUT INTENT ///
+class LogoutIntent extends AuthIntent {
+
+  LogoutIntent();
+}

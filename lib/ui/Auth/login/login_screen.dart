@@ -56,6 +56,9 @@ class _SignInScreenState extends State<SignInScreen> {
     Config().init(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {
+          Navigator.pushNamed(context, RouteManager.onBoardingScreen);
+        }, icon: Icon(Icons.arrow_back_ios_new_outlined)),
         title: Text(AppStrings.login),
       ),
       body: BlocListener<AuthCubit, AuthState>(

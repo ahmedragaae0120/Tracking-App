@@ -1,6 +1,10 @@
 // ignore_for_file: use_build_context_synchronously, prefer_is_not_operator
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../core/resuable_comp/custom_flower_order.dart';
+import '../../../../core/utils/colors_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/resuable_comp/custom_flower_order.dart';
@@ -165,3 +169,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
