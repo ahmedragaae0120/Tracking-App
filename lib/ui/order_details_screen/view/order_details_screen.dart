@@ -35,6 +35,19 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  LatLng latLngFromString(String? latLongStr) {
+    if (latLongStr == null || latLongStr.isEmpty) {
+      return LatLng(0, 0);
+    }
+    final parts = latLongStr.split(',');
+    if (parts.length != 2) {
+      return LatLng(0, 0);
+    }
+    final lat = double.tryParse(parts[0].trim()) ?? 0;
+    final lng = double.tryParse(parts[1].trim()) ?? 0;
+    return LatLng(lat, lng);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -147,12 +160,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   phone: widget.order.store?.phoneNumber ?? "",
                                   subTitle: widget.order.store?.address ?? "",
                                   onTap: (){
+                                    final driverLatLng = latLngFromString(widget.order.store?.latLong);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => PickUpLocationScreen(
-                                          clientLocation: LatLng(30.0444, 31.2357), // Cairo coordinates
-                                          driverLocation: LatLng(30.0566, 31.2299),  // Nearby location
+                                          clientLocation: LatLng(43.75691737943995, -105.27468239806696), // Cairo coordinates
+                                          driverLocation: driverLatLng,  // Nearby location
                                         ),
                                       ),
                                     );
