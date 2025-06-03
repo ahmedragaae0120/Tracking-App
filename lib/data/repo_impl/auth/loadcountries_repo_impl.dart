@@ -7,7 +7,7 @@ import 'package:tracking_app/domain/repo_contract/auth/loadcountries_contract.da
 
 @Injectable(as: loadCountriesRepo)
 class loadcountriesRepoImpl extends loadCountriesRepo {
-  LoadCountriesDataSourseRepo load;
+  loadcountriesDataSourseRepo load;
   loadcountriesRepoImpl({required this.load});
 
   @override

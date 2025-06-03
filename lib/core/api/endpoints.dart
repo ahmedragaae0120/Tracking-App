@@ -11,8 +11,6 @@ class EndPoint {
   static const String changePasswordEndpoint = "/v1/drivers/change-password";
   static const String apply = "/v1/drivers/apply";
   static const String getallvehicle = '/v1/vehicles';
-  static const String getLoggedInDriver = '/v1/drivers/profile-data';
-  static String updateOrderState(String id) => "/v1/orders/state/$id";
   static const String getPendingOrders = "/v1/orders/pending-orders";
   static String startOrder(String orderId) => "/v1/orders/start/$orderId";
 }
