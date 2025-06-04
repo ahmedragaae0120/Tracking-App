@@ -168,6 +168,11 @@ extension GetItInjectableX on _i174.GetIt {
           apiManager: gh<_i1047.ApiManager>(),
           cacheHelper: gh<_i299.CacheHelper>(),
         ));
+    gh.factory<_i312.GetSpecificProductDatasource>(
+        () => _i351.GetSpecificProductDatasourceImpl(
+              cacheHelper: gh<_i299.CacheHelper>(),
+              apiManager: gh<_i1047.ApiManager>(),
+            ));
     gh.factory<_i709.ProfileDatasource>(() => _i1031.ProfileDatasourceImpl(
           gh<_i1047.ApiManager>(),
           gh<_i299.CacheHelper>(),
@@ -180,6 +185,11 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i30.PendingOrdersDataSource>(
         () => _i345.PendingOrdersDataSourceImpl(
+              cacheHelper: gh<_i299.CacheHelper>(),
+              apiManager: gh<_i1047.ApiManager>(),
+            ));
+    gh.factory<_i629.GetDriverOrdersDatasourse>(
+        () => _i628.GetDriverOrdersDatasourseImpl(
               cacheHelper: gh<_i299.CacheHelper>(),
               apiManager: gh<_i1047.ApiManager>(),
             ));
@@ -200,6 +210,8 @@ extension GetItInjectableX on _i174.GetIt {
             apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i444.GetProfileDetailsUsecase>(
         () => _i444.GetProfileDetailsUsecase(gh<_i689.ProfileRepo>()));
+    gh.factory<_i169.GetDriverOrdersRepo>(() =>
+        _i61.GetDriverOrdersRepoImpl(gh<_i629.GetDriverOrdersDatasourse>()));
     gh.factory<_i317.loadCountriesRepo>(() => _i300.loadcountriesRepoImpl(
         load: gh<_i910.loadcountriesDataSourseRepo>()));
     gh.factory<_i1067.TrackingDataSource>(
@@ -239,6 +251,9 @@ extension GetItInjectableX on _i174.GetIt {
         _i750.VerifyresetcodeUseCase(repo: gh<_i389.VerifyresetcodeRepo>()));
     gh.factory<_i196.applyRepoContract>(() => _i240.applyRepoImpl(
         applyDataSource: gh<_i130.Applydatasourcecontract>()));
+    gh.factory<_i1017.GetDriverOrdersUsecase>(() =>
+        _i1017.GetDriverOrdersUsecase(
+            getDriverOrdersRepo: gh<_i169.GetDriverOrdersRepo>()));
     gh.factory<_i912.LoginUsecase>(
         () => _i912.LoginUsecase(loginRepo: gh<_i284.LoginRepo>()));
     gh.factory<_i475.UpdateDriverInfoUsecase>(
