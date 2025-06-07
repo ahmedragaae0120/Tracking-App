@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -158,8 +159,10 @@ class _PickUpLocationScreenState extends State<PickUpLocationScreen> {
     );
 
     // أضف صورة دراجة في منتصف الطريق
-    final midLat = (widget.driverLocation.latitude + widget.clientLocation.latitude) / 2;
-    final midLng = (widget.driverLocation.longitude + widget.clientLocation.longitude) / 2;
+    final midLat =
+        (widget.driverLocation.latitude + widget.clientLocation.latitude) / 2;
+    final midLng =
+        (widget.driverLocation.longitude + widget.clientLocation.longitude) / 2;
     final midPoint = LatLng(midLat, midLng);
 
     final motorcycleIcon = await _getMotorcycleIcon();

@@ -14,8 +14,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: PickUpLocationScreen(
-            clientLocation: clientLocation,
-            driverLocation: driverLocation,
+            storeLocation: clientLocation,
+            userLocation: driverLocation,
           ),
         ),
       );
