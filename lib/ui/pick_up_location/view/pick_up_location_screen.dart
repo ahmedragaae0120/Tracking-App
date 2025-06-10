@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tracking_app/config/theme/app_theme.dart';
 import 'package:tracking_app/core/utils/assets_manager.dart';
 import 'package:tracking_app/core/utils/colors_manager.dart';
 import 'package:tracking_app/ui/pick_up_location/view/widget/marker_item.dart';
@@ -224,22 +225,22 @@ class _PickUpLocationScreenState extends State<PickUpLocationScreen> {
                 value: _mapType,
                 underline: SizedBox(),
                 icon: const Icon(Icons.arrow_drop_down),
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: MapType.normal,
-                    child: Text('Normal'),
+                    child: Text(
+                      'Normal',
+                      style: AppTheme.lightTheme.textTheme.titleSmall
+                          ?.copyWith(color: ColorManager.primaryColor),
+                    ),
                   ),
                   DropdownMenuItem(
                     value: MapType.satellite,
-                    child: Text('Satellite'),
-                  ),
-                  DropdownMenuItem(
-                    value: MapType.terrain,
-                    child: Text('Terrain'),
-                  ),
-                  DropdownMenuItem(
-                    value: MapType.hybrid,
-                    child: Text('Hybrid'),
+                    child: Text(
+                      'Satellite',
+                      style: AppTheme.lightTheme.textTheme.titleSmall
+                          ?.copyWith(color: ColorManager.primaryColor),
+                    ),
                   ),
                 ],
                 onChanged: (value) {
