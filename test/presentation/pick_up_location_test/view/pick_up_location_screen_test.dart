@@ -8,14 +8,11 @@ void main() {
 
   group('PickUpLocationScreen UI Tests', () {
     final LatLng clientLocation = const LatLng(37.7749, -122.4194);
-    final LatLng driverLocation = const LatLng(37.7849, -122.4094);
 
     testWidgets('should display GoogleMap', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: PickUpLocationScreen(
-            storeLocation: clientLocation,
-            userLocation: driverLocation,
+          home: PickUpLocationScreen(clientLocation: clientLocation,
           ),
         ),
       );

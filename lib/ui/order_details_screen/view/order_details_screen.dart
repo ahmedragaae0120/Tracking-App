@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -61,7 +59,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-
     return PopScope(
       canPop: widget.order.state == Constant.canceledKey ||
           widget.order.state == Constant.completedKey,
@@ -78,15 +75,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: _buildMapWidget(), // استدعاء كلاس الخريطة الخاص بك هنا
+              child: _buildMapWidget(),
             ),
-
-            // slide sheet
             DraggableScrollableSheet(
               controller: _draggableController,
-              initialChildSize: 0.9, // يبدأ في 60% من الشاشة
-              minChildSize: 0.2, // أقل حجم 10% (للسماح برؤية الخريطة)
-              maxChildSize: 0.95, // أقصى حجم 95%
+              initialChildSize: 0.9,
+              minChildSize: 0.2,
+              maxChildSize: 0.95,
               builder: (context, scrollController) {
                 return Container(
                   decoration: BoxDecoration(
@@ -114,8 +109,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-
-                      // محتوى الشيت
                       Expanded(
                         child: BlocProvider(
                           create: (context) => getIt<OrderDetailsCubit>()
@@ -263,26 +256,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   subTitle: widget.order.store
                                                           ?.address ??
                                                       "",
-                                                  onTap: () {
-                                                    final driverLatLng =
-                                                        latLngFromString(widget
-                                                            .order
-                                                            .store
-                                                            ?.latLong);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PickUpLocationScreen(
-                                                          clientLocation: LatLng(
-                                                              43.75691737943995,
-                                                              -105.27468239806696),
-                                                          driverLocation:
-                                                              driverLatLng,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
                                                 ),
                                                 Text(
                                                   AppStrings.userAddress,
@@ -304,22 +277,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   subTitle: widget
                                                           .order.user?.email ??
                                                       "",
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PickUpLocationScreen(
-                                                          clientLocation:
-                                                              LatLng(30.0444,
-                                                                  31.2357),
-                                                          driverLocation:
-                                                              LatLng(30.0566,
-                                                                  31.2299),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
                                                 ),
                                                 Text(
                                                   AppStrings.orderDetails,
@@ -465,7 +422,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   Widget _buildMapWidget() {
-    return Container(height: 300, color: Colors.pink); // add map widget here
+    return Container(
+      height: 300,
+      child: PickUpLocationScreen(
+        clientLocation: LatLng(33.81024137847096, -117.74683888552876),
+      ),
+    );
   }
 
   int getStepNumberFromStatus(OrderStatus status) {
