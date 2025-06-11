@@ -60,6 +60,7 @@ dependencies:
   flutter_svg: ^2.1.0
   flutter_phone_direct_caller: ^2.2.1
   pretty_dio_logger: ^1.4.0
+  rive: ^0.13.20
 
 dev_dependencies:
   flutter_test:
