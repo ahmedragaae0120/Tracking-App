@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart';
 import 'package:tracking_app/core/cache/shared_pref.dart';
 import 'package:tracking_app/core/constant.dart';
 import 'package:tracking_app/core/di/di.dart';
@@ -28,8 +30,17 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final cacheHelper = getIt<CacheHelper>();
   bool _isPasswordVisible = false;
-
+  SMITrigger? failTrigger; // مشغل لحالة الفشل في تسجيل الدخول
+  SMITrigger? successTrigger; // مشغل لحالة النجاح في تسجيل الدخول
+  SMIBool? isHandsUp; // حالة منطقية لرفع يدي الدب (عند إدخال كلمة المرور)
+  SMIBool? isChecking; // حالة منطقية لتدقيق الدب (عند إدخال البريد الإلكتروني)
+  SMINumber? lookNumber; // متغير رقمي للتحكم في حركة عيون الدب
+  StateMachineController?
+      stateMachineController; // وحدة التحكم في آلة حالة Rive
+  Artboard? _riveArtboard; // لوحة الرسم التي تحتوي على الدب المتحرك
   void _validateAndLogin(BuildContext context) {
+    isChecking?.change(false);
+    isHandsUp?.change(false);
     if (_formKey.currentState!.validate()) {
       context.read<AuthCubit>().doIntent(
             SignInIntent(
@@ -38,6 +49,8 @@ class _SignInScreenState extends State<SignInScreen> {
               password: passwordController.text,
             ),
           );
+    } else {
+      failTrigger?.fire();
     }
   }
 
@@ -45,6 +58,60 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     setTokenNull();
+    rootBundle
+        .load('assets/animations/login_screen_character.riv')
+        .then((data) {
+      final file = RiveFile.import(data);
+      final artboard = file.mainArtboard;
+      stateMachineController =
+          StateMachineController.fromArtboard(artboard, "State Machine 1");
+
+      if (stateMachineController != null) {
+        artboard.addController(stateMachineController!);
+        // ربط المتغيرات المحلية بالمدخلات الموجودة في آلة حالة Rive
+
+        for (var input in stateMachineController!.inputs) {
+          // جميع القيم التى يتم مقارنتها هى موجودة فى animation نفسه فى الموقع بنفس الاسم
+          if (input.name == "Check") {
+            isChecking = input as SMIBool;
+          } else if (input.name == "hands_up") {
+            isHandsUp = input as SMIBool;
+          } else if (input.name == "Look") {
+            lookNumber = input as SMINumber;
+          } else if (input.name == "fail") {
+            failTrigger = input as SMITrigger;
+          } else if (input.name == "success") {
+            successTrigger = input as SMITrigger;
+          }
+        }
+        setState(() => _riveArtboard = artboard);
+      }
+    });
+  }
+
+  // دالة لتحريك الدب للنظر حوله (عند التركيز على حقل البريد الإلكتروني)
+  void lookAround() {
+    isChecking?.change(true);
+    isHandsUp?.change(false);
+    lookNumber?.change(0);
+  }
+
+  // دالة لتحريك عيون الدب بناءً على طول نص البريد الإلكتروني
+
+  void moveEyes(String value) {
+    lookNumber?.change(
+        value.length.toDouble()); // تغيير lookNumber بناءً على طول النص
+  }
+
+  // دالة لجعل الدب يغطي عينيه (عند التركيز على حقل كلمة المرور)
+  void handsUpOnEyes() {
+    if (_isPasswordVisible == false) {
+      isHandsUp?.change(true); // تعيين isHandsUp إلى true
+      isChecking?.change(false); // تعيين isChecking إلى false
+    } else {
+      isHandsUp?.change(false);
+      isChecking?.change(true);
+    }
   }
 
   void setTokenNull() async {
@@ -52,26 +119,43 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    stateMachineController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Config().init(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {
-          Navigator.pushNamed(context, RouteManager.onBoardingScreen);
-        }, icon: Icon(Icons.arrow_back_ios_new_outlined)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.onBoardingScreen);
+            },
+            icon: Icon(Icons.arrow_back_ios_new_outlined)),
         title: Text(AppStrings.login),
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccessState) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, RouteManager.mainScreen, (_) => false);
+            setState(() {
+              successTrigger?.fire();
+            });
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RouteManager.mainScreen, (_) => false);
+            });
             toastMessage(
               message: AppStrings.loginSuccessfully,
               tybeMessage: TybeMessage.positive,
             );
           }
           if (state is LoginErrorState) {
+            failTrigger?.fire();
+            setState(() {});
             toastMessage(
               message: state.message.toString(),
               tybeMessage: TybeMessage.negative,
@@ -94,6 +178,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      if (_riveArtboard != null)
+                        SizedBox(
+                          height: Config.screenHight! * 0.3,
+                          child: Rive(
+                            artboard: _riveArtboard!,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       CustomTextField(
                         labelText: AppStrings.email,
                         hintText: AppStrings.enterYourForgetPassword,
@@ -101,6 +193,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         controller: emailController,
                         keyboard: TextInputType.emailAddress,
                         validator: Validator.email,
+                        onchanged: (value) => moveEyes(value),
+                        onTap: () => lookAround(),
                       ),
                       SizedBox(height: 4),
                       CustomTextField(
@@ -109,6 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         controller: passwordController,
                         keyboard: TextInputType.text,
                         obscureText: !_isPasswordVisible,
+                        onTap: () => handsUpOnEyes(),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isPasswordVisible
@@ -118,6 +213,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           onPressed: () {
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
+                              handsUpOnEyes();
                             });
                           },
                         ),
