@@ -140,3 +140,15 @@ class LogoutFailureState extends AuthState {
   final String message;
   LogoutFailureState({required this.message});
 }
+
+class UpdateVehicleSuccessState extends AuthState {
+
+}
+
+class UpdateVehicleErrorState extends AuthState {
+  String message;
+
+  UpdateVehicleErrorState({required this.message});
+}
+
+class UpdateVehicleLoadingState extends AuthState {}

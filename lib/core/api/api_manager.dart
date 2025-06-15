@@ -49,7 +49,7 @@ class ApiManager {
 
   Future<Response> postRequest(
       {required String endpoint,
-      Map<String, dynamic>? body,
+     dynamic body,
       Map<String, dynamic>? headers}) async {
     var response = await dio.post(endpoint,
         data: body, options: Options(headers: headers));
