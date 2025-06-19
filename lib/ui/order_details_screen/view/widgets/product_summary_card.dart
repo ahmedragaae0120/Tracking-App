@@ -23,7 +23,10 @@ class ProductSummaryCard extends StatelessWidget {
               backgroundColor: Colors.grey[200],
               child: ClipOval(
                 child: CachedNetworkImage(
-                  imageUrl: orderItem.product?.images?.first ?? "",
+                  // imageUrl: orderItem.product?.images?.first ?? "",
+                  imageUrl: orderItem.product?.images?.isNotEmpty == true
+                      ? orderItem.product!.images!.first
+                      : "https://flower.elevateegy.com/uploads/66c36d5d-c067-46d9-b339-d81be57e0149-image_one.png",
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,
@@ -55,7 +58,7 @@ class ProductSummaryCard extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                orderItem.product?.title ?? "",
+                                orderItem.product?.title ?? "Wdding Flower",
                                 overflow: TextOverflow.clip,
                                 style: AppTextStyle.regular12
                                     .copyWith(color: ColorManager.grey),

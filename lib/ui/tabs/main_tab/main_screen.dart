@@ -9,6 +9,7 @@ import 'package:tracking_app/ui/tabs/profile_tab/profile_screen.dart';
 
 import '../../../core/utils/colors_manager.dart';
 import '../../../core/utils/string_manager.dart';
+import '../orders_tab/view/orders_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialTab;
@@ -36,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
 
     _screens = [
       HomeScreen(),             // Tab 0: Home
-      Placeholder(),            // Tab 1: Replace with OrdersScreen()
+      OrdersScreen(),            // Tab 1: OrdersScreen
       ProfileScreen(),          // Tab 2: Profile
     ];
   }

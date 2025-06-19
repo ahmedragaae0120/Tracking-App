@@ -16,110 +16,115 @@ class DestinationsWidget extends StatelessWidget {
   String name;
   String phone;
   String subTitle;
+  final VoidCallback? onTap;
 
   DestinationsWidget({
     required this.name,
     required this.phone,
     required this.subTitle,
     required this.imageUrl,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.grey[200],
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      color: Colors.white,
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.grey[200],
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  errorWidget: (context, url, error) => const Center(
-                    child: Icon(Icons.error, color: Colors.red),
+                    errorWidget: (context, url, error) => const Center(
+                      child: Icon(Icons.error, color: Colors.red),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Name and subtitle
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Name and subtitle
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.regular12
+                                .copyWith(color: ColorManager.grey),
+                          ),
+                          Text(
+                            subTitle,
+                            overflow: TextOverflow.clip,
+                            style: AppTextStyle.regular14.copyWith(
+                                color: ColorManager.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Buttons
+                    Row(
                       children: [
-                        Text(
-                          name,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.regular12
-                              .copyWith(color: ColorManager.grey),
+                        IconButton(
+                          onPressed: () async {
+                            await FlutterPhoneDirectCaller.callNumber(phone);
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/images/call.svg',
+                          ),
+                          color: ColorManager.pink,
                         ),
-                        Text(
-                          subTitle,
-                          overflow: TextOverflow.clip,
-                          style: AppTextStyle.regular14.copyWith(
-                              color: ColorManager.black,
-                              fontWeight: FontWeight.w500),
+                        IconButton(
+                          onPressed: () async {
+                            final phoneWithoutPlus =
+                                phone.replaceAll('+', '').replaceAll(' ', '');
+                            final url = 'https://wa.me/$phoneWithoutPlus';
+
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              await launchUrl(Uri.parse(url),
+                                  mode: LaunchMode.externalApplication);
+                            } else {
+                              toastMessage(
+                                  message: AppStrings.whatsAppcannotbeopened,
+                                  tybeMessage: TybeMessage.negative);
+                            }
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/images/whatsapp.svg',
+                          ),
                         ),
                       ],
                     ),
-                  ),
-
-                  // Buttons
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () async {
-                          await FlutterPhoneDirectCaller.callNumber(phone);
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/images/call.svg',
-                        ),
-                        color: ColorManager.pink,
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          final phoneWithoutPlus =
-                              phone.replaceAll('+', '').replaceAll(' ', '');
-                          final url = 'https://wa.me/$phoneWithoutPlus';
-
-                          if (await canLaunchUrl(Uri.parse(url))) {
-                            await launchUrl(Uri.parse(url),
-                                mode: LaunchMode.externalApplication);
-                          } else {
-                            toastMessage(
-                                message: AppStrings.whatsAppcannotbeopened,
-                                tybeMessage: TybeMessage.negative);
-                          }
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/images/whatsapp.svg',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

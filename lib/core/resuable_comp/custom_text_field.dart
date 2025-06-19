@@ -10,6 +10,8 @@ class CustomTextField extends StatelessWidget {
   final String obscuringCharacter;
   final String? Function(String?)? validator;
   final Widget? suffixIcon;
+  final VoidCallback? onTap;
+  final void Function(String)? onchanged;
 
   const CustomTextField({
     required this.labelText,
@@ -22,6 +24,8 @@ class CustomTextField extends StatelessWidget {
     this.obscuringCharacter = '*',
     this.suffixIcon,
     super.key,
+    this.onTap,
+    this.onchanged,
   });
 
   @override
@@ -32,6 +36,8 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       obscureText: obscureText,
       obscuringCharacter: obscuringCharacter,
+      onTap: onTap,
+      onChanged: onchanged,
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: Theme.of(context).textTheme.labelSmall,
