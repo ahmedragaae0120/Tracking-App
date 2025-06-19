@@ -215,6 +215,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i502.UpdateVehicleDataSourceImpl(
               gh<_i1047.ApiManager>(),
               gh<_i299.CacheHelper>(),
+            ));
     gh.factory<_i629.GetDriverOrdersDatasourse>(
         () => _i628.GetDriverOrdersDatasourseImpl(
               cacheHelper: gh<_i299.CacheHelper>(),
