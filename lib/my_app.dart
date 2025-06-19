@@ -15,6 +15,7 @@ import 'package:tracking_app/ui/tabs/profile_tab/change_password/change_password
 import 'package:tracking_app/ui/tabs/profile_tab/change_password/cubit/change_password_cubit.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/edit_profile_screen/view_model/edit_profile_cubit.dart';
+import 'package:tracking_app/ui/tabs/profile_tab/widgets/edit_vehicle.dart';
 
 import 'core/cache/shared_pref.dart';
 import 'core/di/di.dart';
@@ -66,6 +67,8 @@ class MyApp extends StatelessWidget {
             const ResetPasswordScreen(),
         RouteManager.forgetPasswordScreen: (context) =>
             const ForgetPasswordScreen(),
+        RouteManager.editVehicle: (context) =>
+             EditVehicle(),
       },
       initialRoute: initialRoute(),
     );

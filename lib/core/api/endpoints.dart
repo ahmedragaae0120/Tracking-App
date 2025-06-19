@@ -10,6 +10,7 @@ class EndPoint {
   static const String uploadPhoto = "/v1/drivers/upload-photo";
   static const String changePasswordEndpoint = "/v1/drivers/change-password";
   static const String apply = "/v1/drivers/apply";
+  static  String updateVehicle(String id) => '/v1/vehicles/$id';
   static const String getallvehicle = '/v1/vehicles';
   static const String getPendingOrders = "/v1/orders/pending-orders";
   static String startOrder(String orderId) => "/v1/orders/start/$orderId";

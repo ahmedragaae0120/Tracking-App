@@ -2,6 +2,8 @@
 
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
 
+import '../../../../domain/entity/vehicle/update_vehicle_entity.dart';
+
 ///  Auth Intent ///
 // ignore_for_file: non_constant_identifier_names, dangling_library_doc_comments
 
@@ -56,3 +58,8 @@ class LogoutIntent extends AuthIntent {
 
   LogoutIntent();
 }
+
+class updateVehicleIntent extends AuthIntent{
+  final UpdateVehicleRequest updateVehicleRequest;
+
+  updateVehicleIntent({required this.updateVehicleRequest});}

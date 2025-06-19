@@ -41,7 +41,9 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
               VehicleInfoCard(
-                onTap: () {},
+                onTap: () {
+Navigator.pushNamed(context, RouteManager.editVehicle);
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -22,6 +22,9 @@ import 'package:tracking_app/domain/use_cases/auth/logout_usecase.dart';
 import 'package:tracking_app/domain/use_cases/profile/get_profile_details_usecase.dart';
 import 'package:tracking_app/data/model/driver_profile_data.dart';
 import 'package:tracking_app/domain/use_cases/vehicle/getall_vehicle.dart';
+import 'package:tracking_app/domain/use_cases/vehicle/update_vehicle.dart';
+import '../../../../domain/entity/vehicle/update_vehicle_entity.dart';
+import '../../../../domain/use_cases/vehicle/update_vehicle.dart';
 import 'auth_intent.dart';
 part 'auth_state.dart';
 
@@ -36,12 +39,14 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginUsecase signInUsecase;
   Driver? driver;
   final ForgetPasswordUseCase forgetPasswordUseCase;
+  final updateVehicleUsecase updateVehicleUsecas;
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
   final GetProfileDetailsUsecase getProfileDetailsUsecase;
   final LogoutUsecase logoutUsecase;
 
   AuthCubit(
+      this.updateVehicleUsecas,
       this.signInUsecase,
       this.load,
       this.forgetPasswordUseCase,
@@ -71,6 +76,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   void doIntent(AuthIntent authIntent) {
     switch (authIntent) {
+      case updateVehicleIntent():
+        _updateVehicle(intent: authIntent);
+        break;
       case SignInIntent():
         _SignIn(intent: authIntent);
         break;
@@ -238,7 +246,21 @@ class AuthCubit extends Cubit<AuthState> {
         break;
     }
   }
+  _updateVehicle({required updateVehicleIntent intent}) async {
+    emit(UpdateVehicleLoadingState());
+    var result = await updateVehicleUsecas.invoke(intent.updateVehicleRequest);
+    switch (result) {
 
+      case SuccessApiResult():
+        {
+          emit(UpdateVehicleSuccessState());
+        }
+      case ErrorApiResult():
+        {
+          emit(UpdateVehicleErrorState(message: result.exception.toString()));
+            }
+    }
+  }
   _Logout({required LogoutIntent intent}) async {
     emit(LogoutLoadingState());
     final result = await logoutUsecase.invoke();

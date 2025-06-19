@@ -40,6 +40,8 @@ import '../../data/data_source_contract/update_order_datasource_repo.dart'
     as _i408;
 import '../../data/data_source_contract/vehicle/get_all_vehicle_datasource.dart'
     as _i619;
+import '../../data/data_source_contract/vehicle/update_vehicle_datasource.dart'
+    as _i1047;
 import '../../data/data_source_impl/auth/apply_datasource_impl.dart' as _i619;
 import '../../data/data_source_impl/auth/forget_password_datasource_impl/forget_password_datasource_impl.dart'
     as _i444;
@@ -69,6 +71,8 @@ import '../../data/data_source_impl/update_order_data_source_repo_impl.dart'
     as _i988;
 import '../../data/data_source_impl/vehicle/get_all_vehicle_data_source_impl.dart'
     as _i272;
+import '../../data/data_source_impl/vehicle/update_vehicle_data_source_impl.dart'
+    as _i502;
 import '../../data/repo_impl/auth/apply_repo_impl.dart' as _i240;
 import '../../data/repo_impl/auth/forget_password_repo_impl/forget_password_repo_impl.dart'
     as _i363;
@@ -87,6 +91,7 @@ import '../../data/repo_impl/profile/edit_profile_repo_impl.dart' as _i333;
 import '../../data/repo_impl/profile/profile_repo_impl.dart' as _i114;
 import '../../data/repo_impl/tracking/tracking_repo_impl.dart' as _i481;
 import '../../data/repo_impl/update_order_repo_impl.dart' as _i397;
+import '../../data/repo_impl/vehicle/updatevehicle_repo_impl.dart' as _i413;
 import '../../data/repo_impl/vehicle/vehicle_repo_impl.dart' as _i660;
 import '../../domain/repo_contract/auth/apply_contract.dart' as _i196;
 import '../../domain/repo_contract/auth/forget_password_repo/forget_password_repo.dart'
@@ -106,6 +111,7 @@ import '../../domain/repo_contract/profile/edit_profile_repo.dart' as _i301;
 import '../../domain/repo_contract/profile/profile_repo.dart' as _i689;
 import '../../domain/repo_contract/tracking/tracking_repo.dart' as _i861;
 import '../../domain/repo_contract/update_order_repo.dart' as _i314;
+import '../../domain/repo_contract/vehicle/update_vehicle.dart' as _i291;
 import '../../domain/repo_contract/vehicle/vehicle_contract.dart' as _i1042;
 import '../../domain/use_cases/auth/apply_usecase.dart' as _i212;
 import '../../domain/use_cases/auth/forget_password/forget_password_usecase.dart'
@@ -132,6 +138,7 @@ import '../../domain/use_cases/tracking/update_order_status_usecase.dart'
     as _i26;
 import '../../domain/use_cases/update_order_use_case.dart' as _i653;
 import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
+import '../../domain/use_cases/vehicle/update_vehicle.dart' as _i337;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
 import '../../ui/order_details_screen/view_model/cubit/order_details_cubit.dart'
     as _i598;
@@ -203,6 +210,11 @@ extension GetItInjectableX on _i174.GetIt {
               cacheHelper: gh<_i299.CacheHelper>(),
               apiManager: gh<_i1047.ApiManager>(),
             ));
+
+    gh.factory<_i1047.UpdateVehicleDatasource>(
+        () => _i502.UpdateVehicleDataSourceImpl(
+              gh<_i1047.ApiManager>(),
+              gh<_i299.CacheHelper>(),
     gh.factory<_i629.GetDriverOrdersDatasourse>(
         () => _i628.GetDriverOrdersDatasourseImpl(
               cacheHelper: gh<_i299.CacheHelper>(),
@@ -263,6 +275,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i355.LogoutRepoImpl(logoutDatasource: gh<_i883.LogoutDatasource>()));
     gh.factory<_i587.ForgetPasswordUseCase>(() => _i587.ForgetPasswordUseCase(
         forgetPassword: gh<_i883.ForgetpasswordRepo>()));
+    gh.factory<_i291.UpdateVehicleRepo>(() => _i413.UpdateVehicleRepoImpl(
+        updateVehicleDatasource: gh<_i1047.UpdateVehicleDatasource>()));
     gh.factory<_i861.TrackingRepo>(
         () => _i481.TrackingRepoImpl(gh<_i1067.TrackingDataSource>()));
     gh.factory<_i750.VerifyresetcodeUseCase>(() =>
@@ -308,6 +322,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i468.StartOrderUseCase>(),
           gh<_i299.CacheHelper>(),
         ));
+    gh.factory<_i337.updateVehicleUsecase>(() => _i337.updateVehicleUsecase(
+        updateVehicleRepo: gh<_i291.UpdateVehicleRepo>()));
     gh.factory<_i212.ApplyUseCase>(
         () => _i212.ApplyUseCase(applyContract: gh<_i196.applyRepoContract>()));
     gh.factory<_i893.OrdersCubit>(() => _i893.OrdersCubit(
@@ -317,6 +333,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i50.ChangePasswordCubit>(
         () => _i50.ChangePasswordCubit(gh<_i403.ChangePasswordUsecase>()));
     gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit(
+          gh<_i337.updateVehicleUsecase>(),
           gh<_i912.LoginUsecase>(),
           gh<_i1000.loadcountriesUseCase>(),
           gh<_i587.ForgetPasswordUseCase>(),
