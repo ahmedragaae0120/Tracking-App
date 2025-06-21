@@ -1,14 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 class AppStrings {
-  static String get tryAgain => "tryAgain".tr();
-
-  static String get orderNotFound => "orderNotFound".tr();
-
-  static String get storeLocation => "storeLocation".tr();
-
-  static String get customerLocation => "customerLocation".tr();
-
-  static String get products => "products".tr();
   static String get welcomeTo => "welcomeTo".tr();
   static String get floweryRiderApp => "floweryRiderApp".tr();
   static String get applyNow => "applyNow".tr();
@@ -153,7 +144,6 @@ class AppStrings {
   static String get startDeliver => "startDeliver".tr();
   static String get arrivedAtPickupPoint => "arrivedAtPickupPoint".tr();
   static String get delivered => "delivered".tr();
-
   static String get selectVehicleType => "selectVehicleType".tr();
   static String get outForDelivery => "outForDelivery".tr();
   static String get pickupAddress => "pickupAddress".tr();
@@ -163,9 +153,24 @@ class AppStrings {
   static String get userAddress => "userAddress".tr();
   static String get pendingOrders => "pendingOrders".tr();
   static String get noOrdersAvailable => "noOrdersAvailable".tr();
+
+  static String get tryAgain => "tryAgain".tr();
+
+  static String get orderNotFound => "orderNotFound".tr();
   static String get accept => "accept".tr();
+
+  static String get vehicleNumberCannotBeEmpty =>
+      "vehicleNumberCannotBeEmpty".tr();
+
+  static String get vehicleLicenseCannotBeEmpty =>
+      "vehicleLicenseCannotBeEmpty".tr();
   static String get reject => "reject".tr();
 
+  static String get storeLocation => "storeLocation".tr();
+
+  static String get customerLocation => "customerLocation".tr();
+
+  static String get products => "products".tr();
   static String get orderDetails => "orderDetails".tr();
   static String get english => "english".tr();
   static String get arabic => "arabic".tr();

@@ -90,7 +90,8 @@ class _SuccessPageState extends State<SuccessPage>
                 const SizedBox(height: 32),
                 CustomTextButton(
                   onPressed: () {
-                     Navigator.pushReplacementNamed(context, RouteManager.mainScreen);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, RouteManager.mainScreen, (route) => false);
                   },
                   borderColor: ColorManager.primaryColor,
                   text: AppStrings.done,

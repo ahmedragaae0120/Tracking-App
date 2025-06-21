@@ -197,6 +197,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  _updateVehicle({required updateVehicleIntent intent}) async {
+    emit(UpdateVehicleLoadingState());
+    var result = await updateVehicleUsecas.invoke(intent.updateVehicleRequest);
+    switch (result) {
+      case SuccessApiResult():
+        {
+          emit(UpdateVehicleSuccessState());
+        }
+      case ErrorApiResult():
+        {
+          emit(UpdateVehicleErrorState(message: result.exception.toString()));
+        }
+    }
+  }
+
   _apply(applyrequest aplyrequest) async {
     emit(applyLoading());
 
@@ -250,21 +265,7 @@ class AuthCubit extends Cubit<AuthState> {
         break;
     }
   }
-  _updateVehicle({required updateVehicleIntent intent}) async {
-    emit(UpdateVehicleLoadingState());
-    var result = await updateVehicleUsecas.invoke(intent.updateVehicleRequest);
-    switch (result) {
 
-      case SuccessApiResult():
-        {
-          emit(UpdateVehicleSuccessState());
-        }
-      case ErrorApiResult():
-        {
-          emit(UpdateVehicleErrorState(message: result.exception.toString()));
-            }
-    }
-  }
   _Logout({required LogoutIntent intent}) async {
     emit(LogoutLoadingState());
     final result = await logoutUsecase.invoke();

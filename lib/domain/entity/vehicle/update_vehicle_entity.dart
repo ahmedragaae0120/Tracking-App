@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class UpdateVehicleRequest {
@@ -10,6 +11,7 @@ class UpdateVehicleRequest {
     required this.licenseFile,
   });
 
+  /// لتحويل البيانات إلى `FormData` لرفع صورة
   FormData toFormData() {
     return FormData.fromMap({
       'name': vehicleId,

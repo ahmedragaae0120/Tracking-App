@@ -73,12 +73,12 @@ class ApiManager {
     required String endpoint,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
-    Map<String, dynamic>? data, // ✅ Add this parameter for the request body
+    Map<String, dynamic>? data,
   }) async {
     var response = await dio.put(
       endpoint,
       queryParameters: queryParameters,
-      data: data, // ✅ Pass the request body here
+      data: data,
       options: Options(
         headers: headers,
       ),

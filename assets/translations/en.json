@@ -127,6 +127,8 @@
   "tryAgain": "Try Again",
   "orderNotFound": "Order not found",
   "accept": "Accept",
+  "vehicleNumberCannotBeEmpty": "Vehicle number cannot be empty",
+  "vehicleLicenseCannotBeEmpty": "Vehicle license cannot be empty",
   "reject": "Reject",
   "storeLocation": "Store Location",
   "customerLocation": "Customer Location",

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tracking_app/core/resuable_comp/toast_message.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 
 import '../../../../config/theme/app_theme.dart';
-import '../../../../core/di/di.dart';
 import '../../../../core/resuable_comp/custom_text_field.dart';
 import '../../../../core/utils/string_manager.dart';
-import '../../../../domain/entity/vehicle/getallvehicle_entity.dart';
 import '../../../../domain/entity/vehicle/update_vehicle_entity.dart';
 import '../../../Auth/view_model/cubit/auth_intent.dart';
 
@@ -18,16 +17,18 @@ class EditVehicle extends StatefulWidget {
 }
 
 class _EditVehicleState extends State<EditVehicle> {
-  String selectedVehicleType = "";
   final vehicleLicenseController = TextEditingController();
   final vehicleNumberController = TextEditingController();
-  List<VehiclesEntity> vehicleTypes = [];
-  AuthCubit authCubit = getIt<AuthCubit>();
+  late AuthCubit authCubit;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    authCubit = AuthCubit.get(context);
     authCubit.getallvehicle();
+    final driver = authCubit.driver;
+    vehicleNumberController.text = driver?.vehicleNumber ?? '';
   }
 
   @override
@@ -47,81 +48,75 @@ class _EditVehicleState extends State<EditVehicle> {
         value: authCubit,
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            if (state is applyLoading) {
+            if (state is UpdateVehicleLoadingState) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is getVehiclesSuccess) {
-              vehicleTypes = state.vehicles.vehicles ?? [];
-
-              vehicleTypes.forEach((v) => print("${v.id} - ${v.type}"));
-
-              if (vehicleTypes.isNotEmpty && selectedVehicleType.isEmpty) {
-                selectedVehicleType = vehicleTypes.first.id ?? '';
-              }
             }
-
+            if (state is UpdateVehicleErrorState) {
+              toastMessage(
+                  message: state.message.toString(),
+                  tybeMessage: TybeMessage.negative);
+            }
             return Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                      label:  Text(AppStrings.vehicleType??""),
-                    ),
-                    value: selectedVehicleType.isNotEmpty &&
-                        vehicleTypes.any((v) => v.id == selectedVehicleType)
-                        ? selectedVehicleType
-                        : null,
-                    items: vehicleTypes.map((e) {
-                      return DropdownMenuItem<String>(
-                        value: e.id ?? "",
-                        child: Text(e.type ?? ''),
-                      );
-                    }).toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        selectedVehicleType = val ?? "";
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  CustomTextField(
-                    labelText: AppStrings.vehicleNumber,
-                    controller: vehicleNumberController,
-                    hintText: AppStrings.enterVehicleNumber,
-                  ),
-                  const SizedBox(height: 20),
-                  CustomTextField(
-                    labelText: AppStrings.vehicleLicense,
-                    controller: vehicleLicenseController,
-                    hintText: AppStrings.uploadlicense,
-                    suffixIcon: IconButton(
-                      onPressed: () async {
-                        await authCubit.pickVehicleLicense();
-                        if (authCubit.vehicleLicenseFile != null) {
-                          vehicleLicenseController.text =
-                              authCubit.vehicleLicenseFile!.path.split('/').last;
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppStrings.vehicleNumberCannotBeEmpty;
                         }
-                        setState(() {});
+                        return null;
                       },
-                      icon: const Icon(Icons.upload),
+                      labelText: AppStrings.vehicleNumber,
+                      controller: vehicleNumberController,
+                      hintText: AppStrings.enterVehicleNumber,
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                    authCubit.doIntent(updateVehicleIntent(
-                  updateVehicleRequest: UpdateVehicleRequest(vehicleId: vehicleNumberController.text, licenseFile: authCubit.vehicleLicenseFile!
-
-                  )
-                    ));
-                    },
-                    child:  Text('update',style: AppTheme.lightTheme.textTheme.labelLarge,),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppStrings.vehicleLicenseCannotBeEmpty;
+                        }
+                        return null;
+                      },
+                      labelText: AppStrings.vehicleLicense,
+                      controller: vehicleLicenseController,
+                      hintText: AppStrings.uploadlicense,
+                      suffixIcon: IconButton(
+                        onPressed: () async {
+                          await authCubit.pickVehicleLicense();
+                          if (authCubit.vehicleLicenseFile != null) {
+                            vehicleLicenseController.text = authCubit
+                                .vehicleLicenseFile!.path
+                                .split('/')
+                                .last;
+                          }
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.upload),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          authCubit.doIntent(updateVehicleIntent(
+                              updateVehicleRequest: UpdateVehicleRequest(
+                                  vehicleId:
+                                      authCubit.driver?.vehicleType ?? "",
+                                  licenseFile: authCubit.vehicleLicenseFile!)));
+                        }
+                      },
+                      child: Text(
+                        'update',
+                        style: AppTheme.lightTheme.textTheme.labelLarge,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/api_manager.dart';
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/core/api/api_excuter.dart';
 import 'package:tracking_app/core/api/endpoints.dart';
 import 'package:tracking_app/core/cache/shared_pref.dart';
 import 'package:tracking_app/core/constant.dart';
@@ -17,16 +17,18 @@ class UpdateVehicleDataSourceImpl extends UpdateVehicleDatasource {
   UpdateVehicleDataSourceImpl(this.apiManager, this.cacheHelper);
 
   @override
-  Future<ApiResult<Response>> updateVehicle(UpdateVehicleRequest request) async {
+  Future<ApiResult<Response>> updateVehicle(
+      UpdateVehicleRequest request) async {
     return executeApi<Response>(() async {
       final token = await cacheHelper.getData<String>(Constant.tokenKey);
 
-      final response = await apiManager.put(
-        endpoint: EndPoint.editProfile,
+      final response = await apiManager.putFormData(
+        endpoint: EndPoint.updateVehicle(request.vehicleId),
         headers: {
           "Authorization": "Bearer $token",
           "Content-Type": "multipart/form-data",
         },
+        formData: request.toFormData(),
       );
 
       return response;
