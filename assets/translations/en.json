@@ -117,6 +117,7 @@
   "startDeliver": "Start deliver",
   "arrivedAtPickupPoint": "Arrived at pickup point",
   "delivered": "Delivered",
+  "selectVehicleType": "Select Vehicle Type",
   "outForDelivery": "Out for delivery",
   "pickupAddress": "Pickup Address",
   "orderDeliveredSuccessfully": "Order delivered successfully!",

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:tracking_app/core/utils/colors_manager.dart';
 import 'package:tracking_app/core/utils/config.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
+import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
+
 import 'Wigets/custom_divider.dart';
 import 'Wigets/language_widget.dart';
 
@@ -17,6 +20,7 @@ class LanguageBottomSheet extends StatefulWidget {
 class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    final cubit = AuthCubit.get(context);
     Config().init(context);
     return Container(
       height: Config.screenHight! * 0.25,
@@ -49,6 +53,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                     onTap: () {
                       context.setLocale(const Locale('en'));
                       Navigator.pop(context);
+                      cubit.doIntent(UpdateProfileScreen());
                     }),
                 LanguageSelectionItem(
                     label: AppStrings.arabic,
@@ -56,6 +61,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                     onTap: () {
                       context.setLocale(const Locale('ar'));
                       Navigator.pop(context);
+                      cubit.doIntent(UpdateProfileScreen());
                     }),
               ]),
             )

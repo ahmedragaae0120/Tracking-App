@@ -2,12 +2,14 @@
 
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:tracking_app/core/api/api_result.dart';
+import 'package:tracking_app/data/model/driver_profile_data.dart';
 import 'package:tracking_app/data/model/user_model.dart';
 import 'package:tracking_app/domain/entity/auth/apply_entity.dart';
 import 'package:tracking_app/domain/entity/auth/apply_request.dart';
@@ -20,12 +22,11 @@ import 'package:tracking_app/domain/use_cases/auth/loadcountries.dart';
 import 'package:tracking_app/domain/use_cases/auth/login_usecase.dart';
 import 'package:tracking_app/domain/use_cases/auth/logout_usecase.dart';
 import 'package:tracking_app/domain/use_cases/profile/get_profile_details_usecase.dart';
-import 'package:tracking_app/data/model/driver_profile_data.dart';
 import 'package:tracking_app/domain/use_cases/vehicle/getall_vehicle.dart';
 import 'package:tracking_app/domain/use_cases/vehicle/update_vehicle.dart';
-import '../../../../domain/entity/vehicle/update_vehicle_entity.dart';
-import '../../../../domain/use_cases/vehicle/update_vehicle.dart';
+
 import 'auth_intent.dart';
+
 part 'auth_state.dart';
 
 @injectable
@@ -102,6 +103,9 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case LogoutIntent():
         _Logout(intent: authIntent);
+        break;
+      case UpdateProfileScreen():
+        _updateProfile();
         break;
     }
   }
@@ -274,5 +278,9 @@ class AuthCubit extends Cubit<AuthState> {
           emit(LogoutFailureState(message: result.exception.toString()));
         }
     }
+  }
+
+  _updateProfile() {
+    emit(UpdateProfileState());
   }
 }

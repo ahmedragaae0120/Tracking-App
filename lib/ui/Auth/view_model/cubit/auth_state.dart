@@ -152,3 +152,5 @@ class UpdateVehicleErrorState extends AuthState {
 }
 
 class UpdateVehicleLoadingState extends AuthState {}
+
+class UpdateProfileState extends AuthState {}

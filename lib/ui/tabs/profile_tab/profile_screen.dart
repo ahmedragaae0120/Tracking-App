@@ -10,14 +10,21 @@ import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/widgets/item_carts_profile_widget.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/widgets/user_info_card.dart';
+
 import 'language_part/Language_bottom_sheet/Wigets/language_button.dart';
 import 'widgets/vehicle_info_card.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
+    final authCubit = AuthCubit.get(context);
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -29,95 +36,117 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            spacing: 10,
-            children: [
-              UserInfoCard(
-                onTap: () {
-                  Navigator.pushNamed(context, RouteManager.editProfileScreen);
-                },
-              ),
-              VehicleInfoCard(
-                onTap: () {
-Navigator.pushNamed(context, RouteManager.editVehicle);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.translate_outlined,
-                      color: ColorManager.black,
-                      size: 25,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        AppStrings.language,
-                        style: AppTheme.lightTheme.textTheme.bodySmall
-                            ?.copyWith(color: ColorManager.black),
-                      ),
-                    ),
-                    const Spacer(),
-                    const LanguageButton(),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: BlocListener<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                    if (state is LogoutLoadingState) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const Center(
-                          child: CircularProgressIndicator(
-                            color: ColorManager.primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-
-                    if (state is LogoutSuccessState) {
-                      toastMessage(
-                          message: "Logout Successfully, Back to login",
-                          tybeMessage: TybeMessage.positive);
-
-                      Future.delayed(const Duration(seconds: 2), () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          RouteManager.loginScreen,
-                          (route) => false,
-                        );
-                      });
-                    }
-
-                    if (state is LogoutFailureState) {
-                      Navigator.pop(context);
-                      toastMessage(
-                          message: "Error : ${state.message}",
-                          tybeMessage: TybeMessage.negative);
+      body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is UpdateProfileState ||
+              state is GetLoggedInDriverDataSuccessState) {
+            setState(() {});
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              spacing: 10,
+              children: [
+                UserInfoCard(
+                  onTap: () async {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      RouteManager.editProfileScreen,
+                    );
+                    if (result == true && mounted) {
+                      authCubit.doIntent(getLoginDriverDataIntent());
                     }
                   },
-                  child: ItemCartsProfileWidget(
-                    title: AppStrings.logout,
-                    icon: Icons.logout_outlined,
-                    iconArrow: Icons.logout_outlined,
-                    onAction: () {
-                      Dialogs.confirmLogout(
-                        context,
-                        () => Navigator.pop(context),
-                        () => context.read<AuthCubit>().doIntent(LogoutIntent()),
-                      );
-                    },
+                ),
+                VehicleInfoCard(
+                  onTap: () async {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      RouteManager.editVehicle,
+                    );
+                    if (result == true && mounted) {
+                      authCubit.doIntent(getLoginDriverDataIntent());
+                    }
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.translate_outlined,
+                        color: ColorManager.black,
+                        size: 25,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          AppStrings.language,
+                          style: AppTheme.lightTheme.textTheme.bodySmall
+                              ?.copyWith(color: ColorManager.black),
+                        ),
+                      ),
+                      const Spacer(),
+                      const LanguageButton(),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: BlocListener<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is LogoutLoadingState) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorManager.primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+
+                      if (state is LogoutSuccessState) {
+                        toastMessage(
+                            message: "Logout Successfully, Back to login",
+                            tybeMessage: TybeMessage.positive);
+
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteManager.loginScreen,
+                            (route) => false,
+                          );
+                        });
+                      }
+
+                      if (state is LogoutFailureState) {
+                        Navigator.pop(context);
+                        toastMessage(
+                            message: "Error : ${state.message}",
+                            tybeMessage: TybeMessage.negative);
+                      }
+                    },
+                    child: ItemCartsProfileWidget(
+                      title: AppStrings.logout,
+                      icon: Icons.logout_outlined,
+                      iconArrow: Icons.logout_outlined,
+                      onAction: () {
+                        Dialogs.confirmLogout(
+                          context,
+                          () => Navigator.pop(context),
+                          () => context
+                              .read<AuthCubit>()
+                              .doIntent(LogoutIntent()),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

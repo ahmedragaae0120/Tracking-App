@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:tracking_app/core/utils/routes_manager.dart';
-import 'package:tracking_app/core/utils/string_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tracking_app/core/resuable_comp/toast_message.dart';
 import 'package:tracking_app/core/resuable_comp/custom_text_field.dart';
+import 'package:tracking_app/core/resuable_comp/toast_message.dart';
+import 'package:tracking_app/core/utils/routes_manager.dart';
+import 'package:tracking_app/core/utils/string_manager.dart';
 import 'package:tracking_app/data/model/driver_profile_data.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/edit_profile_screen/view_model/edit_profile_cubit.dart';
@@ -103,7 +103,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         } else if (state is PhotoUploadSuccess) {
           Navigator.pop(context, true);
-
           toastMessage(
             message: AppStrings.photoUploadedSuccessfully,
             tybeMessage: TybeMessage.positive,
@@ -123,7 +122,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               elevation: 0,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(context, true),
               ),
               title: Text(
                 AppStrings.editProfile,
@@ -363,3 +362,4 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
+

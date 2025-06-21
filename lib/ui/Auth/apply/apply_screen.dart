@@ -2,10 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/di/di.dart';
+import 'package:tracking_app/core/resuable_comp/validator.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
+import 'package:tracking_app/core/utils/text_style_manager.dart';
 import 'package:tracking_app/domain/entity/vehicle/getallvehicle_entity.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
+
 import '../../../config/theme/app_theme.dart';
 import '../../../core/resuable_comp/custom_text_field.dart';
 import '../../../core/resuable_comp/toast_message.dart';
@@ -46,8 +49,6 @@ class _ApplyScreenState extends State<ApplyScreen> {
     authCubit.getallvehicle();
     authCubit.loadCountries();
   }
-
-
 
   @override
   void dispose() {
@@ -130,22 +131,35 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    labelStyle: AppTextStyle.regular14,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 16),
                     label: Text(AppStrings.country),
+                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
+                  hint: Text(
+                    AppStrings.selectCountry,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                   value: countries.any((c) => c['name'] == selectedCountry)
                       ? selectedCountry
                       : null,
-                  hint: Text(AppStrings.selectCountry),
                   items: countries.map((e) {
                     return DropdownMenuItem<String>(
                       value: e['name'] ?? "error",
                       child: Row(
                         children: [
-                          Text(e['flag'] ?? "error"),
+                          Text(
+                            e['flag'] ?? "🏳️",
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                          ),
                           const SizedBox(width: 8),
-                          Text(e['name'] ?? "error"),
+                          Text(
+                            e['name'] ?? "error",
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                          ),
                         ],
                       ),
                     );
@@ -158,12 +172,14 @@ class _ApplyScreenState extends State<ApplyScreen> {
                 ),
                 const SizedBox(height: 8),
                 CustomTextField(
+                  validator: Validator.firstName,
                   labelText: AppStrings.firstLegalName,
                   controller: firstNameController,
                   hintText: AppStrings.enterFirstLegalName,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
+                  validator: Validator.lastName,
                   labelText: AppStrings.secondLegalName,
                   controller: lastNameController,
                   hintText: AppStrings.enterSecondLegalName,
@@ -178,9 +194,15 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    labelStyle: AppTextStyle.regular14,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 16),
                     label: Text(AppStrings.vehicleType),
+                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
+                  hint: Text(
+                    AppStrings.selectVehicleType,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                   value: selectedVehicleType.isNotEmpty &&
                           vehicleTypes.any((v) => v.id == selectedVehicleType)
@@ -188,8 +210,12 @@ class _ApplyScreenState extends State<ApplyScreen> {
                       : null,
                   items: vehicleTypes.map((e) {
                     return DropdownMenuItem<String>(
-                      value: e.id ?? "ads",
-                      child: Text(e.type ?? ''),
+                      value: e.id ?? "error",
+                      child: Text(
+                        e.type ?? '',
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.black),
+                      ),
                     );
                   }).toList(),
                   onChanged: (val) {
@@ -261,6 +287,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                   children: [
                     Expanded(
                       child: CustomTextField(
+                        validator: Validator.password,
                         labelText: AppStrings.password,
                         controller: passwordController,
                         hintText: AppStrings.enterPassword,
@@ -270,6 +297,8 @@ class _ApplyScreenState extends State<ApplyScreen> {
                     const SizedBox(width: 16),
                     Expanded(
                       child: CustomTextField(
+                        validator: (value) => Validator.confirmPassword(
+                            value, passwordController.text),
                         labelText: AppStrings.confirmPassword,
                         controller: confirmPasswordController,
                         hintText: AppStrings.enterConfirmPassword,
