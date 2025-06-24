@@ -35,15 +35,21 @@ class ApiManager {
         }));
   }
 
-  Future<Response> getRequest(
-      {required String endpoint,
-      Map<String, dynamic>? queryParameters,
-      Map<String, dynamic>? headers}) async {
-    var response = await dio.get(endpoint,
-        queryParameters: queryParameters,
-        options: Options(
-          headers: headers,
-        ));
+  Future<Response> getRequest({
+    required String endpoint,
+    String? baseUrl,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+  }) async {
+    final fullUrl = (baseUrl ?? Constant.baseUrl) + endpoint;
+    final response = await dio.get(
+      fullUrl,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
+
     return response;
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tracking_app/core/constant.dart';
 import 'package:tracking_app/core/di/di.dart';
@@ -13,12 +12,12 @@ import 'package:tracking_app/core/utils/string_manager.dart';
 import 'package:tracking_app/core/utils/text_style_manager.dart';
 import 'package:tracking_app/data/model/orders/orders.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
+import 'package:tracking_app/ui/map/view/map_screen.dart';
 import 'package:tracking_app/ui/order_details_screen/view/widgets/destinations_widget.dart';
 import 'package:tracking_app/ui/order_details_screen/view/widgets/order_details_card.dart';
 import 'package:tracking_app/ui/order_details_screen/view/widgets/product_summary_card.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/order_details_cubit.dart';
 import 'package:tracking_app/ui/order_details_screen/view_model/cubit/oreder_datails_intent.dart';
-import 'package:tracking_app/ui/pick_up_location/view/pick_up_location_screen.dart';
 import 'package:tracking_app/ui/success_page/view/success_page.dart';
 
 import 'widgets/payment_card.dart';
@@ -37,19 +36,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   final DraggableScrollableController _draggableController =
       DraggableScrollableController();
 
-  LatLng latLngFromString(String? latLongStr) {
-    if (latLongStr == null || latLongStr.isEmpty) {
-      return LatLng(0, 0);
-    }
-    final parts = latLongStr.split(',');
-    if (parts.length != 2) {
-      return LatLng(0, 0);
-    }
-    final lat = double.tryParse(parts[0].trim()) ?? 0;
-    final lng = double.tryParse(parts[1].trim()) ?? 0;
-    return LatLng(lat, lng);
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -63,19 +49,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       canPop: widget.order.state == Constant.canceledKey ||
           widget.order.state == Constant.completedKey,
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading:
-              widget.order.state == Constant.canceledKey ||
-                  widget.order.state == Constant.completedKey,
-          title: Text(AppStrings.orderDetails),
-        ),
         body: Stack(
           children: [
             // map here
             SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: _buildMapWidget(),
+              child: MapScreen(),
             ),
             DraggableScrollableSheet(
               controller: _draggableController,
@@ -312,9 +292,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                           .order.paymentType ??
                                                       "",
                                                 ),
-                                                SizedBox(
-                                                    height:
-                                                        80), // مساحة إضافية للزر
+                                                SizedBox(height: 80),
                                               ],
                                             ),
                                           ),
@@ -354,6 +332,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                                 "",
                                                             statusName: OrderStatus
                                                                 .preparingYourOrder));
+
+                                                    /// here where i should update the status of the mapppp
                                                     widget.statusName =
                                                         OrderStatus
                                                             .outForDelivery;
@@ -417,15 +397,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildMapWidget() {
-    return Container(
-      height: 300,
-      child: PickUpLocationScreen(
-        clientLocation: LatLng(33.81024137847096, -117.74683888552876),
       ),
     );
   }

@@ -1,19 +1,16 @@
 // ignore_for_file: use_build_context_synchronously, prefer_is_not_operator
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../core/resuable_comp/custom_flower_order.dart';
-import '../../../../core/utils/colors_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tracking_app/core/di/di.dart';
-import 'package:tracking_app/core/resuable_comp/custom_flower_order.dart';
 import 'package:tracking_app/core/resuable_comp/search_bar/custom_searchbar_widget.dart';
 import 'package:tracking_app/core/resuable_comp/toast_message.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
 import 'package:tracking_app/ui/order_details_screen/view/order_details_screen.dart';
 import 'package:tracking_app/ui/tabs/home_tab/view_model/home_cubit.dart';
 import 'package:tracking_app/ui/tabs/home_tab/view_model/home_intent.dart';
+
+import '../../../../core/resuable_comp/custom_flower_order.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

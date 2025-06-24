@@ -25,6 +25,8 @@ import '../../data/data_source_contract/auth/login_datasource.dart' as _i1048;
 import '../../data/data_source_contract/auth/logout_datasource.dart' as _i883;
 import '../../data/data_source_contract/get_driver_orders_datasourse.dart'
     as _i629;
+import '../../data/data_source_contract/get_route_datasource_repo.dart'
+    as _i1071;
 import '../../data/data_source_contract/get_specific_product_datasource.dart'
     as _i312;
 import '../../data/data_source_contract/pending_orders_datasource.dart' as _i30;
@@ -55,6 +57,8 @@ import '../../data/data_source_impl/auth/login_datasource_impl.dart' as _i1013;
 import '../../data/data_source_impl/auth/logout_datasource_impl.dart' as _i755;
 import '../../data/data_source_impl/get_driver_orders_datasourse_impl.dart'
     as _i628;
+import '../../data/data_source_impl/get_route_data_source_repo_impl.dart'
+    as _i930;
 import '../../data/data_source_impl/get_specific_product_datasource_impl.dart'
     as _i351;
 import '../../data/data_source_impl/pending_orders_datasource_impl.dart'
@@ -84,6 +88,7 @@ import '../../data/repo_impl/auth/loadcountries_repo_impl.dart' as _i300;
 import '../../data/repo_impl/auth/login_repo_impl.dart' as _i314;
 import '../../data/repo_impl/auth/logout_repo_impl.dart' as _i355;
 import '../../data/repo_impl/get_driver_orders_repo_impl.dart' as _i61;
+import '../../data/repo_impl/get_route_repo_impl.dart' as _i1047;
 import '../../data/repo_impl/get_specific_product_repo_impl.dart' as _i288;
 import '../../data/repo_impl/pending_orders_repo_impl.dart' as _i360;
 import '../../data/repo_impl/profile/change_password_repo_impl.dart' as _i517;
@@ -104,6 +109,7 @@ import '../../domain/repo_contract/auth/loadcountries_contract.dart' as _i317;
 import '../../domain/repo_contract/auth/login_repo.dart' as _i284;
 import '../../domain/repo_contract/auth/logout_repo_contract.dart' as _i8;
 import '../../domain/repo_contract/get_driver_orders_repo.dart' as _i169;
+import '../../domain/repo_contract/get_route_repo.dart' as _i212;
 import '../../domain/repo_contract/get_specific_product_repo.dart' as _i555;
 import '../../domain/repo_contract/pending_orders_repo.dart' as _i1031;
 import '../../domain/repo_contract/profile/change_password_repo.dart' as _i968;
@@ -125,6 +131,7 @@ import '../../domain/use_cases/auth/login_usecase.dart' as _i912;
 import '../../domain/use_cases/auth/logout_usecase.dart' as _i722;
 import '../../domain/use_cases/get_driver_orders_usecase.dart' as _i1017;
 import '../../domain/use_cases/get_pending_orders_usecase.dart' as _i966;
+import '../../domain/use_cases/get_route_usecase.dart' as _i1027;
 import '../../domain/use_cases/get_specific_product_usecase.dart' as _i789;
 import '../../domain/use_cases/profile/change_password_usecase.dart' as _i403;
 import '../../domain/use_cases/profile/edit_profile_usecase.dart' as _i666;
@@ -140,6 +147,7 @@ import '../../domain/use_cases/update_order_use_case.dart' as _i653;
 import '../../domain/use_cases/vehicle/getall_vehicle.dart' as _i794;
 import '../../domain/use_cases/vehicle/update_vehicle.dart' as _i337;
 import '../../ui/Auth/view_model/cubit/auth_cubit.dart' as _i906;
+import '../../ui/map/view/cubit/map_cubit.dart' as _i126;
 import '../../ui/order_details_screen/view_model/cubit/order_details_cubit.dart'
     as _i598;
 import '../../ui/tabs/home_tab/view_model/home_cubit.dart' as _i894;
@@ -210,16 +218,15 @@ extension GetItInjectableX on _i174.GetIt {
               cacheHelper: gh<_i299.CacheHelper>(),
               apiManager: gh<_i1047.ApiManager>(),
             ));
-
-    gh.factory<_i1047.UpdateVehicleDatasource>(
-        () => _i502.UpdateVehicleDataSourceImpl(
-              gh<_i1047.ApiManager>(),
-              gh<_i299.CacheHelper>(),
-            ));
     gh.factory<_i629.GetDriverOrdersDatasourse>(
         () => _i628.GetDriverOrdersDatasourseImpl(
               cacheHelper: gh<_i299.CacheHelper>(),
               apiManager: gh<_i1047.ApiManager>(),
+            ));
+    gh.factory<_i1047.UpdateVehicleDatasource>(
+        () => _i502.UpdateVehicleDataSourceImpl(
+              gh<_i1047.ApiManager>(),
+              gh<_i299.CacheHelper>(),
             ));
     gh.factory<_i1042.VehicleContract>(() =>
         _i660.vehicleRepoImpl(gh<_i619.getallvehicledatasourceContract>()));
@@ -231,6 +238,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i314.SigninRepoImpl(gh<_i1048.LoginDataSourceRepo>()));
     gh.factory<_i689.ProfileRepo>(
         () => _i114.ProfileRepoImpl(gh<_i709.ProfileDatasource>()));
+    gh.factory<_i1071.GetRouteDatasourceRepo>(() =>
+        _i930.GetRouteDataSourceRepoImpl(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i314.UpdateOrderRepo>(
         () => _i397.UpdateOrderRepoImpl(gh<_i408.UpdateOrderdatasource>()));
     gh.factory<_i879.ForgetpasswordDataSourseRepo>(() =>
@@ -269,9 +278,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i883.ForgetpasswordRepo>(() => _i363.Forgetpasswordrepoimpl(
         forgetpassword_data_sourse_repo:
             gh<_i879.ForgetpasswordDataSourseRepo>()));
+    gh.factory<_i212.GetRouteRepo>(
+        () => _i1047.GetRouteRepoImpl(gh<_i1071.GetRouteDatasourceRepo>()));
     gh.factory<_i555.GetSpecificProductRepo>(() =>
         _i288.GetSpecificProductRepoImpl(
             gh<_i312.GetSpecificProductDatasource>()));
+    gh.factory<_i1027.GetRouteUseCase>(
+        () => _i1027.GetRouteUseCase(getRouteRepo: gh<_i212.GetRouteRepo>()));
     gh.factory<_i8.LogoutRepoContract>(() =>
         _i355.LogoutRepoImpl(logoutDatasource: gh<_i883.LogoutDatasource>()));
     gh.factory<_i587.ForgetPasswordUseCase>(() => _i587.ForgetPasswordUseCase(
@@ -314,6 +327,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i789.GetSpecificProductUsecase>(() =>
         _i789.GetSpecificProductUsecase(
             getSpecificProductRepo: gh<_i555.GetSpecificProductRepo>()));
+    gh.factory<_i126.MapCubit>(
+        () => _i126.MapCubit(gh<_i1027.GetRouteUseCase>()));
     gh.factory<_i45.EditProfileCubit>(() => _i45.EditProfileCubit(
           gh<_i666.EditProfileUsecase>(),
           gh<_i18.UploadPhotoUsecase>(),

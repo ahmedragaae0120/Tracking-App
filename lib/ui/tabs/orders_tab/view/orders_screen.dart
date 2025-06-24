@@ -6,7 +6,6 @@ import 'package:tracking_app/ui/tabs/orders_tab/view_model/orders_cubit.dart';
 import 'package:tracking_app/ui/tabs/orders_tab/view_model/orders_intent.dart';
 
 import '../../../../core/di/di.dart';
-import '../../../order_details_screen/view/order_details_screen.dart';
 import 'order_details.dart';
 
 class OrdersScreen extends StatefulWidget {
