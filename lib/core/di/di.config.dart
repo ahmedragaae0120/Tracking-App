@@ -185,8 +185,9 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.factory<_i619.getallvehicledatasourceContract>(
         () => _i272.getallvehicleimpl(gh<_i1047.ApiManager>()));
-    gh.factory<_i408.UpdateOrderdatasource>(() => _i988.getallvehicleimpl(
-          cacheHelper: gh<_i299.CacheHelper>(),
+    gh.factory<_i408.UpdateOrderdatasource>(
+        () => _i988.UpdateOrderDataSourceImpl(
+              cacheHelper: gh<_i299.CacheHelper>(),
           apiManager: gh<_i1047.ApiManager>(),
         ));
     gh.factory<_i202.EditProfileDatasource>(

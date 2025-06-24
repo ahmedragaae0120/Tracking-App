@@ -7,6 +7,7 @@ enum DriverStatus {
   reject("Reject");
 
   final String status;
+
   const DriverStatus(this.status);
 }
 
@@ -17,6 +18,7 @@ enum OrderStatus {
   delivered("Delivered");
 
   final String statusName;
+
   const OrderStatus(this.statusName);
 }
 
@@ -47,7 +49,7 @@ class FirestoreHepler {
       for (int i = 0; i < orderStatus.length; i++) {
         if (orderStatus[i]['status name'] == statusName.statusName) {
           orderStatus[i]['is done'] = isDone;
-          orderStatus[i]['date'] = formattedDate;
+          orderStatus[i]['date'] = isDone == false ? null : formattedDate;
           updated = true;
           break;
         }

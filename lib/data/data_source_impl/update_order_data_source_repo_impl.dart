@@ -10,11 +10,12 @@ import 'package:tracking_app/core/constant.dart';
 import 'package:tracking_app/data/data_source_contract/update_order_datasource_repo.dart';
 
 @Injectable(as: UpdateOrderdatasource)
-class getallvehicleimpl extends UpdateOrderdatasource {
+class UpdateOrderDataSourceImpl extends UpdateOrderdatasource {
   ApiManager apiManager;
   final CacheHelper cacheHelper;
 
-  getallvehicleimpl({required this.cacheHelper, required this.apiManager});
+  UpdateOrderDataSourceImpl(
+      {required this.cacheHelper, required this.apiManager});
 
   @override
   Future<ApiResult<bool>> updateOrder(String id) async {

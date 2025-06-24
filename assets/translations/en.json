@@ -7,6 +7,7 @@
   "phoneNumberCannotBeEmpty": "Phone number cannot be empty",
   "phoneNumberCannotBeMoreThan20Characters": "Phone number cannot be more than 20 characters",
   "name": "Name",
+  "youCanNotGoBack": "You can't go back",
   "profile": "Profile",
   "rememberMe": "Remember me",
   "passwordMustContainAtLeastOneSpecialCharacter": "Password must contain at least one special character",
