@@ -13,6 +13,9 @@ class AppStrings {
       "phoneNumberCannotBeMoreThan20Characters".tr();
   static String get name => "name".tr();
 
+  static String get store => "store".tr();
+
+  static String get client => "client".tr();
   static String get youCanNotGoBack => "youCanNotGoBack".tr();
   static String get profile => "profile".tr();
   static String get rememberMe => "rememberMe".tr();

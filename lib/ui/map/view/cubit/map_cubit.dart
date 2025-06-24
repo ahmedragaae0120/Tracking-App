@@ -80,7 +80,7 @@ class MapCubit extends Cubit<MapState> {
     switch (result) {
       case SuccessApiResult():
         final destinationMarker =
-            DestinationMarker(location: destination, isHome: isHome);
+            DestinationMarker(point: destination, isHome: isHome);
         markers.removeWhere((marker) => marker is DestinationMarker);
         markers.add(destinationMarker);
         routePoints = result.data ?? [];
