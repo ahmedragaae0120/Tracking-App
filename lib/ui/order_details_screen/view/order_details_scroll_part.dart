@@ -9,11 +9,11 @@ import 'package:tracking_app/ui/order_details_screen/view/widgets/payment_card.d
 import 'package:tracking_app/ui/order_details_screen/view/widgets/product_summary_card.dart';
 
 class OrderDetailsScrollPart extends StatelessWidget {
-  Orders order;
-  OrderStatus? statusName;
-  ScrollController scrollController;
+  final Orders order;
+  final OrderStatus? statusName;
+  final ScrollController scrollController;
 
-  OrderDetailsScrollPart(
+  const OrderDetailsScrollPart(
       {required this.scrollController,
       required this.statusName,
       required this.order,

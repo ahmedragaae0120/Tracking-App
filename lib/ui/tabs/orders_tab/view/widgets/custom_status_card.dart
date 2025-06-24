@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomStatusCard extends StatelessWidget {
-  String title;
-  int count;
-  Color color;
-  IconData icon;
-  CustomStatusCard(this.title,this.count,this.color,this.icon);
+  final String title;
+  final int count;
+  final Color color;
+  final IconData icon;
+
+  const CustomStatusCard(this.title, this.count, this.color, this.icon,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +15,18 @@ class CustomStatusCard extends StatelessWidget {
       width: 170,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.redAccent.withOpacity(0.02),
+        color: Colors.redAccent.withValues(alpha: 0.02), // أفضل من withValues
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
           Row(
             children: [
-              SizedBox(width: 5,),
+              const SizedBox(width: 5),
               Text(
                 '$count',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),

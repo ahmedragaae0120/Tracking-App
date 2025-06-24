@@ -339,7 +339,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i468.StartOrderUseCase>(),
           gh<_i299.CacheHelper>(),
         ));
-    gh.factory<_i337.updateVehicleUsecase>(() => _i337.updateVehicleUsecase(
+    gh.factory<_i337.UpdateVehicleUsecase>(() => _i337.UpdateVehicleUsecase(
         updateVehicleRepo: gh<_i291.UpdateVehicleRepo>()));
     gh.factory<_i212.ApplyUseCase>(
         () => _i212.ApplyUseCase(applyContract: gh<_i196.applyRepoContract>()));
@@ -350,7 +350,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i50.ChangePasswordCubit>(
         () => _i50.ChangePasswordCubit(gh<_i403.ChangePasswordUsecase>()));
     gh.factory<_i906.AuthCubit>(() => _i906.AuthCubit(
-          gh<_i337.updateVehicleUsecase>(),
+          gh<_i337.UpdateVehicleUsecase>(),
           gh<_i912.LoginUsecase>(),
           gh<_i1000.loadcountriesUseCase>(),
           gh<_i587.ForgetPasswordUseCase>(),

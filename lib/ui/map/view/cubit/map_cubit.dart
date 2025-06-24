@@ -32,7 +32,7 @@ class MapCubit extends Cubit<MapState> {
         _initial(intent.latLong);
         break;
 
-      case addDestinationMarker():
+      case AddDestinationMarker():
         _addDestinationMarker(latLong: intent.latLong, isHome: intent.isHome);
         break;
     }
@@ -87,7 +87,6 @@ class MapCubit extends Cubit<MapState> {
         emit(MapDataReady());
         break;
       case ErrorApiResult():
-        print("❌❌ ERROR: ${result.exception}");
         emit(MapStateError(result.exception.toString()));
         break;
     }
@@ -95,7 +94,6 @@ class MapCubit extends Cubit<MapState> {
 
   void _addDestinationMarker({required LatLng latLong, required bool isHome}) {
     _getRoute(destination: latLong, isHome: isHome);
-    print("✅✅✅✅ $latLong}");
   }
 
   Future<void> _initial(LatLng latLong) async {

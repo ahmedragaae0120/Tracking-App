@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
   final LoginUsecase signInUsecase;
   Driver? driver;
   final ForgetPasswordUseCase forgetPasswordUseCase;
-  final updateVehicleUsecase updateVehicleUsecas;
+  final UpdateVehicleUsecase updateVehicleUsecas;
   final VerifyresetcodeUseCase verifyresetcodeUseCase;
   final ResetpasswordUsecase resetpasswordUsecase;
   final GetProfileDetailsUsecase getProfileDetailsUsecase;
@@ -213,21 +213,21 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   _apply(applyrequest aplyrequest) async {
-    emit(applyLoading());
+    emit(ApplyLoading());
 
     final result = await _applyUseCase.apply(applyrequest: aplyrequest);
 
     switch (result) {
       case SuccessApiResult():
         if (result.data != null) {
-          emit(applySuccess(result.data!));
+          emit(ApplySuccess(result.data!));
         } else {
-          emit(applyFailure(message: 'Received empty response from server'));
+          emit(ApplyFailure(message: 'Received empty response from server'));
         }
         break;
       case ErrorApiResult():
         log("Error: ${result.exception.toString()}");
-        emit(applyFailure(message: result.exception.toString()));
+        emit(ApplyFailure(message: result.exception.toString()));
         break;
     }
   }
@@ -253,15 +253,15 @@ class AuthCubit extends Cubit<AuthState> {
     switch (response) {
       case SuccessApiResult():
         if (response.data != null && response.data!.vehicles != null) {
-          emit(getVehiclesSuccess(response.data!));
+          emit(GetVehiclesSuccess(response.data!));
         } else {
-          emit(getVehiclesFailure(
+          emit(GetVehiclesFailure(
               message: 'Received empty response from server'));
         }
         break;
       case ErrorApiResult():
         log("Error: ${response.exception.toString()}");
-        emit(getVehiclesFailure(message: response.exception.toString()));
+        emit(GetVehiclesFailure(message: response.exception.toString()));
         break;
     }
   }

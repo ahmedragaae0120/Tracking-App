@@ -174,7 +174,7 @@ class OrderBottomSheet extends StatelessWidget {
                                                         .preparingYourOrder,
                                                   ));
                                                   mapCubit.doIntent(
-                                                    addDestinationMarker(
+                                                    AddDestinationMarker(
                                                       latLong: latLongShop,
                                                       isHome: false,
                                                     ),
@@ -255,7 +255,7 @@ class OrderBottomSheet extends StatelessWidget {
                                                   .preparingYourOrder,
                                             ));
                                             mapCubit
-                                                .doIntent(addDestinationMarker(
+                                                .doIntent(AddDestinationMarker(
                                               latLong: latLongHome,
                                               isHome: true,
                                             ));

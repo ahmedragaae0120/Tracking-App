@@ -8,7 +8,7 @@ import 'package:tracking_app/core/utils/colors_manager.dart';
 import 'cubit/map_cubit.dart';
 
 class MapScreen extends StatelessWidget {
-  MapScreen({
+  const MapScreen({
     super.key,
   });
 

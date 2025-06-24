@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
 
 class DestinationMarker extends Marker {
   DestinationMarker({
-    required LatLng point,
+    required super.point,
     required bool isHome,
     Color color = Colors.pink,
   }) : super(
           width: 100,
           height: 60,
-          point: point,
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Container(

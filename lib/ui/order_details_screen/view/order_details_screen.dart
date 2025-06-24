@@ -17,11 +17,11 @@ import 'order_bottom_sheet.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final Orders order;
-  OrderStatus? statusName;
 
-  OrderDetailsScreen({required this.order, super.key}) {
-    statusName = OrderStatus.receivedYourOrder;
-  }
+  const OrderDetailsScreen({
+    required this.order,
+    super.key,
+  });
 
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -34,6 +34,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   final LatLng latLongHome = LatLng(30.0280, 31.2613);
   final LatLng latLongShop = LatLng(31.417802, 31.813134);
 
+  late OrderStatus _statusName;
+
+  @override
+  void initState() {
+    super.initState();
+    _statusName = OrderStatus.receivedYourOrder;
+  }
+
   @override
   void dispose() {
     _draggableController.dispose();
@@ -44,9 +52,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     Config().init(context);
 
+    final isPopAllowed = widget.order.state == Constant.canceledKey ||
+        widget.order.state == Constant.completedKey;
+
     return PopScope(
-      canPop: widget.order.state == Constant.canceledKey ||
-          widget.order.state == Constant.completedKey,
+      canPop: isPopAllowed,
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MapCubit>(
@@ -67,16 +77,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: Scaffold(
           body: Stack(
             children: [
-              MapScreen(),
+              const MapScreen(),
               OrderBottomSheet(
                 order: widget.order,
-                statusName: widget.statusName,
+                statusName: _statusName,
                 controller: _draggableController,
                 latLongHome: latLongHome,
                 latLongShop: latLongShop,
                 onStatusChange: (newStatus) {
                   setState(() {
-                    widget.statusName = newStatus;
+                    _statusName = newStatus;
                   });
                 },
               ),
@@ -86,5 +96,4 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       ),
     );
   }
-
 }

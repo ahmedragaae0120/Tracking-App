@@ -10,9 +10,9 @@ class InitialIntent extends MapIntent {
   });
 }
 
-class addDestinationMarker extends MapIntent {
+class AddDestinationMarker extends MapIntent {
   LatLng latLong;
   bool isHome;
 
-  addDestinationMarker({required this.latLong, required this.isHome});
+  AddDestinationMarker({required this.latLong, required this.isHome});
 }

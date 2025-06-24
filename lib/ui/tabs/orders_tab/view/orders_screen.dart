@@ -43,7 +43,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             if (state is GetDriverOrdersLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is GetDriverOrdersErrorState) {
-              return Center(child: Text('${state.message}'));
+              return Center(child: Text(state.message));
             } else if (state is GetDriverOrdersSuccessState) {
               final completedOrders = state.orders
                   .where((o) => (o.order.state ?? '').toLowerCase() == 'completed')
