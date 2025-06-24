@@ -5,7 +5,6 @@ import 'package:tracking_app/ui/Auth/view_model/cubit/auth_cubit.dart';
 import 'package:tracking_app/ui/Auth/view_model/cubit/auth_intent.dart';
 import 'package:tracking_app/ui/tabs/home_tab/view/home_screen.dart';
 import 'package:tracking_app/ui/tabs/profile_tab/profile_screen.dart';
-
 import '../../../core/utils/colors_manager.dart';
 import '../../../core/utils/string_manager.dart';
 import '../orders_tab/view/orders_screen.dart';
