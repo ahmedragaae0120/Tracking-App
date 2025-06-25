@@ -205,7 +205,14 @@ class OrderBottomSheet extends StatelessWidget {
                                                   break;
                                               }
                                             }
-                                          : null,
+                                          : () {
+                                              toastMessage(
+                                                message:
+                                                    AppStrings.youCanNotGoBack,
+                                                tybeMessage:
+                                                    TybeMessage.negative,
+                                              );
+                                            },
                                       child: Container(
                                         height: 48,
                                         decoration: BoxDecoration(
