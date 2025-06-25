@@ -5,9 +5,9 @@ import 'package:injectable/injectable.dart';
 import 'package:tracking_app/domain/use_cases/get_driver_orders_usecase.dart';
 import 'package:tracking_app/domain/use_cases/get_specific_product_usecase.dart';
 import 'package:tracking_app/ui/tabs/orders_tab/view_model/orders_intent.dart';
+
 import '../../../../core/api/api_result.dart';
 import '../../../../data/model/orders/driver_order.dart';
-import '../../../../data/model/orders/orders.dart';
 import '../../../../data/model/orders/product.dart';
 
 part 'orders_state.dart';

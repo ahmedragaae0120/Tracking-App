@@ -107,13 +107,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         );
                       }
-
                       if (state is LogoutSuccessState) {
                         toastMessage(
-                            message: "Logout Successfully, Back to login",
-                            tybeMessage: TybeMessage.positive);
+                          message: "Logout Successfully, Back to login",
+                          tybeMessage: TybeMessage.positive,
+                        );
 
                         Future.delayed(const Duration(seconds: 2), () {
+                          if (!context.mounted) return;
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             RouteManager.loginScreen,

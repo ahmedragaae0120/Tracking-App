@@ -17,7 +17,7 @@ import 'edit_profile_state.dart';
 class EditProfileCubit extends Cubit<EditProfileState> {
   final EditProfileUsecase editProfileUsecase;
   final UploadPhotoUsecase uploadPhotoUsecase;
-  final authCubit = getIt<AuthCubit>;
+  final authCubit = getIt<AuthCubit>();
 
   EditProfileCubit(this.editProfileUsecase, this.uploadPhotoUsecase)
       : super(EditProfileInitial());

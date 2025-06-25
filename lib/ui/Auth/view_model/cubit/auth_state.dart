@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable, camel_case_types
 
 part of 'auth_cubit.dart';
 
@@ -9,19 +8,19 @@ sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
 
-class applySuccess extends AuthState {
+class ApplySuccess extends AuthState {
   final ApplyEntity applyEntity;
 
-  applySuccess(this.applyEntity);
+  ApplySuccess(this.applyEntity);
 }
 
-class applyFailure extends AuthState {
+class ApplyFailure extends AuthState {
   String message;
 
-  applyFailure({required this.message});
+  ApplyFailure({required this.message});
 }
 
-class applyLoading extends AuthState {}
+class ApplyLoading extends AuthState {}
 
 final class LoginSuccessState extends AuthState {
   UserModel? userModel;
@@ -103,16 +102,16 @@ class LoadContryFailure extends AuthState {
   LoadContryFailure({required this.message});
 }
 
-class getVehiclesSuccess extends AuthState {
+class GetVehiclesSuccess extends AuthState {
   GetallvehicleEntity vehicles;
 
-  getVehiclesSuccess(this.vehicles);
+  GetVehiclesSuccess(this.vehicles);
 }
 
-class getVehiclesFailure extends AuthState {
+class GetVehiclesFailure extends AuthState {
   String message;
 
-  getVehiclesFailure({required this.message});
+  GetVehiclesFailure({required this.message});
 }
 
 final class GetLoggedInDriverDataSuccessState extends AuthState {

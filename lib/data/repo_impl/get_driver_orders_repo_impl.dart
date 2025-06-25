@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 import 'package:tracking_app/core/api/api_result.dart';
-import 'package:tracking_app/data/model/orders/orders.dart';
 
 import '../../domain/repo_contract/get_driver_orders_repo.dart';
 import '../data_source_contract/get_driver_orders_datasourse.dart';

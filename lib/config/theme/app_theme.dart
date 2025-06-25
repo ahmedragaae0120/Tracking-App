@@ -129,8 +129,11 @@ class AppTheme {
       unselectedItemColor: Colors.black54,
       showUnselectedLabels: true,
     ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: ColorManager.primaryColor,
+    ),
 
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: ColorManager.primaryColor,
       dividerColor: Colors.transparent,
       indicatorSize: TabBarIndicatorSize.tab,
@@ -139,12 +142,9 @@ class AppTheme {
       tabAlignment: TabAlignment.start,
     ),
 
-    progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: ColorManager.primaryColor,
-    ),
 
     // 🛒 تصميم بطاقات المنتجات (Cards)
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.white,
       elevation: 2,
       shape: RoundedRectangleBorder(

@@ -144,9 +144,13 @@ class _SignInScreenState extends State<SignInScreen> {
             setState(() {
               successTrigger?.fire();
             });
-            Future.delayed(const Duration(seconds: 3), () {
+            Future.delayed(const Duration(seconds: 2), () {
+              if (!context.mounted) return;
               Navigator.pushNamedAndRemoveUntil(
-                  context, RouteManager.mainScreen, (_) => false);
+                context,
+                RouteManager.mainScreen,
+                (route) => false,
+              );
             });
             toastMessage(
               message: AppStrings.loginSuccessfully,

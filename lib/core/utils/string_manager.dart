@@ -12,6 +12,11 @@ class AppStrings {
   static String get phoneNumberCannotBeMoreThan20Characters =>
       "phoneNumberCannotBeMoreThan20Characters".tr();
   static String get name => "name".tr();
+
+  static String get store => "store".tr();
+
+  static String get client => "client".tr();
+  static String get youCanNotGoBack => "youCanNotGoBack".tr();
   static String get profile => "profile".tr();
   static String get rememberMe => "rememberMe".tr();
 
@@ -153,9 +158,7 @@ class AppStrings {
   static String get userAddress => "userAddress".tr();
   static String get pendingOrders => "pendingOrders".tr();
   static String get noOrdersAvailable => "noOrdersAvailable".tr();
-
   static String get tryAgain => "tryAgain".tr();
-
   static String get orderNotFound => "orderNotFound".tr();
   static String get accept => "accept".tr();
 
@@ -165,11 +168,8 @@ class AppStrings {
   static String get vehicleLicenseCannotBeEmpty =>
       "vehicleLicenseCannotBeEmpty".tr();
   static String get reject => "reject".tr();
-
   static String get storeLocation => "storeLocation".tr();
-
   static String get customerLocation => "customerLocation".tr();
-
   static String get products => "products".tr();
   static String get orderDetails => "orderDetails".tr();
   static String get english => "english".tr();
