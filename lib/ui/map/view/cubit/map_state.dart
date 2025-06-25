@@ -19,3 +19,17 @@ final class MapStateError extends MapState {
 
   MapStateError(this.message);
 }
+
+final class GetUserAddressSuccess extends MapState {}
+
+final class GetUserAddressError extends MapState {
+  final String message;
+
+  GetUserAddressError(this.message);
+}
+
+final class UpdateDriverAddressError extends MapState {
+  final String message;
+
+  UpdateDriverAddressError(this.message);
+}

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:injectable/injectable.dart';
+import 'package:latlong2/latlong.dart';
 
 enum DriverStatus {
   accept("Accept"),
@@ -22,67 +22,90 @@ enum OrderStatus {
   const OrderStatus(this.statusName);
 }
 
-@injectable
-@singleton
-class FirestoreHepler {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+abstract class FireStoreHelper {
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  CollectionReference<Map<String, dynamic>> get ordersCollection =>
+  static CollectionReference<Map<String, dynamic>> get ordersCollection =>
       _firestore.collection('orders');
+  static final String formattedDate =
+      DateFormat('dd MMM yyyy - h:mm').format(DateTime.now());
 
-  final formattedDate = DateFormat('dd MMM yyyy - h:mm').format(DateTime.now());
-
-  Future<void> updateOrderStatusIsDoneByName({
+  static Future<void> updateOrderStatusIsDoneByName({
     required String orderId,
     required OrderStatus statusName,
     required bool isDone,
   }) async {
-    final docRef = ordersCollection.doc(orderId);
-    final docSnapshot = await docRef.get();
+    final doc = await ordersCollection.doc(orderId).get();
+    final data = doc.data();
+    if (data == null) throw Exception('Order not found');
 
-    if (docSnapshot.exists) {
-      final data = docSnapshot.data();
-      final List<dynamic> orderStatus = List.from(data?['orderStatus'] ?? []);
+    final List<dynamic> orderStatus = List.from(data['orderStatus'] ?? []);
+    final index = orderStatus.indexWhere(
+        (element) => element['status name'] == statusName.statusName);
 
-      bool updated = false;
-
-      for (int i = 0; i < orderStatus.length; i++) {
-        if (orderStatus[i]['status name'] == statusName.statusName) {
-          orderStatus[i]['is done'] = isDone;
-          orderStatus[i]['date'] = isDone == false ? null : formattedDate;
-          updated = true;
-          break;
-        }
-      }
-
-      if (updated) {
-        await docRef.update({'orderStatus': orderStatus});
-      } else {
-        throw Exception('Status name "${statusName.statusName}" not found');
-      }
-    } else {
-      throw Exception('Order not found');
+    if (index == -1) {
+      throw Exception('Status "${statusName.statusName}" not found');
     }
+
+    orderStatus[index]['is done'] = isDone;
+    orderStatus[index]['date'] = isDone ? formattedDate : null;
+
+    await ordersCollection.doc(orderId).update({'orderStatus': orderStatus});
   }
 
-  Future<void> updateDriverInfo(
-      {required String orderId,
-      required String name,
-      required String phone,
-      required String driverId,
-      required DriverStatus driverStatus}) async {
-    final docRef = ordersCollection.doc(orderId);
-    final docSnapshot = await docRef.get();
+  static Future<void> updateDriverInfo({
+    required String orderId,
+    required String name,
+    required String phone,
+    required String driverId,
+    required DriverStatus driverStatus,
+  }) async {
+    final doc = await ordersCollection.doc(orderId).get();
+    if (!doc.exists) throw Exception('Order not found');
 
-    if (docSnapshot.exists) {
-      await docRef.update({
-        'driverName': name,
-        'driverPhone': phone,
-        'driverId': driverId,
-        'driverStatus': driverStatus.status
-      });
-    } else {
-      throw Exception('Order not found');
+    await ordersCollection.doc(orderId).update({
+      'driverName': name,
+      'driverPhone': phone,
+      'driverId': driverId,
+      'driverStatus': driverStatus.status,
+    });
+  }
+
+  static Future<void> updateDriverAddress({
+    required String orderId,
+    required String lat,
+    required String long,
+  }) async {
+    final doc = await ordersCollection.doc(orderId).get();
+    if (!doc.exists) throw Exception('Order not found');
+
+    await ordersCollection.doc(orderId).update({
+      'driverLatitude': lat,
+      'driverLongitude': long,
+    });
+  }
+
+  static Future<LatLng> getUserLocationByOrderId(String orderId) async {
+    final doc = await ordersCollection.doc(orderId).get();
+    final data = doc.data();
+    if (data == null) throw Exception('Order not found');
+
+    final latStr = data['userLatitude']?.toString();
+    final longStr = data['userLongitude']?.toString();
+
+    if (latStr == null || longStr == null) {
+      throw Exception('User location data not found in this order');
     }
+
+    final lat = double.tryParse(latStr);
+    final long = double.tryParse(longStr);
+
+    if (lat == null || long == null) {
+      throw Exception('User location format is invalid');
+    }
+
+    print(" ⭐⭐ ${lat} , ${long}");
+
+    return LatLng(lat, long);
   }
 }

@@ -6,6 +6,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:tracking_app/core/api/api_result.dart';
 import 'package:tracking_app/domain/use_cases/get_route_usecase.dart';
+import 'package:tracking_app/domain/use_cases/tracking/get_user_address_usecase.dart';
+import 'package:tracking_app/domain/use_cases/tracking/update_driver_Address_usecase.dart';
 import 'package:tracking_app/ui/map/view/widget/destination_marker.dart';
 import 'package:tracking_app/ui/map/view/widget/driver_marker.dart';
 
@@ -21,15 +23,24 @@ class MapCubit extends Cubit<MapState> {
   List<LatLng> routePoints = [];
   List<Marker> markers = [];
   final GetRouteUseCase getRouteUseCase;
+  final GetUserAddressUsecase getUserAddressUsecase;
+  final UpdateDriverAddressUsecase updateDriverAddressUsecase;
 
-  MapCubit(this.getRouteUseCase) : super(MapStateIdle());
+  late LatLng latLongHome;
+
+  MapCubit(this.getRouteUseCase, this.getUserAddressUsecase,
+      this.updateDriverAddressUsecase)
+      : super(MapStateIdle());
 
   static MapCubit get(BuildContext context) => BlocProvider.of(context);
 
   void doIntent(MapIntent intent) {
     switch (intent) {
       case InitialIntent():
-        _initial(intent.latLong);
+        _initial(orderId: intent.orderId, latLong: intent.latLong);
+        break;
+      case GetUserAddress():
+        _getUserAddress(orderId: intent.orderId);
         break;
 
       case AddDestinationMarker():
@@ -38,7 +49,7 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
-  Future<void> _getCurrentLocation() async {
+  Future<void> _getCurrentLocation({required String orderId}) async {
     final location = Location();
 
     try {
@@ -57,6 +68,10 @@ class MapCubit extends Cubit<MapState> {
             location: LatLng(newLocation.latitude!, newLocation.longitude!),
           ),
         );
+        _updateDriverAddress(
+            orderId: orderId,
+            long: userMarker.point.longitude.toString(),
+            lat: userMarker.point.latitude.toString());
         emit(CurrentLocationChanged());
       });
     } catch (e) {
@@ -92,12 +107,46 @@ class MapCubit extends Cubit<MapState> {
     }
   }
 
+  Future<void> _getUserAddress({
+    required String orderId,
+  }) async {
+    final result = await getUserAddressUsecase.call(orderId: orderId);
+    print(" ⭐⭐ ${result}");
+    switch (result) {
+      case SuccessApiResult():
+        latLongHome = result.data ?? LatLng(0, 0);
+        emit(GetUserAddressSuccess());
+        break;
+      case ErrorApiResult():
+        emit(GetUserAddressError(result.exception.toString()));
+        break;
+    }
+  }
+
+  Future<void> _updateDriverAddress({
+    required String orderId,
+    required String lat,
+    required String long,
+  }) async {
+    final result = await updateDriverAddressUsecase.call(
+        orderId: orderId, long: long, lat: lat);
+    switch (result) {
+      case SuccessApiResult():
+        print(" ⭐⭐ Driver Address Updated to ${lat} , ${long}");
+        break;
+      case ErrorApiResult():
+        emit(UpdateDriverAddressError(result.exception.toString()));
+        break;
+    }
+  }
+
   void _addDestinationMarker({required LatLng latLong, required bool isHome}) {
     _getRoute(destination: latLong, isHome: isHome);
   }
 
-  Future<void> _initial(LatLng latLong) async {
-    await _getCurrentLocation();
+  Future<void> _initial(
+      {required LatLng latLong, required String orderId}) async {
+    await _getCurrentLocation(orderId: orderId);
     _addDestinationMarker(isHome: false, latLong: latLong);
   }
 }

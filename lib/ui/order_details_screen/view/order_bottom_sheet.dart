@@ -20,7 +20,6 @@ class OrderBottomSheet extends StatelessWidget {
   final Orders order;
   final OrderStatus? statusName;
   final DraggableScrollableController controller;
-  final LatLng latLongHome;
   final LatLng latLongShop;
   final Function(OrderStatus newStatus) onStatusChange;
 
@@ -29,7 +28,6 @@ class OrderBottomSheet extends StatelessWidget {
     required this.order,
     required this.statusName,
     required this.controller,
-    required this.latLongHome,
     required this.latLongShop,
     required this.onStatusChange,
   });
@@ -263,7 +261,7 @@ class OrderBottomSheet extends StatelessWidget {
                                             ));
                                             mapCubit
                                                 .doIntent(AddDestinationMarker(
-                                              latLong: latLongHome,
+                                              latLong: mapCubit.latLongHome,
                                               isHome: true,
                                             ));
                                             onStatusChange(

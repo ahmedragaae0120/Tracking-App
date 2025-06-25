@@ -12,12 +12,22 @@ class MapScreen extends StatelessWidget {
     super.key,
   });
 
-  //  here i make it const value cause the real location is in US so it will error
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MapCubit, MapState>(
       listener: (context, state) {
+        if (state is UpdateDriverAddressError) {
+          toastMessage(
+            message: state.message,
+            tybeMessage: TybeMessage.negative,
+          );
+        }
+        if (state is GetUserAddressError) {
+          toastMessage(
+            message: state.message,
+            tybeMessage: TybeMessage.negative,
+          );
+        }
         if (state is MapStateError) {
           toastMessage(
             message: state.message,

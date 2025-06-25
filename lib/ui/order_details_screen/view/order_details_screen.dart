@@ -30,8 +30,6 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   final DraggableScrollableController _draggableController =
       DraggableScrollableController();
-
-  final LatLng latLongHome = LatLng(30.0280, 31.2613);
   final LatLng latLongShop = LatLng(31.417802, 31.813134);
 
   late OrderStatus _statusName;
@@ -51,17 +49,21 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);
-
     final isPopAllowed = widget.order.state == Constant.canceledKey ||
         widget.order.state == Constant.completedKey;
-
     return PopScope(
       canPop: isPopAllowed,
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MapCubit>(
+            //'
             create: (context) => getIt<MapCubit>()
-              ..doIntent(InitialIntent(latLong: latLongShop)),
+              ..doIntent(GetUserAddress(orderId: widget.order.id ?? ""))
+              ..doIntent(InitialIntent(
+                  orderId: widget.order.id ?? "",
+                  // i must use the ral lat long but the order does not have it yet
+                  // 👇👇 so i will use the lat long of the const value
+                  latLong: latLongShop)),
           ),
           BlocProvider<OrderDetailsCubit>(
             create: (context) => getIt<OrderDetailsCubit>()
@@ -82,7 +84,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 order: widget.order,
                 statusName: _statusName,
                 controller: _draggableController,
-                latLongHome: latLongHome,
                 latLongShop: latLongShop,
                 onStatusChange: (newStatus) {
                   setState(() {
