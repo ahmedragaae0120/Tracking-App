@@ -7,8 +7,8 @@ import 'package:tracking_app/core/di/di.dart';
 import 'package:tracking_app/core/utils/string_manager.dart';
 import 'package:tracking_app/core/utils/text_style_manager.dart';
 import 'package:tracking_app/ui/order_details_screen/view/widgets/destinations_widget.dart';
-import 'package:tracking_app/ui/order_details_screen/view/widgets/product_summary_card.dart';
 import 'package:tracking_app/ui/tabs/orders_tab/view/widgets/custom_product_summary_card.dart';
+
 import '../../../../data/model/orders/driver_order.dart';
 import '../../../order_details_screen/view/widgets/payment_card.dart';
 import '../view_model/orders_cubit.dart';
@@ -81,11 +81,11 @@ class OrderDetails extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               DestinationsWidget(
-                                imageUrl: order.store.image ?? "",
-                                name: order.store.name ?? "",
-                                phone: order.store.phoneNumber ?? "",
-                                subTitle: order.store.address ?? "",
-                              ),
+                          imageUrl: order.store.image,
+                          name: order.store.name,
+                          phone: order.store.phoneNumber,
+                          subTitle: order.store.address,
+                        ),
                               Text(
                                 AppStrings.userAddress,
                                 style: AppTextStyle.regular16

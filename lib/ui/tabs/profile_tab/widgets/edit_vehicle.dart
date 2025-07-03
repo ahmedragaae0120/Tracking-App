@@ -10,7 +10,7 @@ import '../../../../domain/entity/vehicle/update_vehicle_entity.dart';
 import '../../../Auth/view_model/cubit/auth_intent.dart';
 
 class EditVehicle extends StatefulWidget {
-  EditVehicle({super.key});
+  const EditVehicle({super.key});
 
   @override
   State<EditVehicle> createState() => _EditVehicleState();
@@ -36,7 +36,7 @@ class _EditVehicleState extends State<EditVehicle> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        title: Text('${AppStrings.editProfile}'),
+        title: Text(AppStrings.editProfile),
         actions: [
           const Icon(
             Icons.notifications_none,

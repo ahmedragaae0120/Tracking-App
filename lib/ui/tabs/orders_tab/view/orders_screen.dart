@@ -6,7 +6,6 @@ import 'package:tracking_app/ui/tabs/orders_tab/view_model/orders_cubit.dart';
 import 'package:tracking_app/ui/tabs/orders_tab/view_model/orders_intent.dart';
 
 import '../../../../core/di/di.dart';
-import '../../../order_details_screen/view/order_details_screen.dart';
 import 'order_details.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -44,7 +43,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             if (state is GetDriverOrdersLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is GetDriverOrdersErrorState) {
-              return Center(child: Text('${state.message}'));
+              return Center(child: Text(state.message));
             } else if (state is GetDriverOrdersSuccessState) {
               final completedOrders = state.orders
                   .where((o) => (o.order.state ?? '').toLowerCase() == 'completed')

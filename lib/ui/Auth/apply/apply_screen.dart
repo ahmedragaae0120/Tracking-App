@@ -76,19 +76,19 @@ class _ApplyScreenState extends State<ApplyScreen> {
       body: BlocBuilder<AuthCubit, AuthState>(
         bloc: authCubit,
         builder: (context, state) {
-          if (state is applySuccess) {
+          if (state is ApplySuccess) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushNamed(context, RouteManager.applySuccess);
             });
           }
           if (state is LoadContrySuccess) {
             countries = state.countries;
-          } else if (state is applyFailure) {
+          } else if (state is ApplyFailure) {
             toastMessage(
                 message: state.message, tybeMessage: TybeMessage.negative);
-          } else if (state is applyLoading) {
+          } else if (state is ApplyLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is getVehiclesSuccess) {
+          } else if (state is GetVehiclesSuccess) {
             vehicleTypes = state.vehicles.vehicles ?? [];
             if (vehicleTypes.isNotEmpty) {
               selectedVehicleType = selectedVehicleType.isEmpty
